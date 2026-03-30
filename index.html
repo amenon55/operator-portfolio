@@ -10,7 +10,194 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 		<style>
+
+
+			html, body, input, select, textarea {
+	font-family: 'Inter', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.7;
+	color: var(--ink);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+body, input, select, textarea {
+	letter-spacing: 0.005em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Playfair Display', serif;
+	color: var(--ink);
+	letter-spacing: -0.015em;
+	line-height: 1.12;
+	margin: 0 0 0.65em 0;
+	font-weight: 700;
+}
+
+h1 {
+	font-size: 2.9rem;
+}
+
+h2 {
+	font-size: 2.35rem;
+}
+
+h3 {
+	font-size: 1.65rem;
+}
+
+h4 {
+	font-size: 1.15rem;
+}
+
+p, li {
+	font-size: 0.98rem;
+	line-height: 1.72;
+	color: var(--ink);
+}
+
+.hero-title {
+	font-family: 'Playfair Display', serif;
+	font-size: 3rem;
+	font-weight: 700;
+	letter-spacing: -0.03em;
+	line-height: 1.02;
+	margin-bottom: 0.35rem;
+}
+
+.hero-subtitle {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.95rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--muted);
+	margin-bottom: 1.25rem;
+}
+
+.hero-copy {
+	font-family: 'Inter', sans-serif;
+	font-size: 1.02rem;
+	line-height: 1.82;
+	max-width: 40rem;
+	color: #222;
+}
+
+.eyebrow,
+.label {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.72rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: var(--muted);
+}
+
+.section-intro {
+	font-family: 'Inter', sans-serif;
+	font-size: 1rem;
+	line-height: 1.78;
+	color: var(--muted);
+	max-width: 44rem;
+}
+
+.metric-number {
+	font-family: 'Inter', sans-serif;
+	font-size: 2rem;
+	font-weight: 800;
+	letter-spacing: -0.04em;
+	line-height: 1;
+	color: var(--ink);
+}
+
+.metric-label {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	line-height: 1.45;
+	color: var(--muted);
+	margin-top: 0.55rem;
+}
+
+.case-subtitle {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--muted);
+	margin-top: -0.15rem;
+	margin-bottom: 1rem;
+}
+
+.case-outcome {
+	font-weight: 600;
+	line-height: 1.7;
+}
+
+#nav ul li a {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.78rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+}
+
+#logo a {
+	font-family: 'Playfair Display', serif;
+	font-size: 1.35rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+#header header p {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.78rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	line-height: 1.8;
+}
+
+.button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.78rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+}
+
+.note {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.92rem;
+	line-height: 1.7;
+	color: var(--muted);
+	font-style: italic;
+}
+
+@media screen and (max-width: 980px) {
+	h1 { font-size: 2.3rem; }
+	h2 { font-size: 2rem; }
+	h3 { font-size: 1.45rem; }
+
+	.hero-title {
+		font-size: 2.35rem;
+	}
+}
 	:root {
 	--ink: #111111;
 	--muted: #5f6368;
@@ -50,9 +237,10 @@
 			}
 
 			.metrics-grid {
-				grid-template-columns: repeat(5, 1fr);
-				margin-top: 2rem;
-			}
+	grid-template-columns: repeat(5, 1fr);
+	gap: 1rem;
+	margin-top: 2rem;
+}
 
 			.three-col {
 				grid-template-columns: repeat(3, 1fr);
@@ -82,10 +270,21 @@
 			}
 
 			.metric-card {
-				text-align: center;
-				padding: 1.2rem 1rem;
-			}
+	text-align: center;
+	padding: 1.35rem 0.9rem 1.15rem 0.9rem;
+}
+section h3 {
+	padding-bottom: 0.45rem;
+	border-bottom: 1px solid var(--line);
+	margin-bottom: 1rem;
+}
 
+			.info-card p,
+.case-card p,
+.priority-card p,
+.contact-card p {
+	max-width: 52ch;
+}
 			.metric-number {
 				display: block;
 				font-size: 1.55rem;
