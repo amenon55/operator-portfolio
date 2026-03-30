@@ -6,38 +6,259 @@
 -->
 <html>
 	<head>
-		<title>Read Only by HTML5 UP</title>
+		<title>Abi Menon | Operator Brief</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			:root {
+				--ink: #1f2933;
+				--muted: #52606d;
+				--line: #d9e2ec;
+				--panel: #f7f9fb;
+				--accent: #2f6fed;
+			}
+
+			body {
+				color: var(--ink);
+			}
+
+			#header header p {
+				color: rgba(255,255,255,0.78);
+				line-height: 1.6em;
+			}
+
+			#logo a {
+				font-size: 1.1em;
+				letter-spacing: 0.02em;
+			}
+
+			.hero-grid,
+			.metrics-grid,
+			.three-col,
+			.case-grid,
+			.system-grid,
+			.contact-grid {
+				display: grid;
+				gap: 1.5rem;
+			}
+
+			.hero-grid {
+				grid-template-columns: 1.6fr 1fr;
+				align-items: start;
+			}
+
+			.metrics-grid {
+				grid-template-columns: repeat(5, 1fr);
+				margin-top: 2rem;
+			}
+
+			.three-col {
+				grid-template-columns: repeat(3, 1fr);
+				margin-top: 1.5rem;
+			}
+
+			.case-grid,
+			.system-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.contact-grid {
+				grid-template-columns: 1.2fr 1fr;
+				align-items: start;
+			}
+
+			.panel,
+			.metric-card,
+			.info-card,
+			.case-card,
+			.priority-card,
+			.contact-card {
+				background: var(--panel);
+				border: 1px solid var(--line);
+				border-radius: 10px;
+				padding: 1.4rem 1.4rem 1.2rem 1.4rem;
+			}
+
+			.metric-card {
+				text-align: center;
+				padding: 1.2rem 1rem;
+			}
+
+			.metric-number {
+				display: block;
+				font-size: 1.55rem;
+				font-weight: 700;
+				line-height: 1.1;
+				color: var(--ink);
+				margin-bottom: 0.35rem;
+			}
+
+			.metric-label {
+				display: block;
+				font-size: 0.9rem;
+				color: var(--muted);
+				line-height: 1.35;
+			}
+
+			.eyebrow {
+				display: inline-block;
+				font-size: 0.75rem;
+				font-weight: 700;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 0.8rem;
+			}
+
+			.hero-title {
+				margin-bottom: 0.5rem;
+			}
+
+			.hero-subtitle {
+				font-size: 1.1rem;
+				color: var(--muted);
+				margin-bottom: 1.15rem;
+			}
+
+			.hero-copy {
+				font-size: 1rem;
+				line-height: 1.8em;
+				margin-bottom: 1.5rem;
+				max-width: 42rem;
+			}
+
+			.hero-actions {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.75rem;
+				margin-top: 1rem;
+			}
+
+			.button.primary {
+				background-color: var(--accent) !important;
+				box-shadow: none !important;
+			}
+
+			.snapshot-list,
+			.clean-list {
+				list-style: none;
+				padding-left: 0;
+				margin: 0;
+			}
+
+			.snapshot-list li,
+			.clean-list li {
+				padding: 0.6rem 0;
+				border-bottom: 1px solid var(--line);
+				line-height: 1.5em;
+			}
+
+			.snapshot-list li:last-child,
+			.clean-list li:last-child {
+				border-bottom: none;
+				padding-bottom: 0;
+			}
+
+			.snapshot-list strong,
+			.clean-list strong {
+				color: var(--ink);
+			}
+
+			.section-intro {
+				color: var(--muted);
+				max-width: 44rem;
+				margin-bottom: 1rem;
+			}
+
+			.info-card h4,
+			.case-card h4,
+			.priority-card h4,
+			.contact-card h4 {
+				margin-bottom: 0.55rem;
+			}
+
+			.info-card p,
+			.case-card p,
+			.priority-card p,
+			.contact-card p {
+				margin-bottom: 0.75rem;
+			}
+
+			.label {
+				display: inline-block;
+				font-size: 0.78rem;
+				font-weight: 700;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 0.35rem;
+			}
+
+			.case-subtitle {
+				color: var(--muted);
+				margin-top: -0.15rem;
+				margin-bottom: 1rem;
+				font-size: 0.95rem;
+			}
+
+			.case-outcome {
+				font-weight: 600;
+			}
+
+			.note {
+				color: var(--muted);
+				font-style: italic;
+				margin-top: 1rem;
+			}
+
+			.contact-links a {
+				border-bottom: none;
+			}
+
+			.contact-links .button {
+				margin: 0 0.6rem 0.6rem 0;
+			}
+
+			#footer .copyright {
+				font-size: 0.85rem;
+			}
+
+			@media screen and (max-width: 980px) {
+				.hero-grid,
+				.metrics-grid,
+				.three-col,
+				.contact-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 
 		<!-- Header -->
 			<section id="header">
 				<header>
-					<span class="image avatar"><img src="images/avatar.jpg" alt="" /></span>
-					<h1 id="logo"><a href="#">Willis Corto</a></h1>
-					<p>I got reprogrammed by a rogue AI<br />
-					and now I'm totally cray</p>
+					<span class="image avatar"><img src="images/avatar.jpg" alt="Abi Menon" /></span>
+					<h1 id="logo"><a href="#">Abi Menon</a></h1>
+					<p>M&amp;A Integration<br />
+					Operations Turnarounds<br />
+					Lean Execution</p>
 				</header>
 				<nav id="nav">
 					<ul>
-<li><a href="#one">Overview</a></li>
-<li><a href="#two">Practical Automation</a></li>
-<li><a href="#three">Selected Cases</a></li>
-<li><a href="#four">Operating System</a></li>
-<li><a href="#five">Contact</a></li>
-						
+						<li><a href="#one" class="active">Overview</a></li>
+						<li><a href="#two">Practical Automation</a></li>
+						<li><a href="#three">Selected Cases</a></li>
+						<li><a href="#four">Operating System</a></li>
+						<li><a href="#five">Contact</a></li>
 					</ul>
 				</nav>
 				<footer>
 					<ul class="icons">
-						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="mailto:your@email.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+						<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
 						<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-						<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
 					</ul>
 				</footer>
 			</section>
@@ -48,364 +269,214 @@
 				<!-- Main -->
 					<div id="main">
 
-						<!-- One -->
-			<section id="one">
-  <div class="container">
-    <header class="major">
-      <h2>Abi Menon</h2>
-      <p>M&amp;A Integration | Operations Turnarounds | Lean Execution</p>
-    </header>
-    <p>I step into unstable post-close environments, identify the real operating constraints, and stabilize the business before scaling improvement.</p>
-    <p>Selected examples below in automation, plant operations, integration execution, and operating discipline.</p>
-  </div>
-</section>
-
-						<!-- Two -->
-							<section id="two">
-  <div class="container">
-    <h3>Practical Automation</h3>
-    <p><strong>Problem</strong><br>$2M in vendor fraud exposure and thousands of invoices requiring manual review.</p>
-    <p><strong>Build</strong><br>Created an n8n workflow to extract PDF data, categorize risk, fast-track standard vendors, and flag anomalies for review.</p>
-    <p><strong>Impact</strong><br>Reduced manual review burden, improved early compliance screening, and established a more repeatable control process.</p>
-  </div>
-</section>
-
-						<!-- Three -->
-						<section id="three">
-  <div class="container">
-    <h3>Selected Cases</h3>
-
-    <hr>
-    <h4>Distressed Plant Turnaround | Minnesota</h4>
-    <p><strong>Context</strong><br>Distressed $25M manufacturing plant with legacy equipment, labor attrition, and paper-based scheduling.</p>
-    <p><strong>Action</strong><br>Relocated as Interim GM. Moved onto the shop floor. Applied Lean fundamentals, rebuilt training, and transitioned planning into ERP/MRP.</p>
-    <p><strong>Outcome</strong><br>Training time reduced from 18 to 8 weeks. Inventory turns improved from 5.8x to 8.8x. Stabilized site to roughly $100K/month profit run-rate.</p>
-
-    <hr>
-    <h4>Saving the Integration | ArcOne</h4>
-    <p><strong>Context</strong><br>$8M assembly acquisition. Founder exited on Day 1. Thousands of SKUs had no BOM data. Corporate pushed a 500-item checklist.</p>
-    <p><strong>Action</strong><br>Dropped the checklist. Focused on ERP cutover, supply continuity, and talent retention. Led manual rebuild of product structures.</p>
-    <p><strong>Outcome</strong><br>Protected the ERP cutover. Avoided shipping disruption. Hit targets 3 months early.</p>
-
-    <hr>
-    <h4>Regulatory Discipline | NIOSH Helmet</h4>
-    <p><strong>Context</strong><br>COVID demand spike for an acquired welding helmet, but the product lacked required life-safety certification.</p>
-    <p><strong>Action</strong><br>Stopped the commercial launch despite pressure to ship. Stabilized certification path and fragile supply chain before resuming.</p>
-    <p><strong>Outcome</strong><br>Avoided major liability and recall exposure. Protected the brand. Enabled compliant market re-entry.</p>
-  </div>
-</section>
-
-						<!-- Four -->
-						<section id="four">
-  <div class="container">
-    <h3>Operating System</h3>
-    <p><strong>1. Quality &amp; Regulatory Risk</strong><br>Stop shipments if compliance is compromised.</p>
-    <p><strong>2. Supply Continuity</strong><br>Secure fragile vendors before delivery fails.</p>
-    <p><strong>3. Data &amp; Systems Accuracy</strong><br>Clean BOMs, stabilize ERP logic, and remove bad operating data.</p>
-    <p><strong>4. Lean Execution</strong><br>Drive direct observation, standard work, training discipline, and visual control on the floor.</p>
-    <p><strong>5. Cost Optimization</strong><br>Only after the operation is stable.</p>
-    <p><em>Sequence matters: stabilize, standardize, then optimize.</em></p>
-  </div>
-</section>
-
-						<!-- Five -->
-						<!--
-							<section id="five">
-  <div class="container">
-    <h3>Contact</h3>
-    <p>If useful, I’m happy to walk through any of the examples above in more detail.</p>
-    <p>Email<br>LinkedIn<br>Resume on request</p>
-  </div>
-</section>
-									</section>
-
-									<section>
-										<h4>Lists</h4>
-										<div class="row">
-											<div class="col-6 col-12-xsmall">
-												<h5>Unordered</h5>
-												<ul>
-													<li>Dolor pulvinar etiam magna etiam.</li>
-													<li>Sagittis adipiscing lorem eleifend.</li>
-													<li>Felis enim feugiat dolore viverra.</li>
-												</ul>
-												<h5>Alternate</h5>
-												<ul class="alt">
-													<li>Dolor pulvinar etiam magna etiam.</li>
-													<li>Sagittis adipiscing lorem eleifend.</li>
-													<li>Felis enim feugiat dolore viverra.</li>
-												</ul>
-											</div>
-											<div class="col-6 col-12-xsmall">
-												<h5>Ordered</h5>
-												<ol>
-													<li>Dolor pulvinar etiam magna etiam.</li>
-													<li>Etiam vel felis at lorem sed viverra.</li>
-													<li>Felis enim feugiat dolore viverra.</li>
-													<li>Dolor pulvinar etiam magna etiam.</li>
-													<li>Etiam vel felis at lorem sed viverra.</li>
-													<li>Felis enim feugiat dolore viverra.</li>
-												</ol>
-												<h5>Icons</h5>
-												<ul class="icons">
-													<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-													<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-													<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-													<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-													<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-													<li><a href="#" class="icon brands fa-tumblr"><span class="label">Tumblr</span></a></li>
-												</ul>
+						<!-- Overview -->
+							<section id="one">
+								<div class="container">
+									<div class="hero-grid">
+										<div>
+											<span class="eyebrow">Operator Brief</span>
+											<h2 class="hero-title">Abi Menon</h2>
+											<p class="hero-subtitle">M&amp;A Integration | Operations Turnarounds | Lean Execution</p>
+											<p class="hero-copy">
+												I step into unstable post-close environments, identify the real operating constraints, and stabilize the business before scaling improvement. The work usually starts where systems are weak, supply chains are fragile, and the operation is relying on workarounds.
+											</p>
+											<div class="hero-actions">
+												<a href="#three" class="button primary">View Cases</a>
+												<a href="#two" class="button">See Automation</a>
 											</div>
 										</div>
-										<h5>Actions</h5>
-										<ul class="actions">
-											<li><a href="#" class="button primary">Default</a></li>
-											<li><a href="#" class="button">Default</a></li>
-											<li><a href="#" class="button alt">Default</a></li>
-										</ul>
-										<ul class="actions small">
-											<li><a href="#" class="button primary small">Small</a></li>
-											<li><a href="#" class="button small">Small</a></li>
-											<li><a href="#" class="button alt small">Small</a></li>
-										</ul>
-										<div class="row">
-											<div class="col-3 col-6-medium col-12-xsmall">
-												<ul class="actions stacked">
-													<li><a href="#" class="button primary">Default</a></li>
-													<li><a href="#" class="button">Default</a></li>
-													<li><a href="#" class="button alt">Default</a></li>
-												</ul>
-											</div>
-											<div class="col-3 col-6 col-12-xsmall">
-												<ul class="actions stacked">
-													<li><a href="#" class="button primary small">Small</a></li>
-													<li><a href="#" class="button small">Small</a></li>
-													<li><a href="#" class="button alt small">Small</a></li>
-												</ul>
-											</div>
-											<div class="col-3 col-6-medium col-12-xsmall">
-												<ul class="actions stacked">
-													<li><a href="#" class="button primary fit">Default</a></li>
-													<li><a href="#" class="button fit">Default</a></li>
-													<li><a href="#" class="button alt fit">Default</a></li>
-												</ul>
-											</div>
-											<div class="col-3 col-6-medium col-12-xsmall">
-												<ul class="actions stacked">
-													<li><a href="#" class="button primary small fit">Small</a></li>
-													<li><a href="#" class="button small fit">Small</a></li>
-													<li><a href="#" class="button alt small fit">Small</a></li>
-												</ul>
-											</div>
+
+										<div class="panel">
+											<h4>Operator Snapshot</h4>
+											<ul class="snapshot-list">
+												<li><strong>Scope:</strong> post-close stabilization, supply continuity, ERP/MRP transitions, Lean execution</li>
+												<li><strong>Typical situations:</strong> founder exits, weak BOM data, distressed plants, fragile vendors, manual workarounds</li>
+												<li><strong>Approach:</strong> direct observation first, stabilize the floor, then standardize and optimize</li>
+												<li><strong>Bias:</strong> practical fixes over presentations, operating rhythm over slideware</li>
+											</ul>
 										</div>
-									</section>
+									</div>
 
-									<section>
-										<h4>Table</h4>
-										<h5>Default</h5>
-										<div class="table-wrapper">
-											<table>
-												<thead>
-													<tr>
-														<th>Name</th>
-														<th>Description</th>
-														<th>Price</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>Item One</td>
-														<td>Ante turpis integer aliquet porttitor.</td>
-														<td>29.99</td>
-													</tr>
-													<tr>
-														<td>Item Two</td>
-														<td>Vis ac commodo adipiscing arcu aliquet.</td>
-														<td>19.99</td>
-													</tr>
-													<tr>
-														<td>Item Three</td>
-														<td> Morbi faucibus arcu accumsan lorem.</td>
-														<td>29.99</td>
-													</tr>
-													<tr>
-														<td>Item Four</td>
-														<td>Vitae integer tempus condimentum.</td>
-														<td>19.99</td>
-													</tr>
-													<tr>
-														<td>Item Five</td>
-														<td>Ante turpis integer aliquet porttitor.</td>
-														<td>29.99</td>
-													</tr>
-												</tbody>
-												<tfoot>
-													<tr>
-														<td colspan="2"></td>
-														<td>100.00</td>
-													</tr>
-												</tfoot>
-											</table>
+									<div class="metrics-grid">
+										<div class="metric-card">
+											<span class="metric-number">$25M</span>
+											<span class="metric-label">Distressed plant stabilized</span>
 										</div>
-
-										<h5>Alternate</h5>
-										<div class="table-wrapper">
-											<table class="alt">
-												<thead>
-													<tr>
-														<th>Name</th>
-														<th>Description</th>
-														<th>Price</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>Item One</td>
-														<td>Ante turpis integer aliquet porttitor.</td>
-														<td>29.99</td>
-													</tr>
-													<tr>
-														<td>Item Two</td>
-														<td>Vis ac commodo adipiscing arcu aliquet.</td>
-														<td>19.99</td>
-													</tr>
-													<tr>
-														<td>Item Three</td>
-														<td> Morbi faucibus arcu accumsan lorem.</td>
-														<td>29.99</td>
-													</tr>
-													<tr>
-														<td>Item Four</td>
-														<td>Vitae integer tempus condimentum.</td>
-														<td>19.99</td>
-													</tr>
-													<tr>
-														<td>Item Five</td>
-														<td>Ante turpis integer aliquet porttitor.</td>
-														<td>29.99</td>
-													</tr>
-												</tbody>
-												<tfoot>
-													<tr>
-														<td colspan="2"></td>
-														<td>100.00</td>
-													</tr>
-												</tfoot>
-											</table>
+										<div class="metric-card">
+											<span class="metric-number">18 → 8</span>
+											<span class="metric-label">Training weeks reduced</span>
 										</div>
-									</section>
-
-									<section>
-										<h4>Buttons</h4>
-										<ul class="actions">
-											<li><a href="#" class="button primary">Primary</a></li>
-											<li><a href="#" class="button">Default</a></li>
-											<li><a href="#" class="button alt">Alternate</a></li>
-										</ul>
-										<ul class="actions">
-											<li><a href="#" class="button primary large">Large</a></li>
-											<li><a href="#" class="button">Default</a></li>
-											<li><a href="#" class="button alt small">Small</a></li>
-										</ul>
-										<ul class="actions fit">
-											<li><a href="#" class="button primary fit">Fit</a></li>
-											<li><a href="#" class="button fit">Fit</a></li>
-											<li><a href="#" class="button alt fit">Fit</a></li>
-										</ul>
-										<ul class="actions fit small">
-											<li><a href="#" class="button primary fit small">Fit + Small</a></li>
-											<li><a href="#" class="button fit small">Fit + Small</a></li>
-											<li><a href="#" class="button alt fit small">Fit + Small</a></li>
-										</ul>
-										<ul class="actions">
-											<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
-											<li><a href="#" class="button icon solid fa-download">Icon</a></li>
-											<li><a href="#" class="button alt icon solid fa-check">Icon</a></li>
-										</ul>
-										<ul class="actions">
-											<li><span class="button primary disabled">Primary</span></li>
-											<li><span class="button disabled">Default</span></li>
-											<li><span class="button alt disabled">Alternate</span></li>
-										</ul>
-									</section>
-
-									<section>
-										<h4>Form</h4>
-										<form method="post" action="#">
-											<div class="row gtr-uniform">
-												<div class="col-6 col-12-xsmall">
-													<input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
-												</div>
-												<div class="col-6 col-12-xsmall">
-													<input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
-												</div>
-												<div class="col-12">
-													<select name="demo-category" id="demo-category">
-														<option value="">- Category -</option>
-														<option value="1">Manufacturing</option>
-														<option value="1">Shipping</option>
-														<option value="1">Administration</option>
-														<option value="1">Human Resources</option>
-													</select>
-												</div>
-												<div class="col-4 col-12-medium">
-													<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-													<label for="demo-priority-low">Low Priority</label>
-												</div>
-												<div class="col-4 col-12-medium">
-													<input type="radio" id="demo-priority-normal" name="demo-priority">
-													<label for="demo-priority-normal">Normal Priority</label>
-												</div>
-												<div class="col-4 col-12-medium">
-													<input type="radio" id="demo-priority-high" name="demo-priority">
-													<label for="demo-priority-high">High Priority</label>
-												</div>
-												<div class="col-6 col-12-medium">
-													<input type="checkbox" id="demo-copy" name="demo-copy">
-													<label for="demo-copy">Email me a copy of this message</label>
-												</div>
-												<div class="col-6 col-12-medium">
-													<input type="checkbox" id="demo-human" name="demo-human" checked>
-													<label for="demo-human">I am a human and not a robot</label>
-												</div>
-												<div class="col-12">
-													<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-												</div>
-												<div class="col-12">
-													<ul class="actions">
-														<li><input type="submit" value="Send Message" /></li>
-														<li><input type="reset" value="Reset" class="alt" /></li>
-													</ul>
-												</div>
-											</div>
-										</form>
-									</section>
-
-									<section>
-										<h4>Image</h4>
-										<h5>Fit</h5>
-										<span class="image fit"><img src="images/banner.jpg" alt="" /></span>
-										<div class="box alt">
-											<div class="row gtr-50 gtr-uniform">
-												<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-												<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-												<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-												<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-												<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-												<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-												<div class="col-4"><span class="image fit"><img src="images/pic03.jpg" alt="" /></span></div>
-												<div class="col-4"><span class="image fit"><img src="images/pic01.jpg" alt="" /></span></div>
-												<div class="col-4"><span class="image fit"><img src="images/pic02.jpg" alt="" /></span></div>
-											</div>
+										<div class="metric-card">
+											<span class="metric-number">5.8x → 8.8x</span>
+											<span class="metric-label">Inventory turns improved</span>
 										</div>
-										<h5>Left &amp; Right</h5>
-										<p><span class="image left"><img src="images/avatar.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-										<p><span class="image right"><img src="images/avatar.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-									</section>
-
+										<div class="metric-card">
+											<span class="metric-number">$100K/mo</span>
+											<span class="metric-label">Profit run-rate stabilized</span>
+										</div>
+										<div class="metric-card">
+											<span class="metric-number">$2M</span>
+											<span class="metric-label">Vendor fraud exposure addressed</span>
+										</div>
+									</div>
 								</div>
 							</section>
-						-->
+
+						<!-- Practical Automation -->
+							<section id="two">
+								<div class="container">
+									<h3>Practical Automation</h3>
+									<p class="section-intro">
+										Used automation to reduce manual review burden and improve control discipline in a high-volume invoice environment. This was built to solve an operating problem, not to showcase tooling.
+									</p>
+
+									<div class="three-col">
+										<div class="info-card">
+											<span class="label">Problem</span>
+											<h4>Manual review bottleneck</h4>
+											<p>$2M in vendor fraud exposure and thousands of invoices requiring manual review created a control gap and slowed the team down.</p>
+										</div>
+
+										<div class="info-card">
+											<span class="label">Build</span>
+											<h4>n8n workflow</h4>
+											<p>Built an n8n workflow to extract PDF data, categorize vendor risk, fast-track standard vendors, and route anomalies for review.</p>
+										</div>
+
+										<div class="info-card">
+											<span class="label">Impact</span>
+											<h4>Operational control</h4>
+											<p>Reduced manual workload, improved early compliance screening, and created a more repeatable decision path for invoice handling.</p>
+										</div>
+									</div>
+
+									<div class="panel" style="margin-top: 1.5rem;">
+										<h4>Swap-in block</h4>
+										<p style="margin-bottom: 0;">
+											This section is designed to be replaced per company with a Loom, workflow image, architecture sketch, or text-only example depending on what is most relevant.
+										</p>
+									</div>
+								</div>
+							</section>
+
+						<!-- Selected Cases -->
+							<section id="three">
+								<div class="container">
+									<h3>Selected Cases</h3>
+									<p class="section-intro">
+										Three examples of stepping into unstable conditions, focusing on the real constraint, and restoring operating control.
+									</p>
+
+									<div class="case-grid">
+										<div class="case-card">
+											<h4>Distressed Plant Turnaround | Minnesota</h4>
+											<p class="case-subtitle">$25M manufacturing site | Interim GM assignment</p>
+
+											<span class="label">Context</span>
+											<p>Distressed manufacturing plant with legacy equipment, labor attrition, and paper-based scheduling.</p>
+
+											<span class="label">Action</span>
+											<p>Relocated as Interim GM. Moved onto the shop floor. Applied Lean fundamentals, rebuilt training, and transitioned planning into ERP/MRP.</p>
+
+											<span class="label">Outcome</span>
+											<p class="case-outcome">Training time reduced from 18 to 8 weeks. Inventory turns improved from 5.8x to 8.8x. Stabilized site to roughly $100K/month profit run-rate.</p>
+										</div>
+
+										<div class="case-card">
+											<h4>Saving the Integration | ArcOne</h4>
+											<p class="case-subtitle">$8M assembly acquisition | ERP cutover and supply continuity</p>
+
+											<span class="label">Context</span>
+											<p>Founder exited on Day 1. Thousands of SKUs had no BOM data. Corporate pushed a 500-item checklist that was disconnected from the actual risk.</p>
+
+											<span class="label">Action</span>
+											<p>Dropped the checklist. Focused on ERP cutover, supply continuity, and talent retention. Led manual rebuild of product structures to protect the transition.</p>
+
+											<span class="label">Outcome</span>
+											<p class="case-outcome">Protected the ERP cutover, avoided shipping disruption, and hit integration targets three months early.</p>
+										</div>
+
+										<div class="case-card">
+											<h4>Regulatory Discipline | NIOSH Helmet</h4>
+											<p class="case-subtitle">COVID demand spike | Life-safety certification risk</p>
+
+											<span class="label">Context</span>
+											<p>Demand surged for an acquired welding helmet, but the product lacked required NIOSH life-safety certification and the supply chain was fragile.</p>
+
+											<span class="label">Action</span>
+											<p>Stopped the commercial launch despite pressure to ship. Stabilized the certification path and supply chain before resuming.</p>
+
+											<span class="label">Outcome</span>
+											<p class="case-outcome">Avoided major liability and recall exposure, protected the brand, and enabled compliant market re-entry.</p>
+										</div>
+									</div>
+								</div>
+							</section>
+
+						<!-- Operating System -->
+							<section id="four">
+								<div class="container">
+									<h3>Operating System</h3>
+									<p class="section-intro">
+										Post-close situations become manageable when the priorities are sequenced correctly. The mistake is trying to optimize before the operation is stable.
+									</p>
+
+									<div class="system-grid">
+										<div class="priority-card">
+											<span class="label">1</span>
+											<h4>Quality &amp; Regulatory Risk</h4>
+											<p>Stop shipments if compliance is compromised. Brand damage and liability outrank speed.</p>
+										</div>
+
+										<div class="priority-card">
+											<span class="label">2</span>
+											<h4>Supply Continuity</h4>
+											<p>Secure fragile vendors and critical inputs before delivery failures compound the problem.</p>
+										</div>
+
+										<div class="priority-card">
+											<span class="label">3</span>
+											<h4>Data &amp; Systems Accuracy</h4>
+											<p>Clean BOMs, stabilize ERP logic, and remove bad operating data before scaling decisions from it.</p>
+										</div>
+
+										<div class="priority-card">
+											<span class="label">4</span>
+											<h4>Lean Execution</h4>
+											<p>Use direct observation, standard work, training discipline, and visual control to restore consistency on the floor.</p>
+										</div>
+
+										<div class="priority-card">
+											<span class="label">5</span>
+											<h4>Cost Optimization</h4>
+											<p>Only after the operation is stable. Otherwise savings efforts usually create new failure points.</p>
+										</div>
+									</div>
+
+									<p class="note">Sequence matters: stabilize, standardize, then optimize.</p>
+								</div>
+							</section>
+
+						<!-- Contact -->
+							<section id="five">
+								<div class="container">
+									<div class="contact-grid">
+										<div class="contact-card">
+											<h3>Contact</h3>
+											<p>
+												If useful, I’m happy to walk through any of the examples above in more detail and tailor the page to the operating problems most relevant to the role.
+											</p>
+										</div>
+
+										<div class="contact-card contact-links">
+											<h4>Links</h4>
+											<a href="mailto:your@email.com" class="button primary">Email</a>
+											<a href="#" class="button">LinkedIn</a>
+											<a href="#" class="button">Resume</a>
+										</div>
+									</div>
+								</div>
+							</section>
 
 					</div>
 
@@ -413,7 +484,7 @@
 					<section id="footer">
 						<div class="container">
 							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; Abi Menon</li><li>Design base: HTML5 UP</li>
 							</ul>
 						</div>
 					</section>
