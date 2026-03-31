@@ -134,8 +134,9 @@ body {
 /* Align the right "Operator Snapshot" panel with the headline area. */
 .hero-grid > .panel {
 	margin-top: 2.02rem; /* eyebrow line-height + eyebrow margin-bottom */
-	/* Make the title start align so gutter spacing matches the left column. */
-	padding-left: 0;
+	/* Increase internal gutter for readability. */
+	padding-left: 1.8rem; /* ~29px */
+	padding-right: 1.8rem; /* ~29px */
 }
 
 .metrics-grid {
@@ -398,7 +399,8 @@ button {
 	/* Reset header box offsets on single-column layout. */
 	.hero-grid > .panel {
 		margin-top: 0;
-		padding-left: 1.4rem;
+		padding-left: 1.8rem;
+		padding-right: 1.8rem;
 	}
 }
 </style>
