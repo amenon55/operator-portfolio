@@ -139,6 +139,12 @@ body {
 	padding-right: 1.8rem; /* ~29px */
 }
 
+.snapshot-section-separator {
+	border-top: 1px solid var(--line);
+	/* Keep it visually "attached" to the header text. */
+	margin: 0.4rem 0 0.15rem 0;
+}
+
 .metrics-grid {
 	display: flex;
 	flex-wrap: nowrap; /* Keep all 5 cards on the same row */
@@ -459,6 +465,7 @@ button {
 										</div>
 <div class="panel">
 	<h4>Operator Snapshot</h4>
+	<div class="snapshot-section-separator" aria-hidden="true"></div>
 	<ul class="snapshot-list">
 		<li><strong>15+ years</strong> experience</li>
 		<li><strong>Lean 6 Sigma Black Belt</strong> (In Progress)</li>
