@@ -131,6 +131,13 @@ body {
 	align-items: start;
 }
 
+/* Align the right "Operator Snapshot" panel with the headline area. */
+.hero-grid > .panel {
+	margin-top: 2.02rem; /* eyebrow line-height + eyebrow margin-bottom */
+	/* Make the title start align so gutter spacing matches the left column. */
+	padding-left: 0;
+}
+
 .metrics-grid {
 	display: flex;
 	flex-wrap: nowrap; /* Keep all 5 cards on the same row */
@@ -386,6 +393,12 @@ button {
 	.three-col,
 	.contact-grid {
 		grid-template-columns: 1fr;
+	}
+
+	/* Reset header box offsets on single-column layout. */
+	.hero-grid > .panel {
+		margin-top: 0;
+		padding-left: 1.4rem;
 	}
 }
 </style>
