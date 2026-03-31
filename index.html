@@ -206,28 +206,30 @@ body {
 	padding: 1.5rem;
 }
 
-/* Practical Automation standardized 3-column template (structure-only). */
+/* Practical Automation + Selected Cases: one grid column = label + divider + body (reads correctly on mobile). */
 .automation-template {
 	padding: 1.5rem; /* ~24px */
 }
 
-.automation-template-head,
-.automation-template-body {
+.case-template-columns {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1.5rem;
 	align-items: start;
 }
 
-.automation-template-divider {
-	grid-column: 1 / -1;
+.case-template-column .label {
+	display: block;
+	margin-bottom: 0.35rem;
+}
+
+.case-template-column .case-template-divider {
 	border-top: 1px solid var(--line);
 	margin: 0.75rem 0;
 }
 
-.automation-template-body h4 {
-	/* Keep font styling intact; only normalize vertical rhythm. */
-	min-height: 2.4em; /* Enough for up to ~2 lines, aligns paragraphs across columns */
+.automation-template .case-template-column h4 {
+	min-height: 2.4em;
 	margin-bottom: 0.55rem;
 }
 
@@ -238,37 +240,13 @@ body {
 	padding: 1.5rem; /* ~24px */
 }
 
-.case-template-head,
-.case-template-body {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 1.5rem;
-	align-items: start;
-}
-
-.case-template-divider {
-	grid-column: 1 / -1;
-	border-top: 1px solid var(--line);
-	margin: 0.75rem 0;
-}
-
 @media screen and (max-width: 980px) {
-	.automation-template-head,
-	.automation-template-body {
+	.case-template-columns {
 		grid-template-columns: 1fr;
 	}
 
-	.automation-template-divider {
-		margin: 0.9rem 0;
-	}
-
-	.case-template-head,
-	.case-template-body {
-		grid-template-columns: 1fr;
-	}
-
-	.case-template-divider {
-		margin: 0.9rem 0;
+	.case-template-column .case-template-divider {
+		margin: 0.65rem 0 0.85rem 0;
 	}
 }
 
@@ -695,24 +673,22 @@ button:hover {
 									</p>
 
 									<div class="panel automation-template">
-										<div class="automation-template-head">
-											<span class="label">The Constraint</span>
-											<span class="label">The Fix</span>
-											<span class="label">The Value</span>
-										</div>
-										<div class="automation-template-divider" aria-hidden="true"></div>
-										<div class="automation-template-body">
-											<div>
+										<div class="case-template-columns">
+											<div class="case-template-column">
+												<span class="label">The Constraint</span>
+												<div class="case-template-divider" aria-hidden="true"></div>
 												<h4>Manual review bottleneck</h4>
 												<p>$2M in vendor fraud exposure and thousands of invoices requiring manual review created a control gap and slowed the team down.</p>
 											</div>
-
-											<div>
+											<div class="case-template-column">
+												<span class="label">The Fix</span>
+												<div class="case-template-divider" aria-hidden="true"></div>
 												<h4>n8n/Cursor workflow</h4>
 												<p>Built an n8n/Cursor workflow to extract PDF data, categorize vendor risk, fast-track standard vendors, and route anomalies for review.</p>
 											</div>
-
-											<div>
+											<div class="case-template-column">
+												<span class="label">The Value</span>
+												<div class="case-template-divider" aria-hidden="true"></div>
 												<h4>Operational control</h4>
 												<p>Reduced manual workload, improved early compliance screening, and created a more repeatable decision path for invoice handling.</p>
 											</div>
@@ -734,22 +710,22 @@ button:hover {
 											<h4>Asset Portfolio Recovery | $25M P&amp;L</h4>
 											<p class="case-subtitle">Merger stabilization &amp; operational overhaul</p>
 
-											<div class="case-template-head">
-												<span class="label">The Constraint</span>
-												<span class="label">The Fix</span>
-												<span class="label">The Value</span>
-											</div>
-											<div class="case-template-divider" aria-hidden="true"></div>
-											<div class="case-template-body">
-												<div>
+											<div class="case-template-columns">
+												<div class="case-template-column">
+													<span class="label">The Constraint</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p><strong>Unstable Merger:</strong> Foundation plagued by 10% annual customer churn and toxic performers. Site leads were drowning in <strong>3,000+ annual site reviews</strong>, leading to administrative burnout and &quot;paper-based&quot; gridlock.</p>
 													<p><strong>Systemic Bottleneck:</strong> Manual documentation of thousands of high-stakes meetings was the primary driver of staff attrition and client friction.</p>
 												</div>
-												<div>
+												<div class="case-template-column">
+													<span class="label">The Fix</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p><strong>Talent Overhaul:</strong> Purged toxic leads within 90 days. Restructured pay and aligned high-performers to the most profitable assets in the portfolio.</p>
 													<p><strong>Practical Automation:</strong> Built an &quot;Automation Pod&quot; to convert field audio into automated minutes/reports, returning thousands of hours to the field.</p>
 												</div>
-												<div>
+												<div class="case-template-column">
+													<span class="label">The Value</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p class="case-outcome"><strong>2x EBITDA Expansion</strong> within 12 months.</p>
 													<p class="case-outcome"><strong>Record Retention:</strong> Drastic improvement in Customer Retention and a significant jump in <strong>Net Promoter Score (NPS)</strong>.</p>
 												</div>
@@ -760,20 +736,20 @@ button:hover {
 											<h4>Industrial Turnaround | $25M Manufacturing Site</h4>
 											<p class="case-subtitle">Post-acquisition recovery &amp; stabilization</p>
 
-											<div class="case-template-head">
-												<span class="label">The Constraint</span>
-												<span class="label">The Fix</span>
-												<span class="label">The Value</span>
-											</div>
-											<div class="case-template-divider" aria-hidden="true"></div>
-											<div class="case-template-body">
-												<div>
+											<div class="case-template-columns">
+												<div class="case-template-column">
+													<span class="label">The Constraint</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p><strong>Total Chaos:</strong> Inherited a site with zero ownership, WWII-era gear, and a <strong>1-year backlog</strong>. High labor turnover due to &quot;VHS-tape&quot; training and paper-based scheduling. No working fire extinguishers on Day 1.</p>
 												</div>
-												<div>
+												<div class="case-template-column">
+													<span class="label">The Fix</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p><strong>Emergency Stabilization:</strong> Fixed safety gear and quality standards for aerospace. Swapped batch processing for <strong>one-piece flow</strong>. Moved training to iPads and scheduling to <strong>ERP</strong>. Fired toxic leads and found new steel suppliers.</p>
 												</div>
-												<div>
+												<div class="case-template-column">
+													<span class="label">The Value</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p class="case-outcome"><strong>12 Months to 6 Weeks:</strong> Slashed lead times by 90%. <strong>$500K in SG&amp;A Savings.</strong> Stabilized the site to a <strong>$100K/month profit run-rate.</strong></p>
 												</div>
 											</div>
@@ -783,20 +759,20 @@ button:hover {
 											<h4>Saving the Integration | Covid </h4>
 											<p class="case-subtitle">$8M assembly acquisition | ERP cutover and supply continuity</p>
 
-											<div class="case-template-head">
-												<span class="label">The Constraint</span>
-												<span class="label">The Fix</span>
-												<span class="label">The Value</span>
-											</div>
-											<div class="case-template-divider" aria-hidden="true"></div>
-											<div class="case-template-body">
-												<div>
+											<div class="case-template-columns">
+												<div class="case-template-column">
+													<span class="label">The Constraint</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p>Founder exited on Day 1. Thousands of SKUs had no BOM data. Corporate pushed a 500-item checklist that was disconnected from the actual risk.</p>
 												</div>
-												<div>
+												<div class="case-template-column">
+													<span class="label">The Fix</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p>Dropped the checklist. Focused on ERP cutover, supply continuity, and talent retention. Led manual rebuild of product structures to protect the transition.</p>
 												</div>
-												<div>
+												<div class="case-template-column">
+													<span class="label">The Value</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p class="case-outcome">Protected the ERP cutover, avoided shipping disruption, and hit integration targets three months early.</p>
 												</div>
 											</div>
@@ -806,20 +782,20 @@ button:hover {
 											<h4>Regulatory Discipline | NIOSH Helmet</h4>
 											<p class="case-subtitle">COVID demand spike | Life-safety certification risk</p>
 
-											<div class="case-template-head">
-												<span class="label">The Constraint</span>
-												<span class="label">The Fix</span>
-												<span class="label">The Value</span>
-											</div>
-											<div class="case-template-divider" aria-hidden="true"></div>
-											<div class="case-template-body">
-												<div>
+											<div class="case-template-columns">
+												<div class="case-template-column">
+													<span class="label">The Constraint</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p>Demand surged for an acquired welding helmet, but the product lacked required NIOSH life-safety certification and the supply chain was fragile.</p>
 												</div>
-												<div>
+												<div class="case-template-column">
+													<span class="label">The Fix</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p>Stopped the commercial launch despite pressure to ship. Stabilized the certification path and supply chain before resuming.</p>
 												</div>
-												<div>
+												<div class="case-template-column">
+													<span class="label">The Value</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
 													<p class="case-outcome">Avoided major liability and recall exposure, protected the brand, and enabled compliant market re-entry.</p>
 												</div>
 											</div>
