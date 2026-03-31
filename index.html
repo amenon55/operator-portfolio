@@ -217,6 +217,27 @@ body {
 	margin-bottom: 0.55rem;
 }
 
+/* Selected Cases standardized 3-column template (structure-only). */
+.case-template-card {
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	padding: 1.5rem; /* ~24px */
+}
+
+.case-template-head,
+.case-template-body {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1.5rem;
+	align-items: start;
+}
+
+.case-template-divider {
+	grid-column: 1 / -1;
+	border-top: 1px solid var(--line);
+	margin: 0.75rem 0;
+}
+
 @media screen and (max-width: 980px) {
 	.automation-template-head,
 	.automation-template-body {
@@ -224,6 +245,15 @@ body {
 	}
 
 	.automation-template-divider {
+		margin: 0.9rem 0;
+	}
+
+	.case-template-head,
+	.case-template-body {
+		grid-template-columns: 1fr;
+	}
+
+	.case-template-divider {
 		margin: 0.9rem 0;
 	}
 }
@@ -603,46 +633,73 @@ button {
 									</p>
 
 									<div class="case-grid">
-										<div class="case-card">
+										<div class="case-card case-template-card">
 											<h4>Distressed Plant Turnaround | Minnesota</h4>
 											<p class="case-subtitle">$25M manufacturing site | Interim GM assignment</p>
 
-											<span class="label">Context</span>
-											<p>Distressed manufacturing plant with legacy equipment, labor attrition, and paper-based scheduling.</p>
-
-											<span class="label">Action</span>
-											<p>Relocated as Interim GM. Moved onto the shop floor. Applied Lean fundamentals, rebuilt training, and transitioned planning into ERP/MRP.</p>
-
-											<span class="label">Outcome</span>
-											<p class="case-outcome">Training time reduced from 18 to 8 weeks. Inventory turns improved from 5.8x to 8.8x. Stabilized site to roughly $100K/month profit run-rate.</p>
+											<div class="case-template-head">
+												<span class="label">The Constraint</span>
+												<span class="label">The Fix</span>
+												<span class="label">The Value</span>
+											</div>
+											<div class="case-template-divider" aria-hidden="true"></div>
+											<div class="case-template-body">
+												<div>
+													<p>Distressed manufacturing plant with legacy equipment, labor attrition, and paper-based scheduling.</p>
+												</div>
+												<div>
+													<p>Relocated as Interim GM. Moved onto the shop floor. Applied Lean fundamentals, rebuilt training, and transitioned planning into ERP/MRP.</p>
+												</div>
+												<div>
+													<p class="case-outcome">Training time reduced from 18 to 8 weeks. Inventory turns improved from 5.8x to 8.8x. Stabilized site to roughly $100K/month profit run-rate.</p>
+												</div>
+											</div>
 										</div>
 
-										<div class="case-card">
+										<div class="case-card case-template-card">
 											<h4>Saving the Integration | Covid </h4>
 											<p class="case-subtitle">$8M assembly acquisition | ERP cutover and supply continuity</p>
 
-											<span class="label">Context</span>
-											<p>Founder exited on Day 1. Thousands of SKUs had no BOM data. Corporate pushed a 500-item checklist that was disconnected from the actual risk.</p>
-
-											<span class="label">Action</span>
-											<p>Dropped the checklist. Focused on ERP cutover, supply continuity, and talent retention. Led manual rebuild of product structures to protect the transition.</p>
-
-											<span class="label">Outcome</span>
-											<p class="case-outcome">Protected the ERP cutover, avoided shipping disruption, and hit integration targets three months early.</p>
+											<div class="case-template-head">
+												<span class="label">The Constraint</span>
+												<span class="label">The Fix</span>
+												<span class="label">The Value</span>
+											</div>
+											<div class="case-template-divider" aria-hidden="true"></div>
+											<div class="case-template-body">
+												<div>
+													<p>Founder exited on Day 1. Thousands of SKUs had no BOM data. Corporate pushed a 500-item checklist that was disconnected from the actual risk.</p>
+												</div>
+												<div>
+													<p>Dropped the checklist. Focused on ERP cutover, supply continuity, and talent retention. Led manual rebuild of product structures to protect the transition.</p>
+												</div>
+												<div>
+													<p class="case-outcome">Protected the ERP cutover, avoided shipping disruption, and hit integration targets three months early.</p>
+												</div>
+											</div>
 										</div>
 
-										<div class="case-card">
+										<div class="case-card case-template-card">
 											<h4>Regulatory Discipline | NIOSH Helmet</h4>
 											<p class="case-subtitle">COVID demand spike | Life-safety certification risk</p>
 
-											<span class="label">Context</span>
-											<p>Demand surged for an acquired welding helmet, but the product lacked required NIOSH life-safety certification and the supply chain was fragile.</p>
-
-											<span class="label">Action</span>
-											<p>Stopped the commercial launch despite pressure to ship. Stabilized the certification path and supply chain before resuming.</p>
-
-											<span class="label">Outcome</span>
-											<p class="case-outcome">Avoided major liability and recall exposure, protected the brand, and enabled compliant market re-entry.</p>
+											<div class="case-template-head">
+												<span class="label">The Constraint</span>
+												<span class="label">The Fix</span>
+												<span class="label">The Value</span>
+											</div>
+											<div class="case-template-divider" aria-hidden="true"></div>
+											<div class="case-template-body">
+												<div>
+													<p>Demand surged for an acquired welding helmet, but the product lacked required NIOSH life-safety certification and the supply chain was fragile.</p>
+												</div>
+												<div>
+													<p>Stopped the commercial launch despite pressure to ship. Stabilized the certification path and supply chain before resuming.</p>
+												</div>
+												<div>
+													<p class="case-outcome">Avoided major liability and recall exposure, protected the brand, and enabled compliant market re-entry.</p>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
