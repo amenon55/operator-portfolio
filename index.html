@@ -412,6 +412,43 @@ button {
 	color: white !important;
 }
 
+/* High-end tactile hover (industrial press). */
+.panel,
+.metric-card,
+.info-card,
+.case-card,
+.priority-card,
+.contact-card,
+.button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	position: relative;
+	transition: transform 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
+	will-change: transform;
+}
+
+.panel:hover,
+.metric-card:hover,
+.info-card:hover,
+.case-card:hover,
+.priority-card:hover,
+.contact-card:hover,
+.button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover {
+	transform: translate(-4px, -4px);
+	box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.1);
+}
+
+/* Internal text reaction: active title accent on hover. */
+.case-card:hover h4 {
+	color: var(--accent);
+}
+
 .note {
 	font-family: 'Inter', sans-serif;
 	font-size: 0.92rem;
