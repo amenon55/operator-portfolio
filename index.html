@@ -63,6 +63,20 @@ body {
 	color: var(--ink);
 }
 
+/* Avoid horizontal scroll from long words, transforms, or flex min-content */
+#main {
+	min-width: 0;
+	overflow-x: hidden;
+}
+
+.panel,
+.case-card,
+.case-template-card,
+.automation-template {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
 #header {
 	background: #2b2b2b !important;
 }
@@ -269,9 +283,25 @@ body {
 	justify-content: flex-start; /* Keep all metric numbers aligned */
 }
 
-@media (max-width: 900px) {
+/* metrics-grid is flex (not CSS grid); wrap once the sidebar becomes an overlay */
+@media screen and (max-width: 1024px) {
 	.metrics-grid {
-		flex-wrap: wrap; /* Allow wrap on smaller screens */
+		flex-wrap: wrap;
+		justify-content: center;
+		row-gap: 0.75rem;
+	}
+
+	.metric-card {
+		flex: 1 1 calc(50% - 0.5rem);
+		min-width: min(100%, 9.5rem);
+		max-width: 100%;
+		box-sizing: border-box;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.metric-card {
+		flex: 1 1 100%;
 	}
 }
 
@@ -525,7 +555,6 @@ button:hover {
 	}
 
 	.hero-grid,
-	.metrics-grid,
 	.three-col,
 	.contact-grid {
 		grid-template-columns: 1fr;
@@ -536,6 +565,23 @@ button:hover {
 		margin-top: 0;
 		padding-left: 1.8rem;
 		padding-right: 1.8rem;
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.hero-title {
+		font-size: 2rem;
+	}
+
+	.hero-actions {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.hero-actions .button {
+		width: 100%;
+		text-align: center;
+		box-sizing: border-box;
 	}
 }
 </style>
