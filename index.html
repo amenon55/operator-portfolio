@@ -202,12 +202,19 @@ body {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1.5rem;
+	align-items: start;
 }
 
 .automation-template-divider {
 	grid-column: 1 / -1;
 	border-top: 1px solid var(--line);
 	margin: 0.75rem 0;
+}
+
+.automation-template-body h4 {
+	/* Keep font styling intact; only normalize vertical rhythm. */
+	min-height: 2.4em; /* Enough for up to ~2 lines, aligns paragraphs across columns */
+	margin-bottom: 0.55rem;
 }
 
 @media screen and (max-width: 980px) {
@@ -560,26 +567,23 @@ button {
 
 									<div class="panel automation-template">
 										<div class="automation-template-head">
-											<span class="label">The Context (Left)</span>
-											<span class="label">The Intervention (Center)</span>
-											<span class="label">The Value Capture (Right)</span>
+											<span class="label">The Context</span>
+											<span class="label">The Intervention</span>
+											<span class="label">The Value Capture</span>
 										</div>
 										<div class="automation-template-divider" aria-hidden="true"></div>
 										<div class="automation-template-body">
 											<div>
-												<span class="label">Problem</span>
 												<h4>Manual review bottleneck</h4>
 												<p>$2M in vendor fraud exposure and thousands of invoices requiring manual review created a control gap and slowed the team down.</p>
 											</div>
 
 											<div>
-												<span class="label">Build</span>
-												<h4>n8n workflow</h4>
-												<p>Built an n8n workflow to extract PDF data, categorize vendor risk, fast-track standard vendors, and route anomalies for review.</p>
+												<h4>n8n/Cursor workflow</h4>
+												<p>Built an n8n/Cursor workflow to extract PDF data, categorize vendor risk, fast-track standard vendors, and route anomalies for review.</p>
 											</div>
 
 											<div>
-												<span class="label">Impact</span>
 												<h4>Operational control</h4>
 												<p>Reduced manual workload, improved early compliance screening, and created a more repeatable decision path for invoice handling.</p>
 											</div>
