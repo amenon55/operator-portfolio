@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>asdlalaAbi Menon | Operator Brief</title>
+		<title>Abi Menon | Operator Brief</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -132,7 +132,8 @@ body {
 }
 
 .metrics-grid {
-	grid-template-columns: repeat(5, 1fr);
+	display: flex;
+	flex-wrap: wrap; /* Keep responsive on smaller screens */
 	gap: 1rem;
 	margin-top: 2rem;
 }
@@ -167,6 +168,11 @@ body {
 .metric-card {
 	text-align: center;
 	padding: 1.35rem 0.9rem 1.15rem 0.9rem;
+	flex: 1 1 0; /* Equal card widths within the flex container */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .metric-number {
