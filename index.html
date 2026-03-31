@@ -145,6 +145,13 @@ body {
 	margin: 0.4rem 0 0.15rem 0;
 }
 
+.snapshot-status {
+	display: block; /* Forces stacked line under the bold title */
+	font-size: 0.88em; /* Slightly smaller than main */
+	font-style: italic;
+	color: var(--muted);
+}
+
 .metrics-grid {
 	display: flex;
 	flex-wrap: nowrap; /* Keep all 5 cards on the same row */
@@ -468,7 +475,11 @@ button {
 	<div class="snapshot-section-separator" aria-hidden="true"></div>
 	<ul class="snapshot-list">
 		<li><strong>15+ years</strong> experience</li>
-		<li><strong>Lean 6 Sigma Black Belt</strong> (In Progress)</li>
+		<li>
+			<strong>Lean 6 Sigma Black Belt</strong>
+			<br />
+			<span class="snapshot-status">In Progress</span>
+		</li>
 		<li>
 			<strong>Purdue Engineer</strong><br />
 			
