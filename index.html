@@ -192,6 +192,35 @@ body {
 	padding: 1.5rem;
 }
 
+/* Practical Automation standardized 3-column template (structure-only). */
+.automation-template {
+	padding: 1.5rem; /* ~24px */
+}
+
+.automation-template-head,
+.automation-template-body {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1.5rem;
+}
+
+.automation-template-divider {
+	grid-column: 1 / -1;
+	border-top: 1px solid var(--line);
+	margin: 0.75rem 0;
+}
+
+@media screen and (max-width: 980px) {
+	.automation-template-head,
+	.automation-template-body {
+		grid-template-columns: 1fr;
+	}
+
+	.automation-template-divider {
+		margin: 0.9rem 0;
+	}
+}
+
 .metric-card {
 	text-align: center;
 	padding: 1.35rem 0.9rem 1.15rem 0.9rem;
@@ -439,7 +468,7 @@ button {
 				<nav id="nav">
 					<ul>
 						<li><a href="#one" class="active">Overview</a></li>
-						<li><a href="#two">AI/Automation</a></li>
+						<li><a href="#two">AI/Automation Built</a></li>
 						<li><a href="#three">Projects</a></li>
 									<li><a href="#five">Contact</a></li>
 					</ul>
@@ -524,28 +553,36 @@ button {
 						<!-- Practical Automation -->
 							<section id="two">
 								<div class="container">
-									<h3>Practical Automation</h3>
+									<h3>AI/Automation Built</h3>
 									<p class="section-intro">
 										Used automation to reduce manual review burden and improve control discipline in a high-volume invoice environment. This was built to solve an operating problem, not to showcase tooling.
 									</p>
 
-									<div class="three-col">
-										<div class="info-card">
-											<span class="label">Problem</span>
-											<h4>Manual review bottleneck</h4>
-											<p>$2M in vendor fraud exposure and thousands of invoices requiring manual review created a control gap and slowed the team down.</p>
+									<div class="panel automation-template">
+										<div class="automation-template-head">
+											<span class="label">The Context (Left)</span>
+											<span class="label">The Intervention (Center)</span>
+											<span class="label">The Value Capture (Right)</span>
 										</div>
+										<div class="automation-template-divider" aria-hidden="true"></div>
+										<div class="automation-template-body">
+											<div>
+												<span class="label">Problem</span>
+												<h4>Manual review bottleneck</h4>
+												<p>$2M in vendor fraud exposure and thousands of invoices requiring manual review created a control gap and slowed the team down.</p>
+											</div>
 
-										<div class="info-card">
-											<span class="label">Build</span>
-											<h4>n8n workflow</h4>
-											<p>Built an n8n workflow to extract PDF data, categorize vendor risk, fast-track standard vendors, and route anomalies for review.</p>
-										</div>
+											<div>
+												<span class="label">Build</span>
+												<h4>n8n workflow</h4>
+												<p>Built an n8n workflow to extract PDF data, categorize vendor risk, fast-track standard vendors, and route anomalies for review.</p>
+											</div>
 
-										<div class="info-card">
-											<span class="label">Impact</span>
-											<h4>Operational control</h4>
-											<p>Reduced manual workload, improved early compliance screening, and created a more repeatable decision path for invoice handling.</p>
+											<div>
+												<span class="label">Impact</span>
+												<h4>Operational control</h4>
+												<p>Reduced manual workload, improved early compliance screening, and created a more repeatable decision path for invoice handling.</p>
+											</div>
 										</div>
 									</div>
 								</div>
