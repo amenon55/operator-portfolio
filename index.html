@@ -140,17 +140,48 @@ body {
 	gap: 1.5rem;
 }
 
+.hero-top {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.hero-copy-column {
+	min-width: 0;
+}
+
 .hero-grid {
 	grid-template-columns: 1.6fr 1fr;
 	align-items: start;
+	gap: 1.75rem;
 }
 
-/* Align the right "Operator Snapshot" panel with the headline area. */
-.hero-grid > .panel {
-	margin-top: 2.02rem; /* eyebrow line-height + eyebrow margin-bottom */
-	/* Increase internal gutter for readability. */
-	padding-left: 1.8rem; /* ~29px */
-	padding-right: 1.8rem; /* ~29px */
+/* Snapshot sits only beside the narrative (not the CTAs) so bottoms can align with the last bullet. */
+.hero-grid > .panel.hero-snapshot-panel {
+	margin-top: 0;
+	align-self: start;
+	padding: 1.1rem 1.5rem 0.95rem;
+}
+
+.hero-snapshot-panel h4 {
+	margin-bottom: 0.4rem;
+}
+
+.hero-snapshot-panel .snapshot-section-separator {
+	margin: 0.3rem 0 0.05rem 0;
+}
+
+.hero-snapshot-panel .snapshot-list {
+	font-size: 0.92rem;
+}
+
+.hero-snapshot-panel .snapshot-list li {
+	padding: 0.42rem 0;
+	line-height: 1.45;
+}
+
+.hero-snapshot-panel .snapshot-list li:first-child {
+	padding-top: 0.3rem;
 }
 
 .snapshot-section-separator {
@@ -330,18 +361,20 @@ body {
 	font-size: 3rem;
 	font-weight: 700;
 	letter-spacing: -0.03em;
-	line-height: 1.02;
-	margin-bottom: 0.35rem;
+	line-height: 1.05;
+	margin-bottom: 0.45rem;
 }
 
 .hero-subtitle {
 	font-family: 'Inter', sans-serif;
-	font-size: 0.95rem;
-	font-weight: 700;
+	font-size: 0.875rem;
+	font-weight: 600;
 	text-transform: uppercase;
-	letter-spacing: 0.12em;
+	letter-spacing: 0.1em;
+	line-height: 1.5;
 	color: var(--muted);
-	margin-bottom: 1.25rem;
+	margin-bottom: 1.2rem;
+	max-width: 36rem;
 }
 
 .hero-copy {
@@ -355,45 +388,50 @@ body {
 
 .hero-lead {
 	font-family: 'Inter', sans-serif;
-	font-size: 1.08rem;
-	font-weight: 700;
-	line-height: 1.45;
-	color: var(--ink);
-	max-width: 40rem;
-	margin: 0 0 0.65rem 0;
+	font-size: 1.0625rem;
+	font-weight: 600;
+	line-height: 1.48;
+	letter-spacing: -0.012em;
+	color: #1a1a1a;
+	max-width: 38rem;
+	margin: 0 0 0.5rem 0;
 }
 
 .hero-kicker {
 	font-family: 'Inter', sans-serif;
-	font-size: 0.98rem;
-	line-height: 1.65;
-	color: var(--muted);
-	max-width: 40rem;
-	margin: 0 0 1.15rem 0;
+	font-size: 0.9375rem;
+	font-weight: 400;
+	line-height: 1.55;
+	color: #6b7280;
+	max-width: 38rem;
+	margin: 0 0 0.95rem 0;
 }
 
 .hero-copy-intro {
 	font-family: 'Inter', sans-serif;
-	font-size: 1.02rem;
-	line-height: 1.82;
-	color: #222;
-	max-width: 40rem;
-	margin: 0 0 0.5rem 0;
+	font-size: 0.98rem;
+	font-weight: 500;
+	line-height: 1.55;
+	color: #374151;
+	max-width: 38rem;
+	margin: 0 0 0.38rem 0;
 }
 
 .hero-bullet-list {
 	font-family: 'Inter', sans-serif;
-	font-size: 1.02rem;
-	line-height: 1.72;
-	color: #222;
-	max-width: 40rem;
-	margin: 0 0 1.5rem 0;
-	padding-left: 1.35rem;
+	font-size: 0.98rem;
+	font-weight: 400;
+	line-height: 1.58;
+	color: #374151;
+	max-width: 38rem;
+	margin: 0;
+	padding-left: 1.15rem;
 	list-style: disc;
 }
 
 .hero-bullet-list li {
-	margin-bottom: 0.35rem;
+	margin-bottom: 0.28rem;
+	padding-left: 0.15rem;
 }
 
 .hero-bullet-list li:last-child {
@@ -404,7 +442,10 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.75rem;
-	margin-top: 1rem;
+}
+
+.hero-top .hero-actions {
+	margin-top: 1.35rem;
 }
 
 .section-intro {
@@ -588,11 +629,9 @@ button:hover {
 		grid-template-columns: 1fr;
 	}
 
-	/* Reset header box offsets on single-column layout. */
-	.hero-grid > .panel {
+	.hero-grid > .panel.hero-snapshot-panel {
 		margin-top: 0;
-		padding-left: 1.8rem;
-		padding-right: 1.8rem;
+		max-width: 100%;
 	}
 }
 
@@ -653,25 +692,21 @@ button:hover {
 						<!-- Overview -->
 							<section id="one">
 								<div class="container">
-									<div class="hero-grid">
-										<div>
-											<span class="eyebrow"></span>
-											<h2 class="hero-title">Abi Menon</h2>
-											<p class="hero-subtitle">M&amp;A Integration | Operations Turnarounds | Lean Execution</p>
-											<p class="hero-lead">I step into acquisitions on day one &mdash; and get the business working.</p>
-											<p class="hero-kicker">Not from a boardroom. From the floor.</p>
-											<p class="hero-copy-intro">I work inside the operation to:</p>
-											<ul class="hero-bullet-list">
-												<li>find what&rsquo;s holding the business back</li>
-												<li>stabilize teams under pressure</li>
-												<li>turn workarounds into systems</li>
-											</ul>
-											<div class="hero-actions">
-												<a href="#three" class="button primary">Past Projects</a>
-												<a href="#two" class="button">AI/Automation Built</a>
+									<div class="hero-top">
+										<div class="hero-grid">
+											<div class="hero-copy-column">
+												<h2 class="hero-title">Abi Menon</h2>
+												<p class="hero-subtitle">M&amp;A Integration | Operations Turnarounds | Lean Execution</p>
+												<p class="hero-lead">I step into acquisitions on day one &mdash; and get the business working.</p>
+												<p class="hero-kicker">Not from a boardroom. From the floor.</p>
+												<p class="hero-copy-intro">I work inside the operation to:</p>
+												<ul class="hero-bullet-list">
+													<li>find what&rsquo;s holding the business back</li>
+													<li>stabilize teams under pressure</li>
+													<li>turn workarounds into systems</li>
+												</ul>
 											</div>
-										</div>
-<div class="panel">
+<div class="panel hero-snapshot-panel">
 	<h4>Operator Snapshot</h4>
 	<div class="snapshot-section-separator" aria-hidden="true"></div>
 	<ul class="snapshot-list">
@@ -692,6 +727,11 @@ button:hover {
 
 	</ul>
 </div>
+										</div>
+										<div class="hero-actions">
+											<a href="#three" class="button primary">Past Projects</a>
+											<a href="#two" class="button">AI/Automation Built</a>
+										</div>
 									</div>
 
 									<div class="metrics-grid">
