@@ -172,41 +172,53 @@ body {
 	box-sizing: border-box;
 }
 
-/* Same 1.6 / 1 grid as hero: metrics left, CTAs right (aligned under snapshot). */
+/* Full width of hero area (same left/right as narrative + snapshot): metrics row, then CTAs — edges align with $50M … 15+ */
 .hero-metrics-row {
-	display: grid;
-	grid-template-columns: 1.6fr 1fr;
-	gap: 1.75rem;
-	align-items: end;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 1rem;
 	margin-top: 2rem;
+	width: 100%;
 }
 
 .hero-metrics-row .metrics-grid {
 	margin-top: 0;
-	flex: 1 1 auto;
-	min-width: 0;
+	width: 100%;
 }
 
 .hero-metrics-row .hero-actions {
-	margin-top: 0;
-	justify-self: stretch;
 	display: flex;
 	flex-direction: column;
 	gap: 0.65rem;
 	width: 100%;
+	margin-top: 0;
 }
 
 .hero-metrics-row .hero-actions .button {
 	width: 100%;
 	box-sizing: border-box;
 	text-align: center;
-	padding-left: 1.35em;
-	padding-right: 1.35em;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
 	min-height: 2.85em;
 	line-height: 1.2;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+/* Overview metrics: more horizontal padding + slightly relaxed label so copy doesn’t feel cramped */
+#one .hero-metrics-row .metric-card {
+	padding: 1.35rem 0.85rem 1.2rem;
+}
+
+#one .hero-metrics-row .metric-label {
+	letter-spacing: 0.09em;
+	line-height: 1.5;
+	max-width: 100%;
+	padding: 0 0.15rem;
+	box-sizing: border-box;
 }
 
 .hero-snapshot-panel h4 {
@@ -682,10 +694,6 @@ button:hover {
 		max-width: 100%;
 	}
 
-	.hero-metrics-row {
-		grid-template-columns: 1fr;
-		gap: 1.25rem;
-	}
 }
 
 @media screen and (max-width: 1100px) {
