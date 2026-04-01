@@ -304,6 +304,16 @@ body {
 	margin-bottom: 0.55rem;
 }
 
+.automation-template .case-template-column p {
+	max-width: 52ch;
+	margin-bottom: 0.75rem;
+	color: var(--ink);
+}
+
+.automation-template .case-template-column p:last-child {
+	margin-bottom: 0;
+}
+
 .case-template-columns {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -322,11 +332,6 @@ body {
 .case-template-column .case-template-divider {
 	border-top: 1px solid var(--line);
 	margin: 0 0 0.95rem 0;
-}
-
-.automation-template .case-template-column h4 {
-	min-height: 2.4em;
-	margin-bottom: 0.55rem;
 }
 
 /* Past Projects case cards: 3-column template (structure-only). */
@@ -841,19 +846,16 @@ button:hover {
 											<div class="case-template-column">
 												<span class="label">The Constraint</span>
 												<div class="case-template-divider" aria-hidden="true"></div>
-												<h4>Manual review bottleneck</h4>
 												<p>$2M in vendor fraud exposure and thousands of invoices requiring manual review created a control gap and slowed the team down.</p>
 											</div>
 											<div class="case-template-column">
 												<span class="label">The Fix</span>
 												<div class="case-template-divider" aria-hidden="true"></div>
-												<h4>n8n/Cursor workflow</h4>
 												<p>Built an n8n/Cursor workflow to extract PDF data, categorize vendor risk, fast-track standard vendors, and route anomalies for review.</p>
 											</div>
 											<div class="case-template-column">
 												<span class="label">The Value</span>
 												<div class="case-template-divider" aria-hidden="true"></div>
-												<h4>Operational control</h4>
 												<p>Reduced manual workload, improved early compliance screening, and created a more repeatable decision path for invoice handling.</p>
 											</div>
 										</div>
