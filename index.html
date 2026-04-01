@@ -336,6 +336,36 @@ body {
 	padding: 1.5rem; /* ~24px */
 }
 
+.case-template-column .case-detail-list {
+	margin: 0.35rem 0 0.65rem 0;
+	padding-left: 1.15rem;
+	list-style: disc;
+	color: var(--ink);
+}
+
+.case-template-column .case-detail-list:last-child {
+	margin-bottom: 0;
+}
+
+.case-template-column .case-detail-list li {
+	margin-bottom: 0.28rem;
+	line-height: 1.55;
+}
+
+.case-template-column p + .case-detail-list {
+	margin-top: 0.3rem;
+}
+
+.case-subhead {
+	margin: 0.75rem 0 0.3rem 0;
+	font-size: inherit;
+	line-height: 1.35;
+}
+
+.case-template-column .case-subhead:first-of-type {
+	margin-top: 0;
+}
+
 @media screen and (max-width: 980px) {
 	.case-template-columns {
 		grid-template-columns: 1fr;
@@ -905,19 +935,41 @@ button:hover {
 
 											<div class="case-template-columns">
 												<div class="case-template-column">
-													<span class="label">The Constraint</span>
+													<span class="label">The Situation</span>
 													<div class="case-template-divider" aria-hidden="true"></div>
-													<p><strong>Total Chaos:</strong> Inherited a site with zero ownership, WWII-era gear, and a <strong>1-year backlog</strong>. High labor turnover due to &quot;VHS-tape&quot; training and paper-based scheduling. No working fire extinguishers on Day 1.</p>
+													<p>Inherited a site with no clear ownership, outdated equipment, and a one-year backlog.</p>
+													<p>Operations were strained:</p>
+													<ul class="case-detail-list">
+														<li>high labor turnover driven by long training cycles</li>
+														<li>paper-based scheduling and inconsistent processes</li>
+														<li>safety gaps identified immediately on arrival</li>
+													</ul>
 												</div>
 												<div class="case-template-column">
-													<span class="label">The Fix</span>
+													<span class="label">What I Did</span>
 													<div class="case-template-divider" aria-hidden="true"></div>
-													<p><strong>Emergency Stabilization:</strong> Fixed safety gear and quality standards for aerospace. Swapped batch processing for <strong>one-piece flow</strong>. Moved training to iPads and scheduling to <strong>ERP</strong>. Fired toxic leads and found new steel suppliers.</p>
+													<p class="case-subhead"><strong>Stabilized the basics</strong></p>
+													<ul class="case-detail-list">
+														<li>addressed safety and quality gaps</li>
+														<li>introduced structured training and clearer accountability</li>
+													</ul>
+													<p class="case-subhead"><strong>Simplified operations</strong></p>
+													<ul class="case-detail-list">
+														<li>shifted from batch to one-piece flow</li>
+														<li>moved scheduling and training onto digital systems (ERP + iPads)</li>
+													</ul>
+													<p class="case-subhead"><strong>Strengthened the foundation</strong></p>
+													<ul class="case-detail-list">
+														<li>diversified critical suppliers</li>
+														<li>aligned labor structure and reduced attrition</li>
+													</ul>
 												</div>
 												<div class="case-template-column">
-													<span class="label">The Value</span>
+													<span class="label">The Result</span>
 													<div class="case-template-divider" aria-hidden="true"></div>
-													<p class="case-outcome"><strong>12 Months to 6 Weeks:</strong> Slashed lead times by 90%. <strong>$500K in SG&amp;A Savings.</strong> Stabilized the site to a <strong>$100K/month profit run-rate.</strong></p>
+													<p class="case-outcome">Lead times reduced from 12 months to 6 weeks</p>
+													<p class="case-outcome">~$500K in cost savings</p>
+													<p class="case-outcome">Site stabilized to ~$100K/month profit run-rate</p>
 												</div>
 											</div>
 										</div>
