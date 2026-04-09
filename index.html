@@ -701,6 +701,58 @@ button:hover {
 	justify-content: flex-start;
 }
 
+.personal-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+	margin-top: 1.25rem;
+}
+
+.personal-item {
+	margin: 0;
+}
+
+.personal-photo {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 4 / 5;
+	overflow: hidden;
+	border-radius: 10px;
+	border: 1px solid var(--line);
+	background: #f3f4f6;
+}
+
+.personal-photo img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.personal-caption {
+	margin-top: 0.6rem;
+	font-family: 'Inter', sans-serif;
+	font-size: 0.78rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--muted);
+}
+
+@media screen and (max-width: 980px) {
+	.personal-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.personal-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
 .image.avatar img {
 	border-radius: 50%;
 	filter: grayscale(100%);
@@ -775,7 +827,8 @@ button:hover {
 						<li><a href="#one" class="active">Overview</a></li>
 						<li><a href="#two">AI/Automation Built</a></li>
 						<li><a href="#three">Past Projects</a></li>
-									<li><a href="#five">Contact</a></li>
+						<li><a href="#four">Personal</a></li>
+						<li><a href="#five">Contact</a></li>
 					</ul>
 				</nav>
 				<footer>
@@ -1029,6 +1082,43 @@ button:hover {
 
 										
 						
+						<!-- Personal -->
+							<section id="four">
+								<div class="container">
+									<h3>Personal</h3>
+									<p class="section-intro">
+										A few interests outside of work.
+									</p>
+
+									<div class="personal-grid">
+										<figure class="personal-item">
+											<div class="personal-photo">
+												<img src="images/personal-1.jpg" alt="Personal interest photo placeholder" loading="lazy" decoding="async" />
+											</div>
+											<figcaption class="personal-caption">Interest one</figcaption>
+										</figure>
+										<figure class="personal-item">
+											<div class="personal-photo">
+												<img src="images/personal-2.jpg" alt="Personal interest photo placeholder" loading="lazy" decoding="async" />
+											</div>
+											<figcaption class="personal-caption">Interest two</figcaption>
+										</figure>
+										<figure class="personal-item">
+											<div class="personal-photo">
+												<img src="images/personal-3.jpg" alt="Personal interest photo placeholder" loading="lazy" decoding="async" />
+											</div>
+											<figcaption class="personal-caption">Interest three</figcaption>
+										</figure>
+										<figure class="personal-item">
+											<div class="personal-photo">
+												<img src="images/personal-1.jpg" alt="Personal interest photo placeholder" loading="lazy" decoding="async" />
+											</div>
+											<figcaption class="personal-caption">Interest four</figcaption>
+										</figure>
+									</div>
+								</div>
+							</section>
+
 						<!-- Contact -->
 							<section id="five">
 								<div class="container">
