@@ -703,13 +703,16 @@ button:hover {
 
 .personal-grid {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 1rem;
+	width: 100%;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1.25rem;
 	margin-top: 1.25rem;
+	align-items: start;
 }
 
 .personal-item {
 	margin: 0;
+	min-width: 0;
 }
 
 .personal-photo {
@@ -718,7 +721,7 @@ button:hover {
 	aspect-ratio: 4 / 5;
 	overflow: hidden;
 	border-radius: 10px;
-	border: 1px solid var(--line);
+	border: 2px solid #e5e7eb;
 	background: #f3f4f6;
 }
 
@@ -729,6 +732,7 @@ button:hover {
 	height: 100%;
 	object-fit: cover;
 	display: block;
+	filter: grayscale(100%);
 }
 
 .personal-caption {
@@ -741,15 +745,10 @@ button:hover {
 	color: var(--muted);
 }
 
-@media screen and (max-width: 980px) {
-	.personal-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 720px) {
 	.personal-grid {
 		grid-template-columns: 1fr;
+		gap: 1.1rem;
 	}
 }
 
@@ -1108,12 +1107,6 @@ button:hover {
 												<img src="images/yoga.png" alt="Yoga" loading="lazy" decoding="async" />
 											</div>
 											<figcaption class="personal-caption">Yoga</figcaption>
-										</figure>
-										<figure class="personal-item">
-											<div class="personal-photo">
-												<img src="images/personal-1.jpg" alt="Personal interest photo placeholder" loading="lazy" decoding="async" />
-											</div>
-											<figcaption class="personal-caption">Interest four</figcaption>
 										</figure>
 									</div>
 								</div>
