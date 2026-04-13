@@ -844,17 +844,20 @@ button:hover {
 	position: relative;
 	aspect-ratio: 16 / 10;
 	border-radius: 10px;
-	border: 1px dashed var(--line);
+	border: 1px solid var(--line);
 	background: var(--panel);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: var(--muted);
-	font-family: 'Inter', sans-serif;
-	font-size: 0.72rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.1em;
+	overflow: hidden;
+	margin: 0;
+}
+
+.playbook-thumb img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top center;
+	display: block;
 }
 
 .playbook-request-heading {
@@ -1239,10 +1242,16 @@ button:hover {
 									<p class="playbook-body">
 										I am frequently asked how I manage the chaos of a founder exit or a messy ERP cutover. The answer is a repeatable, battle-tested playbook.
 									</p>
-									<div class="playbook-thumbs" aria-label="Playbook preview placeholders">
-										<div class="playbook-thumb"><span>Thumbnail</span></div>
-										<div class="playbook-thumb"><span>Thumbnail</span></div>
-										<div class="playbook-thumb"><span>Thumbnail</span></div>
+									<div class="playbook-thumbs">
+										<figure class="playbook-thumb">
+											<img src="images/playbook-checklist.png" alt="Integration checklist: workstreams, tasks, priorities, owners, and status by workstream." loading="lazy" decoding="async" />
+										</figure>
+										<figure class="playbook-thumb">
+											<img src="images/playbook-timeline.png" alt="Phased timeline with weeks and months, task bars, and constraint mapping milestones." loading="lazy" decoding="async" />
+										</figure>
+										<figure class="playbook-thumb">
+											<img src="images/playbook-ebitda-dashboard.png" alt="EBITDA synergy waterfall and variance table: cost synergies, revenue synergies, and integration costs." loading="lazy" decoding="async" />
+										</figure>
 									</div>
 									<p class="playbook-request-heading">Request the Full playbook</p>
 									<form class="playbook-request-form" id="playbook-request-form" action="#" method="post" novalidate>
