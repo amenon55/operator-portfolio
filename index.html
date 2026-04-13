@@ -817,6 +817,93 @@ button:hover {
 	display: block;
 }
 
+.playbook-tagline {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin: 0.35rem 0 1rem;
+}
+
+.playbook-body {
+	margin-bottom: 1.35rem;
+	max-width: 62ch;
+}
+
+.playbook-thumbs {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1rem;
+	margin: 0 0 1.75rem;
+	width: 100%;
+}
+
+.playbook-thumb {
+	position: relative;
+	aspect-ratio: 16 / 10;
+	border-radius: 10px;
+	border: 1px dashed var(--line);
+	background: var(--panel);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--muted);
+	font-family: 'Inter', sans-serif;
+	font-size: 0.72rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+
+.playbook-request-heading {
+	font-family: 'Playfair Display', serif;
+	font-size: 1.2rem;
+	font-weight: 700;
+	margin: 0 0 0.85rem;
+	color: var(--ink);
+}
+
+.playbook-request-form {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	gap: 0.75rem;
+	max-width: 520px;
+}
+
+.playbook-request-form input[type="email"] {
+	flex: 1;
+	min-width: 200px;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: #fff;
+	font-family: 'Inter', sans-serif;
+	font-size: 0.95rem;
+	color: var(--ink);
+	box-sizing: border-box;
+}
+
+.playbook-request-form input[type="email"]::placeholder {
+	color: #9ca3af;
+}
+
+.playbook-request-form .button {
+	margin: 0;
+	align-self: stretch;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@media screen and (max-width: 720px) {
+	.playbook-thumbs {
+		grid-template-columns: 1fr;
+	}
+}
+
 .image.avatar img {
 	border-radius: 50%;
 	filter: grayscale(100%);
@@ -891,9 +978,10 @@ button:hover {
 						<li><a href="#one" class="active">Overview</a></li>
 						<li><a href="#two">AI/Automation Built</a></li>
 						<li><a href="#three">Past Projects</a></li>
-						<li><a href="#four">Media</a></li>
-						<li><a href="#five">Personal</a></li>
-						<li><a href="#six">Contact</a></li>
+						<li><a href="#four">Integration Playbook</a></li>
+						<li><a href="#five">Media</a></li>
+						<li><a href="#six">Personal</a></li>
+						<li><a href="#seven">Contact</a></li>
 					</ul>
 				</nav>
 				<footer>
@@ -1042,8 +1130,8 @@ button:hover {
 												<div class="case-template-column">
 													<span class="label">The Fix</span>
 													<div class="case-template-divider" aria-hidden="true"></div>
-													<p>Rebuilt leadership structure within 90 days.
-														<p><Aligned compensation with performance and focused teams on high-value assets.</p>
+													<p>Rebuilt leadership structure within 90 days.</p>
+													<p>Aligned compensation with performance and focused teams on high-value assets.</p>
 													<p>Developed a simple AI tool to convert field audio into structured reports.</p>
 												</div>
 												<div class="case-template-column">
@@ -1143,12 +1231,29 @@ button:hover {
 								</div>
 							</section>
 
-						
-
-										
-						
-						<!-- Media -->
+						<!-- The M&A Integration Playbook -->
 							<section id="four">
+								<div class="container">
+									<h3>The M&amp;A Integration Playbook</h3>
+									<p class="playbook-tagline">Stabilize. Systematize. Scale.</p>
+									<p class="playbook-body">
+										I am frequently asked how I manage the chaos of a founder exit or a messy ERP cutover. The answer is a repeatable, battle-tested playbook.
+									</p>
+									<div class="playbook-thumbs" aria-label="Playbook preview placeholders">
+										<div class="playbook-thumb"><span>Thumbnail</span></div>
+										<div class="playbook-thumb"><span>Thumbnail</span></div>
+										<div class="playbook-thumb"><span>Thumbnail</span></div>
+									</div>
+									<p class="playbook-request-heading">Request the Full playbook</p>
+									<form class="playbook-request-form" id="playbook-request-form" action="#" method="post" novalidate>
+										<input type="email" id="playbook-email" name="email" autocomplete="email" inputmode="email" placeholder="you@company.com" aria-label="Email for playbook access" required />
+										<button type="submit" class="button primary">Request Access</button>
+									</form>
+								</div>
+							</section>
+
+						<!-- Media -->
+							<section id="five">
 								<div class="container">
 									<h3>Media</h3>
 									<p class="section-intro">
@@ -1161,7 +1266,7 @@ button:hover {
 							</section>
 
 						<!-- Personal -->
-							<section id="five">
+							<section id="six">
 								<div class="container">
 									<h3>Personal</h3>
 									<p class="section-intro">
@@ -1192,7 +1297,7 @@ button:hover {
 							</section>
 
 						<!-- Contact -->
-							<section id="six">
+							<section id="seven">
 								<div class="container">
 									<div class="contact-card">
 										<h3>Contact</h3>
@@ -1225,6 +1330,24 @@ button:hover {
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				(function () {
+					var form = document.getElementById('playbook-request-form');
+					if (!form) return;
+					form.addEventListener('submit', function (e) {
+						e.preventDefault();
+						var el = document.getElementById('playbook-email');
+						var email = el && el.value ? el.value.trim() : '';
+						if (!email) {
+							if (el) el.focus();
+							return;
+						}
+						var subj = encodeURIComponent('M&A Integration Playbook — access request');
+						var body = encodeURIComponent('Please send the full M&A Integration Playbook to: ' + email);
+						window.location.href = 'mailto:amenon55@email.com?subject=' + subj + '&body=' + body;
+					});
+				})();
+			</script>
 
 	</body>
 </html>
