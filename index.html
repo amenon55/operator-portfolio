@@ -400,6 +400,70 @@ body {
 	gap: 1.5rem;
 }
 
+.technical-proof {
+	padding: 1.5rem;
+}
+
+.technical-proof .tp-headline {
+	margin-bottom: 0.55rem;
+}
+
+.technical-proof .tp-message {
+	max-width: 68ch;
+	margin-bottom: 1.25rem;
+	color: var(--ink);
+}
+
+.tp-grid {
+	display: grid;
+	grid-template-columns: 1.35fr 1fr;
+	gap: 1.25rem;
+	align-items: start;
+}
+
+.tp-diagram {
+	width: 100%;
+	border-radius: 12px;
+	border: 1px solid var(--line);
+	background: radial-gradient(1200px 500px at 25% 15%, rgba(56, 189, 248, 0.08), transparent 60%),
+		radial-gradient(900px 450px at 75% 55%, rgba(167, 139, 250, 0.08), transparent 60%),
+		#0b0f1a;
+	overflow: hidden;
+}
+
+.tp-diagram svg {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.tp-meta {
+	display: grid;
+	gap: 0.9rem;
+}
+
+.tp-meta .tp-block h5 {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.78rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	margin: 0 0 0.35rem;
+	color: var(--muted);
+}
+
+.tp-meta .tp-block p {
+	margin: 0;
+	max-width: 46ch;
+	color: var(--ink);
+}
+
+@media screen and (max-width: 980px) {
+	.tp-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
 .case-template-columns {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -1149,6 +1213,95 @@ button:hover {
 													<p>Zero manual admin to “reset” tomorrow.</p>
 													<p>Fewer dropped items and better follow-through.</p>
 													<p>A consistent operating cadence that survives busy weeks.</p>
+												</div>
+											</div>
+										</div>
+										
+										<div class="panel technical-proof">
+											<h4 class="tp-headline">Autonomous Life-Stack: Project TODO.</h4>
+											<p class="tp-message">I built a vertically-organized autonomous pipeline that reorganizes my Battlefield every midnight. No manual copying. No data leakage. Just a fresh start every morning</p>
+											
+											<div class="tp-grid">
+												<div class="tp-diagram" role="img" aria-label="System architecture flow: Local Today.txt to n8n Workflow to Groq/Llama-3-70B to New Dated File.">
+													<svg viewBox="0 0 980 320" xmlns="http://www.w3.org/2000/svg">
+														<defs>
+															<linearGradient id="neonLine" x1="0" y1="0" x2="1" y2="0">
+																<stop offset="0%" stop-color="#22d3ee"/>
+																<stop offset="50%" stop-color="#a78bfa"/>
+																<stop offset="100%" stop-color="#34d399"/>
+															</linearGradient>
+															<filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+																<feGaussianBlur stdDeviation="4" result="blur"/>
+																<feColorMatrix in="blur" type="matrix"
+																	values="1 0 0 0 0
+																			0 1 0 0 0
+																			0 0 1 0 0
+																			0 0 0 0.9 0" result="colored"/>
+																<feMerge>
+																	<feMergeNode in="colored"/>
+																	<feMergeNode in="SourceGraphic"/>
+																</feMerge>
+															</filter>
+															<filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+																<feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.35"/>
+															</filter>
+														</defs>
+														
+														<rect x="0" y="0" width="980" height="320" fill="transparent"/>
+														
+														<!-- Nodes -->
+														<g filter="url(#softShadow)">
+															<rect x="36" y="88" rx="14" ry="14" width="210" height="144" fill="#0f172a" stroke="rgba(255,255,255,0.12)"/>
+															<rect x="280" y="88" rx="14" ry="14" width="210" height="144" fill="#0f172a" stroke="rgba(255,255,255,0.12)"/>
+															<rect x="524" y="88" rx="14" ry="14" width="210" height="144" fill="#0f172a" stroke="rgba(255,255,255,0.12)"/>
+															<rect x="768" y="88" rx="14" ry="14" width="176" height="144" fill="#0f172a" stroke="rgba(255,255,255,0.12)"/>
+														</g>
+														
+														<!-- Titles -->
+														<g font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" fill="#e5e7eb">
+															<text x="56" y="128" font-size="18" font-weight="700">Local Today.txt</text>
+															<text x="300" y="128" font-size="18" font-weight="700">n8n Workflow</text>
+															<text x="544" y="128" font-size="18" font-weight="700">Groq / Llama-3-70B</text>
+															<text x="788" y="128" font-size="18" font-weight="700">New Dated File</text>
+															
+															<text x="56" y="160" font-size="13" fill="rgba(229,231,235,0.78)">Parse incomplete tasks</text>
+															<text x="300" y="160" font-size="13" fill="rgba(229,231,235,0.78)">Schedule + orchestration</text>
+															<text x="544" y="160" font-size="13" fill="rgba(229,231,235,0.78)">Categorize + reorganize</text>
+															<text x="788" y="160" font-size="13" fill="rgba(229,231,235,0.78)">Tomorrow.txt</text>
+														</g>
+														
+														<!-- Neon connections -->
+														<g fill="none" stroke="url(#neonLine)" stroke-width="4" filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round">
+															<path d="M 246 160 C 262 160, 266 160, 280 160"/>
+															<path d="M 490 160 C 506 160, 510 160, 524 160"/>
+															<path d="M 734 160 C 750 160, 754 160, 768 160"/>
+														</g>
+														
+														<!-- Arrow heads -->
+														<g fill="#34d399" filter="url(#glow)">
+															<path d="M 274 160 l -10 -7 v 14 z"/>
+															<path d="M 518 160 l -10 -7 v 14 z"/>
+															<path d="M 762 160 l -10 -7 v 14 z"/>
+														</g>
+														
+														<!-- Accent dots -->
+														<g filter="url(#glow)">
+															<circle cx="246" cy="160" r="4.5" fill="#22d3ee"/>
+															<circle cx="490" cy="160" r="4.5" fill="#a78bfa"/>
+															<circle cx="734" cy="160" r="4.5" fill="#34d399"/>
+														</g>
+													</svg>
+												</div>
+												
+												<div class="tp-meta">
+													<div class="tp-block">
+														<h5>The Logic</h5>
+														<p>Zero-Friction Text Pipeline.</p>
+													</div>
+													<div class="tp-block">
+														<h5>The Stack</h5>
+														<p>n8n + Cursor + Groq + SQLite.</p>
+													</div>
 												</div>
 											</div>
 										</div>
