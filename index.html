@@ -437,6 +437,21 @@ body {
 	height: auto;
 }
 
+.tp-workflow-shot {
+	margin-top: 1.25rem;
+	width: 100%;
+	border-radius: 12px;
+	border: 1px solid var(--line);
+	overflow: hidden;
+	background: #fff;
+}
+
+.tp-workflow-shot img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
 .tp-meta {
 	display: grid;
 	gap: 0.9rem;
@@ -1179,7 +1194,7 @@ button:hover {
 										
 										<div class="panel technical-proof">
 											<h4 class="tp-headline">Autonomous Life-Stack: Project TODO.</h4>
-											<p class="tp-message">I built a vertically-organized autonomous pipeline that reorganizes my Battlefield every midnight. No manual copying. No data leakage. Just a fresh start every morning</p>
+											<p class="tp-message">I built a vertically-organized autonomous pipeline that reorganizes my Todo list every midnight. No manual copying. No data leakage. Just a fresh start every morning</p>
 											
 											<div class="tp-grid">
 												<div class="tp-diagram" role="img" aria-label="System architecture flow: Local Today.txt to n8n Workflow to Groq/Llama-3-70B to New Dated File.">
@@ -1218,16 +1233,16 @@ button:hover {
 														</g>
 														
 														<!-- Titles -->
-														<g font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" fill="#e5e7eb">
-															<text x="56" y="128" font-size="18" font-weight="700">Local Today.txt</text>
-															<text x="300" y="128" font-size="18" font-weight="700">n8n Workflow</text>
-															<text x="544" y="128" font-size="18" font-weight="700">Groq / Llama-3-70B</text>
-															<text x="788" y="128" font-size="18" font-weight="700">New Dated File</text>
+														<g font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" fill="#ffffff">
+															<text x="56" y="126" font-size="22" font-weight="800">Local Today.txt</text>
+															<text x="300" y="126" font-size="22" font-weight="800">n8n Workflow</text>
+															<text x="544" y="126" font-size="22" font-weight="800">Groq / Llama-3-70B</text>
+															<text x="788" y="126" font-size="22" font-weight="800">New Dated File</text>
 															
-															<text x="56" y="160" font-size="13" fill="rgba(229,231,235,0.78)">Parse incomplete tasks</text>
-															<text x="300" y="160" font-size="13" fill="rgba(229,231,235,0.78)">Schedule + orchestration</text>
-															<text x="544" y="160" font-size="13" fill="rgba(229,231,235,0.78)">Categorize + reorganize</text>
-															<text x="788" y="160" font-size="13" fill="rgba(229,231,235,0.78)">Tomorrow.txt</text>
+															<text x="56" y="165" font-size="15" fill="rgba(255,255,255,0.85)">Parse incomplete tasks</text>
+															<text x="300" y="165" font-size="15" fill="rgba(255,255,255,0.85)">Schedule + orchestration</text>
+															<text x="544" y="165" font-size="15" fill="rgba(255,255,255,0.85)">Categorize + reorganize</text>
+															<text x="788" y="165" font-size="15" fill="rgba(255,255,255,0.85)">Tomorrow.txt</text>
 														</g>
 														
 														<!-- Neon connections -->
@@ -1264,6 +1279,10 @@ button:hover {
 													</div>
 												</div>
 											</div>
+											
+											<figure class="tp-workflow-shot">
+												<img src="images/automation-n8n-workflow.png" alt="n8n workflow: reads today’s file, categorizes tasks, prepares tomorrow’s note, and writes the updated output." loading="lazy" decoding="async" />
+											</figure>
 										</div>
 									</div>
 								</div>
