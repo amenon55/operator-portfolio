@@ -395,6 +395,11 @@ body {
 	margin-bottom: 0;
 }
 
+.automation-stack {
+	display: grid;
+	gap: 1.5rem;
+}
+
 .case-template-columns {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -1080,69 +1085,71 @@ button:hover {
 										Built automation to reduce manual review burden. 
 									</p>
 
-									<div class="panel automation-template">
-										<h4>n8n &amp; Cursor | API &amp; OCR</h4>
-										<p class="case-subtitle">Scalable vendor screening &amp; bottleneck removal</p>
-										<div class="case-template-columns">
-											<div class="case-template-column">
-												<span class="label">The Constraint</span>
-												<div class="case-template-divider" aria-hidden="true"></div>
-												<p>~$2M in vendor fraud exposure.</p>
-												<p>Thousands of invoices required manual review, slowing the team down.</p>
-											</div>
-											<div class="case-template-column">
-												<span class="label">The Fix</span>
-												<div class="case-template-divider" aria-hidden="true"></div>
-												<p>Extract key data from incoming invoices using OCR</p>
-												<p>Categorize vendor risk and flag anomalies</p>
-												<p>Auto-clear low-risk invoices and route exceptions for review using AI</p>
-											</div>
-											<div class="case-template-column">
-												<span class="label">The Value</span>
-												<div class="case-template-divider" aria-hidden="true"></div>
-												<p>Significant reduction in manual workload</p>
-												<p>Earlier detection of high-risk vendors</p>
-												<p>More consistent and repeatable invoice review process</p>
+									<div class="automation-stack">
+										<div class="panel automation-template">
+											<h4>n8n &amp; Cursor | API &amp; OCR</h4>
+											<p class="case-subtitle">Scalable vendor screening &amp; bottleneck removal</p>
+											<div class="case-template-columns">
+												<div class="case-template-column">
+													<span class="label">The Constraint</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
+													<p>~$2M in vendor fraud exposure.</p>
+													<p>Thousands of invoices required manual review, slowing the team down.</p>
+												</div>
+												<div class="case-template-column">
+													<span class="label">The Fix</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
+													<p>Extract key data from incoming invoices using OCR</p>
+													<p>Categorize vendor risk and flag anomalies</p>
+													<p>Auto-clear low-risk invoices and route exceptions for review using AI</p>
+												</div>
+												<div class="case-template-column">
+													<span class="label">The Value</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
+													<p>Significant reduction in manual workload</p>
+													<p>Earlier detection of high-risk vendors</p>
+													<p>More consistent and repeatable invoice review process</p>
+												</div>
 											</div>
 										</div>
-									</div>
-									
-									<div class="panel automation-template">
-										<h4>n8n | Daily Task Rollover</h4>
-										<p class="case-subtitle">Auto-move incomplete “Today” items to “Tomorrow”</p>
 										
-										<div class="playbook-thumbs" aria-label="Automation screenshots">
-											<figure class="playbook-thumb">
-												<img src="images/automation-tasks-todaytomorrow-list.png" alt="Checklist showing completed and incomplete items under TODAY and TOMORROW." loading="lazy" decoding="async" />
-											</figure>
-											<figure class="playbook-thumb">
-												<img src="images/automation-n8n-workflow.png" alt="n8n workflow that reads today’s file, categorizes tasks, prepares tomorrow’s note, and writes the output." loading="lazy" decoding="async" />
-											</figure>
-											<figure class="playbook-thumb">
-												<img src="images/automation-tasks-today-view.png" alt="Daily note with TODAY tasks and an empty TOMORROW section ready for rollover." loading="lazy" decoding="async" />
-											</figure>
-										</div>
-										
-										<div class="case-template-columns">
-											<div class="case-template-column">
-												<span class="label">The Constraint</span>
-												<div class="case-template-divider" aria-hidden="true"></div>
-												<p>Daily task lists drift: unfinished items get buried, duplicated, or forgotten.</p>
-												<p>Rolling “Today” into “Tomorrow” becomes a manual, error-prone routine.</p>
+										<div class="panel automation-template">
+											<h4>n8n | Daily Task Rollover</h4>
+											<p class="case-subtitle">Auto-move incomplete “Today” items to “Tomorrow”</p>
+											
+											<div class="playbook-thumbs" aria-label="Automation screenshots">
+												<figure class="playbook-thumb">
+													<img src="images/automation-tasks-todaytomorrow-list.png" alt="Checklist showing completed and incomplete items under TODAY and TOMORROW." loading="lazy" decoding="async" />
+												</figure>
+												<figure class="playbook-thumb">
+													<img src="images/automation-n8n-workflow.png" alt="n8n workflow that reads today’s file, categorizes tasks, prepares tomorrow’s note, and writes the output." loading="lazy" decoding="async" />
+												</figure>
+												<figure class="playbook-thumb">
+													<img src="images/automation-tasks-today-view.png" alt="Daily note with TODAY tasks and an empty TOMORROW section ready for rollover." loading="lazy" decoding="async" />
+												</figure>
 											</div>
-											<div class="case-template-column">
-												<span class="label">The Fix</span>
-												<div class="case-template-divider" aria-hidden="true"></div>
-												<p>Parse the daily note and identify incomplete items.</p>
-												<p>Carry forward unfinished tasks into tomorrow’s list automatically.</p>
-												<p>Generate a clean next-day file on schedule via n8n.</p>
-											</div>
-											<div class="case-template-column">
-												<span class="label">The Value</span>
-												<div class="case-template-divider" aria-hidden="true"></div>
-												<p>Zero manual admin to “reset” tomorrow.</p>
-												<p>Fewer dropped items and better follow-through.</p>
-												<p>A consistent operating cadence that survives busy weeks.</p>
+											
+											<div class="case-template-columns">
+												<div class="case-template-column">
+													<span class="label">The Constraint</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
+													<p>Daily task lists drift: unfinished items get buried, duplicated, or forgotten.</p>
+													<p>Rolling “Today” into “Tomorrow” becomes a manual, error-prone routine.</p>
+												</div>
+												<div class="case-template-column">
+													<span class="label">The Fix</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
+													<p>Parse the daily note and identify incomplete items.</p>
+													<p>Carry forward unfinished tasks into tomorrow’s list automatically.</p>
+													<p>Generate a clean next-day file on schedule via n8n.</p>
+												</div>
+												<div class="case-template-column">
+													<span class="label">The Value</span>
+													<div class="case-template-divider" aria-hidden="true"></div>
+													<p>Zero manual admin to “reset” tomorrow.</p>
+													<p>Fewer dropped items and better follow-through.</p>
+													<p>A consistent operating cadence that survives busy weeks.</p>
+												</div>
 											</div>
 										</div>
 									</div>
