@@ -879,7 +879,8 @@ button:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.personal-photo img {
+	.personal-photo img,
+	.image.avatar img {
 		transition: none;
 	}
 }
@@ -1027,6 +1028,13 @@ button:hover {
 	transform: scale(1.62);
 	transform-origin: 64% 24%;
 	box-sizing: border-box;
+	transition: transform 500ms ease;
+	will-change: transform;
+}
+
+.image.avatar:hover img {
+	transform: scale(1.782);
+	transform-origin: 64% 24%;
 }
 
 #footer .copyright {
