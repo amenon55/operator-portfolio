@@ -938,10 +938,28 @@ button:hover {
 
 .playbook-thumbs {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	grid-template-rows: auto auto;
 	gap: 1rem;
 	margin: 0 0 1.75rem;
 	width: 100%;
+	align-items: start;
+}
+
+/* Governance (left, vertical); Operations + Synergy (right, stacked wide) */
+.playbook-thumb-item:nth-child(1) {
+	grid-column: 1;
+	grid-row: 1 / span 2;
+}
+
+.playbook-thumb-item:nth-child(2) {
+	grid-column: 2 / 4;
+	grid-row: 1;
+}
+
+.playbook-thumb-item:nth-child(3) {
+	grid-column: 2 / 4;
+	grid-row: 2;
 }
 
 .playbook-thumb-item {
@@ -957,6 +975,20 @@ button:hover {
 	background: var(--panel);
 	overflow: hidden;
 	margin: 0;
+}
+
+/* Tall slot: governance snapshot */
+.playbook-thumb-item:nth-child(1) .playbook-thumb {
+	aspect-ratio: 3 / 5;
+}
+
+/* Wide slots: operations (top) and synergy (bottom) */
+.playbook-thumb-item:nth-child(2) .playbook-thumb {
+	aspect-ratio: 3.25 / 1;
+}
+
+.playbook-thumb-item:nth-child(3) .playbook-thumb {
+	aspect-ratio: 2.5 / 1;
 }
 
 .playbook-thumb img {
@@ -976,9 +1008,9 @@ button:hover {
 	height: 100%;
 	pointer-events: none;
 	display: block;
-	background: #f8fafc;
-	object-fit: cover;
-	object-position: top center;
+	background: #f1f5f9;
+	object-fit: contain;
+	object-position: center;
 }
 
 .playbook-thumb--pdf .playbook-pdf-open {
@@ -1119,6 +1151,20 @@ body.pdf-lightbox-open {
 @media screen and (max-width: 720px) {
 	.playbook-thumbs {
 		grid-template-columns: 1fr;
+		grid-template-rows: none;
+	}
+
+	.playbook-thumb-item:nth-child(1),
+	.playbook-thumb-item:nth-child(2),
+	.playbook-thumb-item:nth-child(3) {
+		grid-column: 1;
+		grid-row: auto;
+	}
+
+	.playbook-thumb-item:nth-child(1) .playbook-thumb,
+	.playbook-thumb-item:nth-child(2) .playbook-thumb,
+	.playbook-thumb-item:nth-child(3) .playbook-thumb {
+		aspect-ratio: 16 / 10;
 	}
 }
 
