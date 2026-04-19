@@ -947,10 +947,12 @@ button:hover {
 }
 
 .playbook-thumbs {
+	--playbook-gap: clamp(1rem, 2vw, 1.35rem);
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 	grid-template-rows: auto auto;
-	gap: clamp(1rem, 2vw, 1.35rem);
+	column-gap: var(--playbook-gap);
+	row-gap: calc(var(--playbook-gap) * 0.7);
 	margin: 0;
 	width: 100%;
 	align-items: stretch;
@@ -981,6 +983,7 @@ button:hover {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
+	gap: 0.6rem;
 }
 
 .playbook-thumb {
@@ -1020,16 +1023,15 @@ button:hover {
 }
 
 .playbook-thumb-caption {
-	margin-top: 0.6rem;
+	margin-top: 0;
+	flex-shrink: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 0.3rem;
 	line-height: 1.35;
-}
-
-.playbook-thumb-item:nth-child(1) .playbook-thumb-caption {
-	margin-top: auto;
+	min-height: 3.15rem;
+	box-sizing: border-box;
 }
 
 .playbook-thumb-title {
@@ -1270,10 +1272,6 @@ body.pdf-lightbox-open {
 	.playbook-thumb-item:nth-child(2) .playbook-thumb,
 	.playbook-thumb-item:nth-child(3) .playbook-thumb {
 		aspect-ratio: 16 / 10;
-	}
-
-	.playbook-thumb-item:nth-child(1) .playbook-thumb-caption {
-		margin-top: 0.6rem;
 	}
 }
 
