@@ -1047,7 +1047,28 @@ button:hover {
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.14em;
-	color: #8b9099;
+	color: #9ca3af;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+@media (hover: hover) {
+	.playbook-thumb-item:has(.playbook-thumb:hover) .playbook-thumb-hint,
+	.playbook-thumb-item:has(.playbook-pdf-open:focus-visible) .playbook-thumb-hint {
+		opacity: 1;
+	}
+}
+
+@media (hover: none) {
+	.playbook-thumb-hint {
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.playbook-thumb-hint {
+		transition: none;
+	}
 }
 
 /* Tall slot: governance snapshot */
