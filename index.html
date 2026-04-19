@@ -963,6 +963,111 @@ button:hover {
 	display: block;
 }
 
+.playbook-thumb--pdf .playbook-pdf-thumb {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	pointer-events: none;
+	display: block;
+	background: #f8fafc;
+}
+
+.playbook-thumb--pdf .playbook-pdf-open {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: inherit;
+	background: transparent;
+	cursor: zoom-in;
+}
+
+.playbook-thumb--pdf .playbook-pdf-open:focus-visible {
+	outline: 2px solid var(--accent, #2563eb);
+	outline-offset: 2px;
+}
+
+.pdf-lightbox {
+	position: fixed;
+	inset: 0;
+	z-index: 10000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: clamp(0.75rem, 3vw, 2rem);
+	box-sizing: border-box;
+}
+
+.pdf-lightbox[hidden] {
+	display: none !important;
+}
+
+.pdf-lightbox-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.88);
+	cursor: pointer;
+}
+
+.pdf-lightbox-panel {
+	position: relative;
+	z-index: 1;
+	width: min(96vw, 1200px);
+	height: min(90vh, 900px);
+	max-width: 100%;
+	background: var(--panel);
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+}
+
+.pdf-lightbox-frame {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	display: block;
+	background: #fff;
+}
+
+.pdf-lightbox-close {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	z-index: 2;
+	width: 2.5rem;
+	height: 2.5rem;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.96);
+	color: var(--ink);
+	font-size: 1.35rem;
+	line-height: 1;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.pdf-lightbox-close:hover {
+	background: #fff;
+}
+
+.pdf-lightbox-close:focus-visible {
+	outline: 2px solid var(--accent, #2563eb);
+	outline-offset: 2px;
+}
+
+body.pdf-lightbox-open {
+	overflow: hidden;
+}
+
 .playbook-request-heading {
 	font-family: 'Playfair Display', serif;
 	font-size: 1.2rem;
@@ -1467,8 +1572,15 @@ button:hover {
 										<figure class="playbook-thumb">
 											<img src="images/playbook-checklist.png" alt="Integration checklist: workstreams, tasks, priorities, owners, and status by workstream." loading="lazy" decoding="async" />
 										</figure>
-										<figure class="playbook-thumb">
-											<img src="images/playbook-timeline.png" alt="Phased timeline with weeks and months, task bars, and constraint mapping milestones." loading="lazy" decoding="async" />
+										<figure class="playbook-thumb playbook-thumb--pdf">
+											<iframe
+												class="playbook-pdf-thumb"
+												src="documents/FINAL_FIXER_7.0_Operations.pdf#view=FitH"
+												title="FINAL FIXER 7.0 Operations — preview"
+												loading="lazy"
+												referrerpolicy="no-referrer"
+											></iframe>
+											<button type="button" class="playbook-pdf-open" id="playbook-operations-pdf-open" aria-haspopup="dialog" aria-controls="playbook-operations-pdf-lightbox" aria-label="Open enlarged view of FINAL FIXER 7.0 Operations PDF"></button>
 										</figure>
 										<figure class="playbook-thumb">
 											<img src="images/playbook-ebitda-dashboard.png" alt="EBITDA synergy waterfall and variance table: cost synergies, revenue synergies, and integration costs." loading="lazy" decoding="async" />
@@ -1552,6 +1664,20 @@ button:hover {
 
 			</div>
 
+			<div id="playbook-operations-pdf-lightbox" class="pdf-lightbox" hidden role="dialog" aria-modal="true" aria-label="FINAL FIXER 7.0 Operations PDF (enlarged view)">
+				<div class="pdf-lightbox-backdrop" tabindex="-1" aria-hidden="true"></div>
+				<div class="pdf-lightbox-panel">
+					<button type="button" class="pdf-lightbox-close" id="playbook-operations-pdf-close" aria-label="Close PDF viewer">&times;</button>
+					<iframe
+						class="pdf-lightbox-frame"
+						id="playbook-operations-pdf-frame"
+						src="documents/FINAL_FIXER_7.0_Operations.pdf"
+						title="FINAL FIXER 7.0 Operations PDF"
+						referrerpolicy="no-referrer"
+					></iframe>
+				</div>
+			</div>
+
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
@@ -1575,6 +1701,48 @@ button:hover {
 						var subj = encodeURIComponent('M&A Integration Playbook — access request');
 						var body = encodeURIComponent('Please send the full M&A Integration Playbook to: ' + email);
 						window.location.href = 'mailto:amenon55@email.com?subject=' + subj + '&body=' + body;
+					});
+				})();
+			</script>
+			<script>
+				(function () {
+					var lightbox = document.getElementById('playbook-operations-pdf-lightbox');
+					var openBtn = document.getElementById('playbook-operations-pdf-open');
+					var closeBtn = document.getElementById('playbook-operations-pdf-close');
+					var backdrop = lightbox && lightbox.querySelector('.pdf-lightbox-backdrop');
+					if (!lightbox || !openBtn) return;
+
+					function openLb() {
+						lightbox.removeAttribute('hidden');
+						document.body.classList.add('pdf-lightbox-open');
+						if (closeBtn) closeBtn.focus();
+						openBtn.setAttribute('aria-expanded', 'true');
+					}
+
+					function closeLb() {
+						lightbox.setAttribute('hidden', '');
+						document.body.classList.remove('pdf-lightbox-open');
+						openBtn.setAttribute('aria-expanded', 'false');
+						openBtn.focus();
+					}
+
+					openBtn.setAttribute('aria-expanded', 'false');
+					openBtn.addEventListener('click', function (e) {
+						e.preventDefault();
+						openLb();
+					});
+					if (closeBtn) closeBtn.addEventListener('click', closeLb);
+					if (backdrop) backdrop.addEventListener('click', closeLb);
+
+					lightbox.addEventListener('click', function (e) {
+						if (e.target === lightbox) closeLb();
+					});
+
+					document.addEventListener('keydown', function (e) {
+						if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) {
+							e.preventDefault();
+							closeLb();
+						}
 					});
 				})();
 			</script>
