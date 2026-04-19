@@ -953,13 +953,15 @@ button:hover {
 	gap: clamp(1rem, 2vw, 1.35rem);
 	margin: 0;
 	width: 100%;
-	align-items: start;
+	align-items: stretch;
 }
 
 /* Governance (left, vertical); Operations + Synergy (right, stacked wide) */
 .playbook-thumb-item:nth-child(1) {
 	grid-column: 1;
 	grid-row: 1 / span 2;
+	align-self: stretch;
+	min-height: 0;
 }
 
 .playbook-thumb-item:nth-child(2) {
@@ -1017,16 +1019,34 @@ button:hover {
 }
 
 .playbook-thumb-caption {
-	margin-top: 0.75rem;
-	padding-top: 0.65rem;
-	border-top: 1px solid rgba(17, 17, 17, 0.08);
-	font-family: 'Playfair Display', serif;
-	font-size: clamp(0.88rem, 1.5vw, 0.98rem);
-	font-weight: 700;
-	letter-spacing: 0.03em;
-	color: var(--ink);
-	text-transform: none;
+	margin-top: 0.6rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.3rem;
 	line-height: 1.35;
+}
+
+.playbook-thumb-item:nth-child(1) .playbook-thumb-caption {
+	margin-top: auto;
+}
+
+.playbook-thumb-title {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.78rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--muted);
+}
+
+.playbook-thumb-hint {
+	font-family: 'Inter', sans-serif;
+	font-size: 0.65rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: #8b9099;
 }
 
 /* Tall slot: governance snapshot */
@@ -1217,6 +1237,10 @@ body.pdf-lightbox-open {
 	.playbook-thumb-item:nth-child(2) .playbook-thumb,
 	.playbook-thumb-item:nth-child(3) .playbook-thumb {
 		aspect-ratio: 16 / 10;
+	}
+
+	.playbook-thumb-item:nth-child(1) .playbook-thumb-caption {
+		margin-top: 0.6rem;
 	}
 }
 
