@@ -887,7 +887,8 @@ button:hover {
 	}
 }
 
-.personal-caption {
+.personal-caption,
+.playbook-thumb-caption {
 	margin-top: 0.6rem;
 	font-family: 'Inter', sans-serif;
 	font-size: 0.78rem;
@@ -941,6 +942,11 @@ button:hover {
 	gap: 1rem;
 	margin: 0 0 1.75rem;
 	width: 100%;
+}
+
+.playbook-thumb-item {
+	margin: 0;
+	min-width: 0;
 }
 
 .playbook-thumb {
@@ -1569,62 +1575,71 @@ body.pdf-lightbox-open {
 										I am frequently asked how I manage the chaos of a founder exit or a messy ERP cutover. The answer is a repeatable, battle-tested playbook.
 									</p>
 									<div class="playbook-thumbs">
-										<figure class="playbook-thumb playbook-thumb--pdf">
-											<iframe
-												class="playbook-pdf-thumb"
-												src="documents/STRATEGIC_ENCAPSULATION_GOVERNANCE_IMO.pdf#view=FitH"
-												title="Strategic Encapsulation Governance IMO — preview"
-												loading="lazy"
-												referrerpolicy="no-referrer"
-											></iframe>
-											<button
-												type="button"
-												class="playbook-pdf-open"
-												data-pdf-src="documents/STRATEGIC_ENCAPSULATION_GOVERNANCE_IMO.pdf"
-												data-pdf-title="Strategic Encapsulation Governance IMO"
-												data-pdf-dialog-label="Strategic Encapsulation Governance IMO PDF (enlarged view)"
-												aria-haspopup="dialog"
-												aria-controls="playbook-pdf-lightbox"
-												aria-label="Open enlarged view of Strategic Encapsulation Governance IMO PDF"
-											></button>
+										<figure class="playbook-thumb-item">
+											<div class="playbook-thumb playbook-thumb--pdf">
+												<iframe
+													class="playbook-pdf-thumb"
+													src="documents/STRATEGIC_ENCAPSULATION_GOVERNANCE_IMO.pdf#view=FitH"
+													title="Strategic Encapsulation Governance IMO — preview"
+													loading="lazy"
+													referrerpolicy="no-referrer"
+												></iframe>
+												<button
+													type="button"
+													class="playbook-pdf-open"
+													data-pdf-src="documents/STRATEGIC_ENCAPSULATION_GOVERNANCE_IMO.pdf"
+													data-pdf-title="Strategic Encapsulation Governance IMO"
+													data-pdf-dialog-label="Strategic Encapsulation Governance IMO PDF (enlarged view)"
+													aria-haspopup="dialog"
+													aria-controls="playbook-pdf-lightbox"
+													aria-label="Open enlarged view of Strategic Encapsulation Governance IMO PDF"
+												></button>
+											</div>
+											<figcaption class="playbook-thumb-caption">Governance Structure</figcaption>
 										</figure>
-										<figure class="playbook-thumb playbook-thumb--pdf">
-											<iframe
-												class="playbook-pdf-thumb"
-												src="documents/FINAL_FIXER_7.0_Operations.pdf#view=FitH"
-												title="FINAL FIXER 7.0 Operations — preview"
-												loading="lazy"
-												referrerpolicy="no-referrer"
-											></iframe>
-											<button
-												type="button"
-												class="playbook-pdf-open"
-												data-pdf-src="documents/FINAL_FIXER_7.0_Operations.pdf"
-												data-pdf-title="FINAL FIXER 7.0 Operations"
-												data-pdf-dialog-label="FINAL FIXER 7.0 Operations PDF (enlarged view)"
-												aria-haspopup="dialog"
-												aria-controls="playbook-pdf-lightbox"
-												aria-label="Open enlarged view of FINAL FIXER 7.0 Operations PDF"
-											></button>
+										<figure class="playbook-thumb-item">
+											<div class="playbook-thumb playbook-thumb--pdf">
+												<iframe
+													class="playbook-pdf-thumb"
+													src="documents/FINAL_FIXER_7.0_Operations.pdf#view=FitH"
+													title="FINAL FIXER 7.0 Operations — preview"
+													loading="lazy"
+													referrerpolicy="no-referrer"
+												></iframe>
+												<button
+													type="button"
+													class="playbook-pdf-open"
+													data-pdf-src="documents/FINAL_FIXER_7.0_Operations.pdf"
+													data-pdf-title="FINAL FIXER 7.0 Operations"
+													data-pdf-dialog-label="FINAL FIXER 7.0 Operations PDF (enlarged view)"
+													aria-haspopup="dialog"
+													aria-controls="playbook-pdf-lightbox"
+													aria-label="Open enlarged view of FINAL FIXER 7.0 Operations PDF"
+												></button>
+											</div>
+											<figcaption class="playbook-thumb-caption">Operations Checklist</figcaption>
 										</figure>
-										<figure class="playbook-thumb playbook-thumb--pdf">
-											<iframe
-												class="playbook-pdf-thumb"
-												src="documents/CLEAN_SYNERGY_ENCAPSULATION.pdf#view=FitH"
-												title="Clean Synergy Encapsulation — preview"
-												loading="lazy"
-												referrerpolicy="no-referrer"
-											></iframe>
-											<button
-												type="button"
-												class="playbook-pdf-open"
-												data-pdf-src="documents/CLEAN_SYNERGY_ENCAPSULATION.pdf"
-												data-pdf-title="Clean Synergy Encapsulation"
-												data-pdf-dialog-label="Clean Synergy Encapsulation PDF (enlarged view)"
-												aria-haspopup="dialog"
-												aria-controls="playbook-pdf-lightbox"
-												aria-label="Open enlarged view of Clean Synergy Encapsulation PDF"
-											></button>
+										<figure class="playbook-thumb-item">
+											<div class="playbook-thumb playbook-thumb--pdf">
+												<iframe
+													class="playbook-pdf-thumb"
+													src="documents/CLEAN_SYNERGY_ENCAPSULATION.pdf#view=FitH"
+													title="Clean Synergy Encapsulation — preview"
+													loading="lazy"
+													referrerpolicy="no-referrer"
+												></iframe>
+												<button
+													type="button"
+													class="playbook-pdf-open"
+													data-pdf-src="documents/CLEAN_SYNERGY_ENCAPSULATION.pdf"
+													data-pdf-title="Clean Synergy Encapsulation"
+													data-pdf-dialog-label="Clean Synergy Encapsulation PDF (enlarged view)"
+													aria-haspopup="dialog"
+													aria-controls="playbook-pdf-lightbox"
+													aria-label="Open enlarged view of Clean Synergy Encapsulation PDF"
+												></button>
+											</div>
+											<figcaption class="playbook-thumb-caption">Synergy Tracking</figcaption>
 										</figure>
 									</div>
 									<p class="playbook-request-heading">Request the Full playbook</p>
