@@ -887,8 +887,7 @@ button:hover {
 	}
 }
 
-.personal-caption,
-.playbook-thumb-caption {
+.personal-caption {
 	margin-top: 0.6rem;
 	font-family: 'Inter', sans-serif;
 	font-size: 0.78rem;
@@ -936,12 +935,23 @@ button:hover {
 	max-width: 62ch;
 }
 
+.playbook-showcase {
+	margin: 0 0 1.75rem;
+	padding: clamp(1.15rem, 2.8vw, 1.65rem);
+	border-radius: 16px;
+	background: linear-gradient(165deg, #fcfcfd 0%, #f6f7f9 50%, #eff1f4 100%);
+	border: 1px solid rgba(17, 17, 17, 0.065);
+	box-shadow:
+		0 1px 3px rgba(0, 0, 0, 0.04),
+		inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
 .playbook-thumbs {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 	grid-template-rows: auto auto;
-	gap: 1rem;
-	margin: 0 0 1.75rem;
+	gap: clamp(1rem, 2vw, 1.35rem);
+	margin: 0;
 	width: 100%;
 	align-items: start;
 }
@@ -965,16 +975,58 @@ button:hover {
 .playbook-thumb-item {
 	margin: 0;
 	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
 }
 
 .playbook-thumb {
 	position: relative;
 	aspect-ratio: 16 / 10;
-	border-radius: 10px;
-	border: 1px solid var(--line);
-	background: var(--panel);
+	border-radius: 12px;
+	border: 1px solid rgba(17, 17, 17, 0.08);
+	background: #fff;
 	overflow: hidden;
 	margin: 0;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.04),
+		0 10px 28px -8px rgba(17, 17, 17, 0.12),
+		inset 0 1px 0 rgba(255, 255, 255, 0.9);
+	transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+}
+
+.playbook-thumb-item:hover .playbook-thumb,
+.playbook-thumb-item:focus-within .playbook-thumb {
+	box-shadow:
+		0 4px 8px rgba(0, 0, 0, 0.06),
+		0 22px 44px -14px rgba(17, 17, 17, 0.2),
+		inset 0 1px 0 rgba(255, 255, 255, 1);
+	transform: translateY(-3px);
+	border-color: rgba(17, 17, 17, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.playbook-thumb {
+		transition: none;
+	}
+
+	.playbook-thumb-item:hover .playbook-thumb,
+	.playbook-thumb-item:focus-within .playbook-thumb {
+		transform: none;
+	}
+}
+
+.playbook-thumb-caption {
+	margin-top: 0.75rem;
+	padding-top: 0.65rem;
+	border-top: 1px solid rgba(17, 17, 17, 0.08);
+	font-family: 'Playfair Display', serif;
+	font-size: clamp(0.88rem, 1.5vw, 0.98rem);
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	color: var(--ink);
+	text-transform: none;
+	line-height: 1.35;
 }
 
 /* Tall slot: governance snapshot */
@@ -1621,6 +1673,7 @@ body.pdf-lightbox-open {
 									<p class="playbook-body">
 										I am frequently asked how I manage the chaos of a founder exit or a messy ERP cutover. The answer is a repeatable, battle-tested playbook.
 									</p>
+									<div class="playbook-showcase">
 									<div class="playbook-thumbs">
 										<figure class="playbook-thumb-item">
 											<div class="playbook-thumb playbook-thumb--pdf">
@@ -1694,6 +1747,7 @@ body.pdf-lightbox-open {
 											</div>
 											<figcaption class="playbook-thumb-caption">Synergy Tracking</figcaption>
 										</figure>
+									</div>
 									</div>
 									<p class="playbook-request-heading">Request the Full playbook</p>
 									<form class="playbook-request-form" id="playbook-request-form" action="#" method="post" novalidate>
