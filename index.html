@@ -1071,9 +1071,12 @@ button:hover {
 	}
 }
 
-/* Tall slot: governance snapshot */
+/* Governance (left): grow to fill column so card bottom aligns with synergy card */
 .playbook-thumb-item:nth-child(1) .playbook-thumb {
-	aspect-ratio: 3 / 5;
+	flex: 1 1 auto;
+	min-height: 0;
+	width: 100%;
+	aspect-ratio: unset;
 }
 
 /* Wide slots: operations (top) and synergy (bottom) */
@@ -1255,7 +1258,15 @@ body.pdf-lightbox-open {
 		grid-row: auto;
 	}
 
-	.playbook-thumb-item:nth-child(1) .playbook-thumb,
+	.playbook-thumb-item:nth-child(1) {
+		height: auto;
+	}
+
+	.playbook-thumb-item:nth-child(1) .playbook-thumb {
+		flex: 0 1 auto;
+		aspect-ratio: 16 / 10;
+	}
+
 	.playbook-thumb-item:nth-child(2) .playbook-thumb,
 	.playbook-thumb-item:nth-child(3) .playbook-thumb {
 		aspect-ratio: 16 / 10;
