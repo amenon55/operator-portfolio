@@ -1569,8 +1569,24 @@ body.pdf-lightbox-open {
 										I am frequently asked how I manage the chaos of a founder exit or a messy ERP cutover. The answer is a repeatable, battle-tested playbook.
 									</p>
 									<div class="playbook-thumbs">
-										<figure class="playbook-thumb">
-											<img src="images/playbook-checklist.png" alt="Integration checklist: workstreams, tasks, priorities, owners, and status by workstream." loading="lazy" decoding="async" />
+										<figure class="playbook-thumb playbook-thumb--pdf">
+											<iframe
+												class="playbook-pdf-thumb"
+												src="documents/STRATEGIC_ENCAPSULATION_GOVERNANCE_IMO.pdf#view=FitH"
+												title="Strategic Encapsulation Governance IMO — preview"
+												loading="lazy"
+												referrerpolicy="no-referrer"
+											></iframe>
+											<button
+												type="button"
+												class="playbook-pdf-open"
+												data-pdf-src="documents/STRATEGIC_ENCAPSULATION_GOVERNANCE_IMO.pdf"
+												data-pdf-title="Strategic Encapsulation Governance IMO"
+												data-pdf-dialog-label="Strategic Encapsulation Governance IMO PDF (enlarged view)"
+												aria-haspopup="dialog"
+												aria-controls="playbook-pdf-lightbox"
+												aria-label="Open enlarged view of Strategic Encapsulation Governance IMO PDF"
+											></button>
 										</figure>
 										<figure class="playbook-thumb playbook-thumb--pdf">
 											<iframe
@@ -1580,7 +1596,16 @@ body.pdf-lightbox-open {
 												loading="lazy"
 												referrerpolicy="no-referrer"
 											></iframe>
-											<button type="button" class="playbook-pdf-open" id="playbook-operations-pdf-open" aria-haspopup="dialog" aria-controls="playbook-operations-pdf-lightbox" aria-label="Open enlarged view of FINAL FIXER 7.0 Operations PDF"></button>
+											<button
+												type="button"
+												class="playbook-pdf-open"
+												data-pdf-src="documents/FINAL_FIXER_7.0_Operations.pdf"
+												data-pdf-title="FINAL FIXER 7.0 Operations"
+												data-pdf-dialog-label="FINAL FIXER 7.0 Operations PDF (enlarged view)"
+												aria-haspopup="dialog"
+												aria-controls="playbook-pdf-lightbox"
+												aria-label="Open enlarged view of FINAL FIXER 7.0 Operations PDF"
+											></button>
 										</figure>
 										<figure class="playbook-thumb">
 											<img src="images/playbook-ebitda-dashboard.png" alt="EBITDA synergy waterfall and variance table: cost synergies, revenue synergies, and integration costs." loading="lazy" decoding="async" />
@@ -1664,17 +1689,11 @@ body.pdf-lightbox-open {
 
 			</div>
 
-			<div id="playbook-operations-pdf-lightbox" class="pdf-lightbox" hidden role="dialog" aria-modal="true" aria-label="FINAL FIXER 7.0 Operations PDF (enlarged view)">
+			<div id="playbook-pdf-lightbox" class="pdf-lightbox" hidden role="dialog" aria-modal="true" aria-label="PDF viewer">
 				<div class="pdf-lightbox-backdrop" tabindex="-1" aria-hidden="true"></div>
 				<div class="pdf-lightbox-panel">
-					<button type="button" class="pdf-lightbox-close" id="playbook-operations-pdf-close" aria-label="Close PDF viewer">&times;</button>
-					<iframe
-						class="pdf-lightbox-frame"
-						id="playbook-operations-pdf-frame"
-						src="documents/FINAL_FIXER_7.0_Operations.pdf"
-						title="FINAL FIXER 7.0 Operations PDF"
-						referrerpolicy="no-referrer"
-					></iframe>
+					<button type="button" class="pdf-lightbox-close" id="playbook-pdf-lightbox-close" aria-label="Close PDF viewer">&times;</button>
+					<iframe class="pdf-lightbox-frame" id="playbook-pdf-lightbox-frame" src="about:blank" title="" referrerpolicy="no-referrer"></iframe>
 				</div>
 			</div>
 
@@ -1706,38 +1725,54 @@ body.pdf-lightbox-open {
 			</script>
 			<script>
 				(function () {
-					var lightbox = document.getElementById('playbook-operations-pdf-lightbox');
-					var openBtn = document.getElementById('playbook-operations-pdf-open');
-					var closeBtn = document.getElementById('playbook-operations-pdf-close');
+					var lightbox = document.getElementById('playbook-pdf-lightbox');
+					var frame = document.getElementById('playbook-pdf-lightbox-frame');
+					var closeBtn = document.getElementById('playbook-pdf-lightbox-close');
 					var backdrop = lightbox && lightbox.querySelector('.pdf-lightbox-backdrop');
-					if (!lightbox || !openBtn) return;
+					var openBtns = document.querySelectorAll('.playbook-pdf-open');
+					var lastOpenBtn = null;
+					if (!lightbox || !frame || !openBtns.length) return;
 
-					function openLb() {
+					function openLb(btn) {
+						var src = btn.getAttribute('data-pdf-src');
+						var title = btn.getAttribute('data-pdf-title') || 'PDF';
+						var dialogLabel = btn.getAttribute('data-pdf-dialog-label') || title;
+						if (!src) return;
+						lastOpenBtn = btn;
+						frame.src = src;
+						frame.title = title + ' PDF';
+						lightbox.setAttribute('aria-label', dialogLabel);
 						lightbox.removeAttribute('hidden');
 						document.body.classList.add('pdf-lightbox-open');
+						openBtns.forEach(function (b) {
+							b.setAttribute('aria-expanded', 'false');
+						});
+						btn.setAttribute('aria-expanded', 'true');
 						if (closeBtn) closeBtn.focus();
-						openBtn.setAttribute('aria-expanded', 'true');
 					}
 
 					function closeLb() {
 						lightbox.setAttribute('hidden', '');
 						document.body.classList.remove('pdf-lightbox-open');
-						openBtn.setAttribute('aria-expanded', 'false');
-						openBtn.focus();
+						openBtns.forEach(function (b) {
+							b.setAttribute('aria-expanded', 'false');
+						});
+						frame.src = 'about:blank';
+						if (lastOpenBtn) lastOpenBtn.focus();
 					}
 
-					openBtn.setAttribute('aria-expanded', 'false');
-					openBtn.addEventListener('click', function (e) {
-						e.preventDefault();
-						openLb();
+					openBtns.forEach(function (btn) {
+						btn.setAttribute('aria-expanded', 'false');
+						btn.addEventListener('click', function (e) {
+							e.preventDefault();
+							openLb(btn);
+						});
 					});
 					if (closeBtn) closeBtn.addEventListener('click', closeLb);
 					if (backdrop) backdrop.addEventListener('click', closeLb);
-
 					lightbox.addEventListener('click', function (e) {
 						if (e.target === lightbox) closeLb();
 					});
-
 					document.addEventListener('keydown', function (e) {
 						if (e.key === 'Escape' && !lightbox.hasAttribute('hidden')) {
 							e.preventDefault();
