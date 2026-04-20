@@ -2086,13 +2086,19 @@ body.pdf-lightbox-open {
 					var lastOpenBtn = null;
 					if (!lightbox || !frame || !openBtns.length) return;
 
+					function pdfUrlWithZoom(url, zoomPercent) {
+						var hashIdx = url.indexOf('#');
+						var base = hashIdx >= 0 ? url.slice(0, hashIdx) : url;
+						return base + '#zoom=' + zoomPercent;
+					}
+
 					function openLb(btn) {
 						var src = btn.getAttribute('data-pdf-src');
 						var title = btn.getAttribute('data-pdf-title') || 'PDF';
 						var dialogLabel = btn.getAttribute('data-pdf-dialog-label') || title;
 						if (!src) return;
 						lastOpenBtn = btn;
-						frame.src = src;
+						frame.src = pdfUrlWithZoom(src, 150);
 						frame.title = title + ' PDF';
 						lightbox.setAttribute('aria-label', dialogLabel);
 						lightbox.removeAttribute('hidden');
