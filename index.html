@@ -951,7 +951,40 @@ button:hover {
 		inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
-.playbook-thumbs {
+.speed-showcase {
+	margin: 1.35rem 0 0;
+	padding: clamp(1.15rem, 2.8vw, 1.65rem);
+	border-radius: 16px;
+	background: linear-gradient(165deg, #fcfcfd 0%, #f6f7f9 50%, #eff1f4 100%);
+	border: 1px solid rgba(17, 17, 17, 0.065);
+	box-shadow:
+		0 1px 3px rgba(0, 0, 0, 0.04),
+		inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.speed-thumbs {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: clamp(1rem, 2vw, 1.35rem);
+	margin: 0;
+	width: 100%;
+	align-items: start;
+}
+
+.speed-thumb-item {
+	margin: 0;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 0.6rem;
+}
+
+.speed-thumb-item .playbook-thumb {
+	aspect-ratio: 8.5 / 11;
+}
+
+#four .playbook-thumbs {
 	--playbook-gap: clamp(1rem, 2vw, 1.35rem);
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
@@ -964,7 +997,7 @@ button:hover {
 }
 
 /* Governance (left, vertical); Operations + Synergy (right, stacked wide) */
-.playbook-thumb-item:nth-child(1) {
+#four .playbook-thumb-item:nth-child(1) {
 	grid-column: 1;
 	grid-row: 1 / span 2;
 	align-self: stretch;
@@ -972,17 +1005,17 @@ button:hover {
 	height: 100%;
 }
 
-.playbook-thumb-item:nth-child(2) {
+#four .playbook-thumb-item:nth-child(2) {
 	grid-column: 2 / 4;
 	grid-row: 1;
 }
 
-.playbook-thumb-item:nth-child(3) {
+#four .playbook-thumb-item:nth-child(3) {
 	grid-column: 2 / 4;
 	grid-row: 2;
 }
 
-.playbook-thumb-item {
+#four .playbook-thumb-item {
 	margin: 0;
 	min-width: 0;
 	display: flex;
@@ -1006,8 +1039,10 @@ button:hover {
 	transition: box-shadow 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
 }
 
-.playbook-thumb-item:hover .playbook-thumb,
-.playbook-thumb-item:focus-within .playbook-thumb {
+#four .playbook-thumb-item:hover .playbook-thumb,
+#four .playbook-thumb-item:focus-within .playbook-thumb,
+.speed-thumb-item:hover .playbook-thumb,
+.speed-thumb-item:focus-within .playbook-thumb {
 	box-shadow:
 		0 4px 8px rgba(0, 0, 0, 0.06),
 		0 22px 44px -14px rgba(17, 17, 17, 0.2),
@@ -1021,8 +1056,10 @@ button:hover {
 		transition: none;
 	}
 
-	.playbook-thumb-item:hover .playbook-thumb,
-	.playbook-thumb-item:focus-within .playbook-thumb {
+	#four .playbook-thumb-item:hover .playbook-thumb,
+	#four .playbook-thumb-item:focus-within .playbook-thumb,
+	.speed-thumb-item:hover .playbook-thumb,
+	.speed-thumb-item:focus-within .playbook-thumb {
 		transform: none;
 	}
 }
@@ -1060,8 +1097,10 @@ button:hover {
 }
 
 @media (hover: hover) {
-	.playbook-thumb-item:has(.playbook-thumb:hover) .playbook-thumb-hint,
-	.playbook-thumb-item:has(.playbook-pdf-open:focus-visible) .playbook-thumb-hint {
+	#four .playbook-thumb-item:has(.playbook-thumb:hover) .playbook-thumb-hint,
+	#four .playbook-thumb-item:has(.playbook-pdf-open:focus-visible) .playbook-thumb-hint,
+	.speed-thumb-item:has(.playbook-thumb:hover) .playbook-thumb-hint,
+	.speed-thumb-item:has(.playbook-pdf-open:focus-visible) .playbook-thumb-hint {
 		opacity: 1;
 	}
 }
@@ -1079,7 +1118,7 @@ button:hover {
 }
 
 /* Governance (left): grow to fill column so card bottom aligns with synergy card */
-.playbook-thumb-item:nth-child(1) .playbook-thumb {
+#four .playbook-thumb-item:nth-child(1) .playbook-thumb {
 	flex: 1 1 auto;
 	min-height: 0;
 	width: 100%;
@@ -1087,11 +1126,11 @@ button:hover {
 }
 
 /* Wide slots: operations (top) and synergy (bottom) */
-.playbook-thumb-item:nth-child(2) .playbook-thumb {
+#four .playbook-thumb-item:nth-child(2) .playbook-thumb {
 	aspect-ratio: 3.25 / 1;
 }
 
-.playbook-thumb-item:nth-child(3) .playbook-thumb {
+#four .playbook-thumb-item:nth-child(3) .playbook-thumb {
 	aspect-ratio: 2.5 / 1;
 }
 
@@ -1253,29 +1292,37 @@ body.pdf-lightbox-open {
 }
 
 @media screen and (max-width: 720px) {
-	.playbook-thumbs {
+	#four .playbook-thumbs {
 		grid-template-columns: 1fr;
 		grid-template-rows: none;
 	}
 
-	.playbook-thumb-item:nth-child(1),
-	.playbook-thumb-item:nth-child(2),
-	.playbook-thumb-item:nth-child(3) {
+	#four .playbook-thumb-item:nth-child(1),
+	#four .playbook-thumb-item:nth-child(2),
+	#four .playbook-thumb-item:nth-child(3) {
 		grid-column: 1;
 		grid-row: auto;
 	}
 
-	.playbook-thumb-item:nth-child(1) {
+	#four .playbook-thumb-item:nth-child(1) {
 		height: auto;
 	}
 
-	.playbook-thumb-item:nth-child(1) .playbook-thumb {
+	#four .playbook-thumb-item:nth-child(1) .playbook-thumb {
 		flex: 0 1 auto;
 		aspect-ratio: 16 / 10;
 	}
 
-	.playbook-thumb-item:nth-child(2) .playbook-thumb,
-	.playbook-thumb-item:nth-child(3) .playbook-thumb {
+	#four .playbook-thumb-item:nth-child(2) .playbook-thumb,
+	#four .playbook-thumb-item:nth-child(3) .playbook-thumb {
+		aspect-ratio: 16 / 10;
+	}
+
+	.speed-thumbs {
+		grid-template-columns: 1fr;
+	}
+
+	.speed-thumb-item .playbook-thumb {
 		aspect-ratio: 16 / 10;
 	}
 }
@@ -1479,6 +1526,91 @@ body.pdf-lightbox-open {
 									<p class="section-intro section-intro--tight-top">
 										As I gather inputs &mdash; interviews, data, and on-the-ground observation &mdash; I track what&rsquo;s clear, what&rsquo;s missing, and where things conflict using an AI tool/system.
 									</p>
+									<div class="speed-showcase">
+										<div class="speed-thumbs">
+											<figure class="speed-thumb-item">
+												<div class="playbook-thumb playbook-thumb--pdf">
+													<img
+														class="playbook-pdf-thumb"
+														src="images/learning-fast-page1.png"
+														alt="Learning fast &mdash; page 1 preview"
+														loading="lazy"
+														decoding="async"
+														width="1377"
+														height="1782"
+													/>
+													<button
+														type="button"
+														class="playbook-pdf-open"
+														data-pdf-src="documents/learning-fast-page1.pdf"
+														data-pdf-title="Learning fast (page 1)"
+														data-pdf-dialog-label="Learning fast PDF (page 1)"
+														aria-haspopup="dialog"
+														aria-controls="playbook-pdf-lightbox"
+														aria-label="Open page 1 of Learning fast PDF"
+													></button>
+												</div>
+												<figcaption class="playbook-thumb-caption">
+													<span class="playbook-thumb-title">Gathering inputs</span>
+													<span class="playbook-thumb-hint" aria-hidden="true">Click to view PDF</span>
+												</figcaption>
+											</figure>
+											<figure class="speed-thumb-item">
+												<div class="playbook-thumb playbook-thumb--pdf">
+													<img
+														class="playbook-pdf-thumb"
+														src="images/learning-fast-page2.png"
+														alt="Learning fast &mdash; page 2 preview"
+														loading="lazy"
+														decoding="async"
+														width="1377"
+														height="1782"
+													/>
+													<button
+														type="button"
+														class="playbook-pdf-open"
+														data-pdf-src="documents/learning-fast-page2.pdf"
+														data-pdf-title="Learning fast (page 2)"
+														data-pdf-dialog-label="Learning fast PDF (page 2)"
+														aria-haspopup="dialog"
+														aria-controls="playbook-pdf-lightbox"
+														aria-label="Open page 2 of Learning fast PDF"
+													></button>
+												</div>
+												<figcaption class="playbook-thumb-caption">
+													<span class="playbook-thumb-title">What&rsquo;s clear vs missing</span>
+													<span class="playbook-thumb-hint" aria-hidden="true">Click to view PDF</span>
+												</figcaption>
+											</figure>
+											<figure class="speed-thumb-item">
+												<div class="playbook-thumb playbook-thumb--pdf">
+													<img
+														class="playbook-pdf-thumb"
+														src="images/learning-fast-page3.png"
+														alt="Learning fast &mdash; page 3 preview"
+														loading="lazy"
+														decoding="async"
+														width="1377"
+														height="1782"
+													/>
+													<button
+														type="button"
+														class="playbook-pdf-open"
+														data-pdf-src="documents/learning-fast-page3.pdf"
+														data-pdf-title="Learning fast (page 3)"
+														data-pdf-dialog-label="Learning fast PDF (page 3)"
+														aria-haspopup="dialog"
+														aria-controls="playbook-pdf-lightbox"
+														aria-label="Open page 3 of Learning fast PDF"
+													></button>
+												</div>
+												<figcaption class="playbook-thumb-caption">
+													<span class="playbook-thumb-title">Where things conflict</span>
+													<span class="playbook-thumb-hint" aria-hidden="true">Click to view PDF</span>
+												</figcaption>
+											</figure>
+										</div>
+									</div>
 								</div>
 							</section>
 
