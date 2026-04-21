@@ -550,7 +550,11 @@ body {
 }
 
 .metric-number {
-	display: block;
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	flex-wrap: nowrap;
+	gap: 0;
 	font-family: 'Inter', sans-serif;
 	font-size: 2rem;
 	font-weight: 800;
@@ -558,6 +562,19 @@ body {
 	line-height: 1;
 	color: var(--ink);
 	margin-bottom: 0.35rem;
+	white-space: nowrap;
+}
+
+.metric-number .metric-prefix,
+.metric-number .metric-suffix {
+	flex: 0 0 auto;
+}
+
+.metric-number .metric-value {
+	flex: 0 0 auto;
+	font-variant-numeric: tabular-nums;
+	min-width: 0.6em;
+	text-align: center;
 }
 
 .metric-label {
@@ -1485,25 +1502,35 @@ body.pdf-lightbox-open {
 											</div>
 										</div>
 										<div class="hero-metrics-row">
-											<div class="metrics-grid">
+											<div class="metrics-grid" id="operator-metrics">
 												<div class="metric-card">
-													<span class="metric-number">$50M </span>
+													<span class="metric-number" aria-label="50 million dollars aggregate P&amp;L transformed">
+														<span class="metric-prefix">$</span><span class="metric-value" data-metric-end="50">0</span><span class="metric-suffix">M</span>
+													</span>
 													<span class="metric-label">Aggregate P&L Transformed</span>
 												</div>
 												<div class="metric-card">
-													<span class="metric-number">150</span>
+													<span class="metric-number" aria-label="150 headcount led max">
+														<span class="metric-value" data-metric-end="150">0</span>
+													</span>
 													<span class="metric-label">Headcount Led (max)</span>
 												</div>
 												<div class="metric-card">
-													<span class="metric-number">10</span>
+													<span class="metric-number" aria-label="10 post-acquisition turnarounds">
+														<span class="metric-value" data-metric-end="10">0</span>
+													</span>
 													<span class="metric-label">Post-Acquisition Turnarounds</span>
 												</div>
 												<div class="metric-card">
-													<span class="metric-number">2x </span>
+													<span class="metric-number" aria-label="2 times EBITDA expansion within 1 year">
+														<span class="metric-value" data-metric-end="2">0</span><span class="metric-suffix">x</span>
+													</span>
 													<span class="metric-label">EBITDA expansion within 1 year</span>
 												</div>
 												<div class="metric-card">
-													<span class="metric-number">15+</span>
+													<span class="metric-number" aria-label="15 plus global markets">
+														<span class="metric-value" data-metric-end="15">0</span><span class="metric-suffix">+</span>
+													</span>
 													<span class="metric-label">Global Markets</span>
 												</div>
 											</div>
@@ -2051,6 +2078,8 @@ body.pdf-lightbox-open {
 			</div>
 
 		<!-- Scripts -->
+			<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
@@ -2137,6 +2166,53 @@ body.pdf-lightbox-open {
 							e.preventDefault();
 							closeLb();
 						}
+					});
+				})();
+			</script>
+			<script>
+				(function () {
+					if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+					gsap.registerPlugin(ScrollTrigger);
+
+					var grid = document.getElementById('operator-metrics');
+					if (!grid) return;
+
+					var valueEls = grid.querySelectorAll('.metric-value[data-metric-end]');
+					if (!valueEls.length) return;
+
+					if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+						valueEls.forEach(function (el) {
+							var end = el.getAttribute('data-metric-end');
+							if (end != null) el.textContent = String(end);
+						});
+						return;
+					}
+
+					var tl = gsap.timeline({
+						scrollTrigger: {
+							trigger: grid,
+							start: 'top 80%',
+							once: true
+						}
+					});
+
+					valueEls.forEach(function (el) {
+						var end = parseFloat(el.getAttribute('data-metric-end'), 10);
+						if (isNaN(end)) return;
+						var proxy = { n: 0 };
+						tl.to(
+							proxy,
+							{
+								n: end,
+								duration: 1.2,
+								ease: 'power2.out',
+								snap: { n: 1 },
+								onUpdate: function () {
+									el.textContent = String(Math.round(proxy.n));
+								}
+							},
+							0
+						);
 					});
 				})();
 			</script>
