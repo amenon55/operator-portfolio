@@ -420,7 +420,7 @@ body {
 
 .tp-grid {
 	display: grid;
-	grid-template-columns: 1.35fr 1fr;
+	grid-template-columns: 1fr;
 	gap: 1.25rem;
 	align-items: start;
 }
@@ -429,13 +429,17 @@ body {
 	width: 100%;
 	border-radius: 12px;
 	border: 1px solid var(--line);
-	background: radial-gradient(1200px 500px at 25% 15%, rgba(56, 189, 248, 0.08), transparent 60%),
-		radial-gradient(900px 450px at 75% 55%, rgba(167, 139, 250, 0.08), transparent 60%),
-		#0b0f1a;
+	background: #fff;
 	overflow: hidden;
 }
 
 .tp-diagram svg {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.tp-diagram img {
 	display: block;
 	width: 100%;
 	height: auto;
@@ -479,7 +483,7 @@ body {
 
 @media screen and (max-width: 980px) {
 	.tp-grid {
-		grid-template-columns: 1fr;
+		gap: 1rem;
 	}
 }
 
