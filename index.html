@@ -863,10 +863,16 @@ button:hover {
 .personal-grid {
 	display: grid;
 	width: 100%;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-template-columns: repeat(4, minmax(0, 1fr));
 	gap: 1.25rem;
 	margin-top: 1.25rem;
 	align-items: start;
+}
+
+@media screen and (max-width: 980px) {
+	.personal-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
 }
 
 .personal-item {
@@ -2038,6 +2044,12 @@ body.pdf-lightbox-open {
 												<img src="images/yoga.png" alt="Yoga" loading="lazy" decoding="async" />
 											</div>
 											<figcaption class="personal-caption">Yoga</figcaption>
+										</figure>
+										<figure class="personal-item">
+											<div class="personal-photo">
+												<img src="images/toastmasters.png" alt="Toastmasters" loading="lazy" decoding="async" width="1024" height="768" />
+											</div>
+											<figcaption class="personal-caption">Toastmasters</figcaption>
 										</figure>
 									</div>
 								</div>
