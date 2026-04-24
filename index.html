@@ -378,7 +378,7 @@ body {
 #operator-metrics .metric-number {
 	height: 2.15rem; /* fixed row height for perfect alignment */
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: center;
 	margin-bottom: 0.45rem;
 }
@@ -392,6 +392,11 @@ body {
 	overflow-wrap: normal;
 	word-break: normal;
 	hyphens: none;
+	min-height: 4.9em; /* fixed caption row height */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 /* Responsive wrap while preserving alignment. */
