@@ -418,6 +418,12 @@ body {
 	align-items: center;
 }
 
+/* First metric needs a slightly wider label to keep 3 lines:
+   "AGGREGATE P&L" / "TRANSFORMED" / "($M)" */
+#operator-metrics .metric-card:nth-child(1) .metric-label {
+	max-width: 120px;
+}
+
 /* Responsive wrap while preserving alignment. */
 @media screen and (max-width: 1024px) {
 	#operator-metrics {
