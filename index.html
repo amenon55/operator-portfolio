@@ -350,6 +350,8 @@ body {
 
 /* Operator metrics: single connected bar */
 #operator-metrics {
+	display: grid;
+	grid-template-columns: repeat(6, minmax(0, 1fr));
 	gap: 0;
 	border-radius: 12px;
 	overflow: hidden;
@@ -362,30 +364,83 @@ body {
 	border-radius: 0;
 	box-shadow: none;
 	background: transparent;
-	/* Center the stack (number + label) vertically in each tile. */
-	justify-content: center;
-	padding-top: 1.2rem;
-	padding-bottom: 1.2rem;
+	justify-content: flex-start;
+	padding: 1.25rem 0.85rem 1.15rem;
+	flex: none;
+	width: auto;
 }
 
 #operator-metrics .metric-card + .metric-card {
 	border-left: 1px solid rgba(17, 17, 17, 0.08);
 }
 
-/* Normalize label height so shorter labels don't "float" high. */
-#operator-metrics .metric-label {
-	margin-top: 0.45rem;
-	min-height: 4.2em; /* ~4 lines at current font-size/line-height */
+/* Keep all numbers aligned; captions flow below consistently. */
+#operator-metrics .metric-number {
+	height: 2.15rem; /* fixed row height for perfect alignment */
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: center;
-	text-wrap: balance;
+	margin-bottom: 0.45rem;
 }
 
-/* Slight optical tweak: $50M reads heavier than other numbers. */
-#operator-metrics .metric-card:first-child .metric-number {
-	font-size: 1.9rem;
-	letter-spacing: -0.035em;
+#operator-metrics .metric-label {
+	margin-top: 0;
+	max-width: 90px;
+	text-align: center;
+	line-height: 1.25;
+	letter-spacing: 0.11em;
+	overflow-wrap: normal;
+	word-break: normal;
+	hyphens: none;
+}
+
+/* Responsive wrap while preserving alignment. */
+@media screen and (max-width: 1024px) {
+	#operator-metrics {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	#operator-metrics .metric-card + .metric-card {
+		border-left: 0;
+	}
+
+	#operator-metrics .metric-card {
+		border-top: 1px solid rgba(17, 17, 17, 0.08);
+	}
+
+	#operator-metrics .metric-card:nth-child(-n + 3) {
+		border-top: 0;
+	}
+
+	#operator-metrics .metric-card:nth-child(3n + 1) {
+		border-left: 0;
+	}
+
+	#operator-metrics .metric-card:not(:nth-child(3n + 1)) {
+		border-left: 1px solid rgba(17, 17, 17, 0.08);
+	}
+}
+
+@media screen and (max-width: 560px) {
+	#operator-metrics {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	#operator-metrics .metric-card:nth-child(-n + 3) {
+		border-top: 1px solid rgba(17, 17, 17, 0.08);
+	}
+
+	#operator-metrics .metric-card:nth-child(-n + 2) {
+		border-top: 0;
+	}
+
+	#operator-metrics .metric-card:not(:nth-child(2n + 1)) {
+		border-left: 1px solid rgba(17, 17, 17, 0.08);
+	}
+
+	#operator-metrics .metric-card:nth-child(2n + 1) {
+		border-left: 0;
+	}
 }
 
 .three-col {
@@ -1555,39 +1610,39 @@ body.pdf-lightbox-open {
 											<div class="metrics-grid" id="operator-metrics">
 												<div class="metric-card">
 													<span class="metric-number" aria-label="50 million dollars aggregate P&amp;L transformed">
-														<span class="metric-prefix">$</span><span class="metric-value" data-metric-end="50">0</span><span class="metric-suffix">M</span>
+														<span class="metric-value" data-metric-end="50">0</span>
 													</span>
-													<span class="metric-label">Aggregate P&L Transformed</span>
+													<span class="metric-label">AGGREGATE<br />P&amp;L<br />TRANSFORMED ($M)</span>
 												</div>
 												<div class="metric-card">
 													<span class="metric-number" aria-label="150 headcount led max">
 														<span class="metric-value" data-metric-end="150">0</span>
 													</span>
-													<span class="metric-label">Headcount Led (max)</span>
+													<span class="metric-label">HEADCOUNT<br />LED (MAX)</span>
 												</div>
 												<div class="metric-card">
 													<span class="metric-number" aria-label="10 post-acquisition turnarounds">
 														<span class="metric-value" data-metric-end="10">0</span>
 													</span>
-													<span class="metric-label">Post&#8209;Acquisition Turnarounds</span>
+													<span class="metric-label">POST&#8209;ACQUISITION<br />TURNAROUNDS</span>
 												</div>
 												<div class="metric-card">
 													<span class="metric-number" aria-label="2 times EBITDA expansion within 1 year">
 														<span class="metric-value" data-metric-end="2">0</span><span class="metric-suffix">x</span>
 													</span>
-													<span class="metric-label">EBITDA expansion within 1 year</span>
+													<span class="metric-label">EBITDA<br />EXPANSION<br />WITHIN<br />1 YR</span>
 												</div>
 												<div class="metric-card">
 													<span class="metric-number" aria-label="15 plus global markets">
 														<span class="metric-value" data-metric-end="15">0</span><span class="metric-suffix">+</span>
 													</span>
-													<span class="metric-label">Global Markets</span>
+													<span class="metric-label">GLOBAL<br />MARKETS</span>
 												</div>
 												<div class="metric-card">
 													<span class="metric-number" aria-label="11 AI automations shipped">
-														<span class="metric-value" data-metric-end="11">0</span>
+														<span class="metric-value" data-metric-end="11">0</span><span class="metric-suffix">+</span>
 													</span>
-													<span class="metric-label">AI Automations Shipped</span>
+													<span class="metric-label">AI<br />AUTOMATIONS<br />SHIPPED</span>
 												</div>
 											</div>
 											<div class="hero-actions">
