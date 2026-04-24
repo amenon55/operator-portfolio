@@ -92,21 +92,26 @@
 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet">
 		<style>
 :root {
-	--ink: #111111;
-	--muted: #5f6368;
-	--line: #e5e7eb;
-	--panel: #f7f7f7;
-	--accent: #3a3a3a;
+	--ink: #0B1220;
+	--navy: #061B49;
+	--navy-dark: #031234;
+	--muted: #4B5563;
+	--muted-light: #6B7280;
+	--line: #D7DEE8;
+	--panel: #F8FAFC;
+	--panel-strong: #FFFFFF;
+	--accent: #006B5B;
+	--accent-blue: #075CE5;
 }
 
 html, body, input, select, textarea {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
 	font-size: 16px;
 	font-weight: 400;
-	line-height: 1.7;
+	line-height: 1.6;
 	color: var(--ink);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -118,18 +123,18 @@ body, input, select, textarea {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Playfair Display', serif;
+	font-family: "Inter Tight", "Inter", sans-serif;
 	color: var(--ink);
-	letter-spacing: -0.015em;
-	line-height: 1.12;
+	font-weight: 800;
+	letter-spacing: -0.035em;
+	line-height: 1.08;
 	margin: 0 0 0.65em 0;
-	font-weight: 700;
 }
 
 h1 { font-size: 2.9rem; }
 h2 { font-size: 2.35rem; }
-h3 { font-size: 1.65rem; }
-h4 { font-size: 1.15rem; }
+h3 { font-size: 1.8rem; font-weight: 850; color: var(--navy); }
+h4 { font-size: 1.2rem; font-weight: 800; color: var(--ink); }
 
 p, li {
 	font-size: 0.98rem;
@@ -156,17 +161,17 @@ body {
 }
 
 #header {
-	background: #2b2b2b !important;
+	background: linear-gradient(180deg, var(--navy-dark) 0%, var(--navy) 100%) !important;
 }
 
 #header header p {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.78rem;
-	font-weight: 600;
+	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 0.12em;
+	letter-spacing: 0.09em;
 	line-height: 1.8;
-	color: rgba(255,255,255,0.78);
+	color: rgba(255,255,255,0.82);
 }
 
 /* Site title in sidebar: not an h1 so the main hero keeps the single page h1 */
@@ -176,10 +181,10 @@ body {
 }
 
 #logo a {
-	font-family: 'Playfair Display', serif;
-	font-size: 1.35rem;
-	font-weight: 700;
-	letter-spacing: -0.01em;
+	font-family: "Inter Tight", "Inter", sans-serif;
+	font-size: 1.45rem;
+	font-weight: 850;
+	letter-spacing: -0.035em;
 	color: #ffffff;
 }
 
@@ -189,11 +194,11 @@ body {
 }
 
 #nav ul li a {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.78rem;
-	font-weight: 700;
+	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.12em;
+	letter-spacing: 0.07em;
 	background: transparent !important;
 	border-right: 1px solid transparent !important;
 	border-left: none !important;
@@ -209,10 +214,10 @@ body {
 }
 
 #nav ul li a.active {
-	background: transparent !important;
+	background: rgba(255,255,255,0.045) !important;
 	color: #ffffff !important;
-	border-right: 1px solid #c7c7c7 !important;
-	font-weight: 600;
+	border-right: 3px solid var(--accent) !important;
+	font-weight: 800;
 }
 
 .hero-grid,
@@ -356,7 +361,8 @@ body {
 	border-radius: 12px;
 	overflow: hidden;
 	border: 1px solid var(--line);
-	background: #fff;
+	background: var(--panel-strong);
+	box-shadow: 0 8px 24px rgba(6, 27, 73, 0.06);
 }
 
 #operator-metrics .metric-card {
@@ -371,7 +377,7 @@ body {
 }
 
 #operator-metrics .metric-card + .metric-card {
-	border-left: 1px solid rgba(17, 17, 17, 0.08);
+	border-left: 1px solid rgba(6, 27, 73, 0.10);
 }
 
 /* Keep all numbers aligned; captions flow below consistently. */
@@ -401,7 +407,7 @@ body {
 	max-width: 90px;
 	text-align: center;
 	line-height: 1.25;
-	letter-spacing: 0.11em;
+	letter-spacing: 0.075em;
 	overflow-wrap: normal;
 	word-break: normal;
 	hyphens: none;
@@ -423,7 +429,7 @@ body {
 	}
 
 	#operator-metrics .metric-card {
-		border-top: 1px solid rgba(17, 17, 17, 0.08);
+		border-top: 1px solid rgba(6, 27, 73, 0.10);
 	}
 
 	#operator-metrics .metric-card:nth-child(-n + 3) {
@@ -435,7 +441,7 @@ body {
 	}
 
 	#operator-metrics .metric-card:not(:nth-child(3n + 1)) {
-		border-left: 1px solid rgba(17, 17, 17, 0.08);
+		border-left: 1px solid rgba(6, 27, 73, 0.10);
 	}
 }
 
@@ -445,7 +451,7 @@ body {
 	}
 
 	#operator-metrics .metric-card:nth-child(-n + 3) {
-		border-top: 1px solid rgba(17, 17, 17, 0.08);
+		border-top: 1px solid rgba(6, 27, 73, 0.10);
 	}
 
 	#operator-metrics .metric-card:nth-child(-n + 2) {
@@ -453,7 +459,7 @@ body {
 	}
 
 	#operator-metrics .metric-card:not(:nth-child(2n + 1)) {
-		border-left: 1px solid rgba(17, 17, 17, 0.08);
+		border-left: 1px solid rgba(6, 27, 73, 0.10);
 	}
 
 	#operator-metrics .metric-card:nth-child(2n + 1) {
@@ -482,10 +488,11 @@ body {
 .case-card,
 .priority-card,
 .contact-card {
-	background: var(--panel);
+	background: var(--panel-strong);
 	border: 1px solid var(--line);
 	border-radius: 10px;
 	padding: 1.4rem 1.4rem 1.2rem 1.4rem;
+	box-shadow: 0 6px 18px rgba(6, 27, 73, 0.045);
 }
 
 /* Slightly increase info-card padding to ~24px internal gutter without changing typography. */
@@ -579,11 +586,11 @@ body {
 }
 
 .tp-meta .tp-block h5 {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.78rem;
 	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.12em;
+	letter-spacing: 0.07em;
 	margin: 0 0 0.35rem;
 	color: var(--muted);
 }
@@ -672,10 +679,10 @@ body {
 	justify-content: center;
 	flex-wrap: nowrap;
 	gap: 0;
-	font-family: 'Inter', sans-serif;
-	font-size: 2rem;
-	font-weight: 800;
-	letter-spacing: -0.04em;
+	font-family: "Inter Tight", "Inter", sans-serif;
+	font-size: 2.15rem;
+	font-weight: 900;
+	letter-spacing: -0.055em;
 	line-height: 1;
 	color: var(--ink);
 	margin-bottom: 0.35rem;
@@ -696,11 +703,11 @@ body {
 
 .metric-label {
 	display: block;
-	font-family: 'Inter', sans-serif;
-	font-size: 0.72rem;
-	font-weight: 700;
+	font-family: "Inter", sans-serif;
+	font-size: 0.7rem;
+	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.12em;
+	letter-spacing: 0.075em;
 	line-height: 1.45;
 	color: var(--muted);
 	margin-top: 0.55rem;
@@ -709,11 +716,11 @@ body {
 .eyebrow,
 .label {
 	display: inline-block;
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.72rem;
 	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.14em;
+	letter-spacing: 0.07em;
 	color: var(--muted);
 	margin-bottom: 0.35rem;
 }
@@ -723,22 +730,23 @@ body {
 }
 
 .hero-title {
-	font-family: 'Playfair Display', serif;
-	font-size: 3rem;
-	font-weight: 700;
-	letter-spacing: -0.03em;
-	line-height: 1.05;
+	font-family: "Inter Tight", "Inter", sans-serif;
+	font-size: clamp(2.4rem, 4vw, 3.4rem);
+	font-weight: 900;
+	letter-spacing: -0.035em;
+	line-height: 0.98;
 	margin-bottom: 0.45rem;
+	color: var(--navy);
 }
 
 .hero-subtitle {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.875rem;
-	font-weight: 600;
+	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.1em;
+	letter-spacing: 0.07em;
 	line-height: 1.5;
-	color: var(--muted);
+	color: rgba(255,255,255,0.72);
 	margin-bottom: 1.2rem;
 	max-width: 36rem;
 }
@@ -749,52 +757,52 @@ body {
 }
 
 .hero-copy {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 1.02rem;
 	line-height: 1.82;
 	max-width: 40rem;
-	color: #222;
+	color: var(--ink);
 	margin-bottom: 1.5rem;
 }
 
 .hero-lead {
-	font-family: 'Inter', sans-serif;
-	font-size: 1.0625rem;
-	font-weight: 600;
-	line-height: 1.48;
-	letter-spacing: -0.012em;
-	color: #1a1a1a;
-	max-width: 38rem;
+	font-family: "Inter Tight", "Inter", sans-serif;
+	font-size: clamp(1.25rem, 2vw, 1.55rem);
+	font-weight: 750;
+	line-height: 1.28;
+	letter-spacing: -0.025em;
+	color: var(--navy);
+	max-width: 42rem;
 	margin: 0 0 0.5rem 0;
 }
 
 .hero-kicker {
-	font-family: 'Inter', sans-serif;
-	font-size: 0.9375rem;
-	font-weight: 400;
+	font-family: "Inter", sans-serif;
+	font-size: 1rem;
+	font-weight: 700;
 	line-height: 1.55;
-	color: #6b7280;
-	max-width: 38rem;
+	color: var(--accent);
+	max-width: 42rem;
 	margin: 0 0 0.95rem 0;
 }
 
 .hero-copy-intro {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.98rem;
 	font-weight: 500;
 	line-height: 1.55;
-	color: #374151;
-	max-width: 38rem;
+	color: var(--ink);
+	max-width: 42rem;
 	margin: 0 0 0.38rem 0;
 }
 
 .hero-bullet-list {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.98rem;
-	font-weight: 400;
+	font-weight: 500;
 	line-height: 1.58;
-	color: #374151;
-	max-width: 38rem;
+	color: var(--ink);
+	max-width: 42rem;
 	margin: 0;
 	padding-left: 1.15rem;
 	list-style: disc;
@@ -817,7 +825,7 @@ body {
 
 
 .section-intro {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 1rem;
 	line-height: 1.78;
 	color: var(--muted);
@@ -832,7 +840,7 @@ body {
 
 section h3 {
 	padding-bottom: 0.45rem;
-	border-bottom: 1px solid var(--line);
+	border-bottom: 2px solid var(--line);
 	margin-bottom: 1rem;
 }
 
@@ -852,11 +860,11 @@ section h3 {
 }
 
 .case-subtitle {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.8rem;
-	font-weight: 700;
+	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.1em;
+	letter-spacing: 0.07em;
 	color: var(--muted);
 	margin-top: -0.15rem;
 	margin-bottom: 1rem;
@@ -872,16 +880,21 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"],
 button {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.78rem;
-	font-weight: 700;
+	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.12em;
+	letter-spacing: 0.075em;
 }
 
 .button.primary {
-	background-color: #1f2933 !important;
+	background-color: var(--navy) !important;
 	color: white !important;
+	border: 1px solid var(--navy) !important;
+}
+
+.button {
+	border-radius: 8px;
 }
 
 /* High-end tactile hover (industrial press). */
@@ -912,8 +925,8 @@ input[type="submit"]:hover,
 input[type="reset"]:hover,
 input[type="button"]:hover,
 button:hover {
-	transform: translate(-4px, -4px);
-	box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.1);
+	transform: translateY(-2px);
+	box-shadow: 0 10px 26px rgba(6, 27, 73, 0.10);
 }
 
 /* Internal text reaction: active title accent on hover. */
@@ -1034,11 +1047,11 @@ button:hover {
 
 .personal-caption {
 	margin-top: 0.6rem;
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.78rem;
-	font-weight: 700;
+	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.1em;
+	letter-spacing: 0.07em;
 	color: var(--muted);
 }
 
@@ -1066,10 +1079,10 @@ button:hover {
 }
 
 .playbook-tagline {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.95rem;
-	font-weight: 700;
-	letter-spacing: 0.14em;
+	font-weight: 800;
+	letter-spacing: 0.07em;
 	text-transform: uppercase;
 	color: var(--muted);
 	margin: 0.35rem 0 1rem;
@@ -1187,7 +1200,7 @@ button:hover {
 		0 4px 8px rgba(0, 0, 0, 0.06),
 		0 22px 44px -14px rgba(17, 17, 17, 0.2),
 		inset 0 1px 0 rgba(255, 255, 255, 1);
-	transform: translateY(-3px);
+	transform: translateY(-2px);
 	border-color: rgba(17, 17, 17, 0.12);
 }
 
@@ -1217,21 +1230,21 @@ button:hover {
 }
 
 .playbook-thumb-title {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.78rem;
-	font-weight: 700;
+	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.1em;
+	letter-spacing: 0.07em;
 	color: var(--muted);
 }
 
 .playbook-thumb-hint {
-	font-family: 'Inter', sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 0.65rem;
-	font-weight: 600;
+	font-weight: 800;
 	text-transform: uppercase;
-	letter-spacing: 0.14em;
-	color: #9ca3af;
+	letter-spacing: 0.07em;
+	color: var(--muted-light);
 	opacity: 0;
 	transition: opacity 0.2s ease;
 }
@@ -1391,9 +1404,10 @@ body.pdf-lightbox-open {
 }
 
 .playbook-request-heading {
-	font-family: 'Playfair Display', serif;
+	font-family: "Inter Tight", "Inter", sans-serif;
 	font-size: 1.2rem;
-	font-weight: 700;
+	font-weight: 800;
+	letter-spacing: -0.035em;
 	margin: 0 0 0.85rem;
 	color: var(--ink);
 }
@@ -1420,7 +1434,7 @@ body.pdf-lightbox-open {
 }
 
 .playbook-request-form input[type="email"]::placeholder {
-	color: #9ca3af;
+	color: var(--muted-light);
 }
 
 .playbook-request-form .button {
