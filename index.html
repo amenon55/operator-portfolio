@@ -362,10 +362,30 @@ body {
 	border-radius: 0;
 	box-shadow: none;
 	background: transparent;
+	/* Center the stack (number + label) vertically in each tile. */
+	justify-content: center;
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
 }
 
 #operator-metrics .metric-card + .metric-card {
-	border-left: 1px solid var(--line);
+	border-left: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+/* Normalize label height so shorter labels don't "float" high. */
+#operator-metrics .metric-label {
+	margin-top: 0.45rem;
+	min-height: 4.2em; /* ~4 lines at current font-size/line-height */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-wrap: balance;
+}
+
+/* Slight optical tweak: $50M reads heavier than other numbers. */
+#operator-metrics .metric-card:first-child .metric-number {
+	font-size: 1.9rem;
+	letter-spacing: -0.035em;
 }
 
 .three-col {
@@ -1549,7 +1569,7 @@ body.pdf-lightbox-open {
 													<span class="metric-number" aria-label="10 post-acquisition turnarounds">
 														<span class="metric-value" data-metric-end="10">0</span>
 													</span>
-													<span class="metric-label">Post-Acquisition Turnarounds</span>
+													<span class="metric-label">Post&#8209;Acquisition Turnarounds</span>
 												</div>
 												<div class="metric-card">
 													<span class="metric-number" aria-label="2 times EBITDA expansion within 1 year">
