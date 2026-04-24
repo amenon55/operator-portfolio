@@ -383,6 +383,19 @@ body {
 	margin-bottom: 0.45rem;
 }
 
+#operator-metrics .metric-main {
+	position: relative;
+	display: inline-block;
+}
+
+/* Make suffixes (e.g., "+") hang without shifting centering */
+#operator-metrics .metric-main .metric-suffix {
+	position: absolute;
+	left: 100%;
+	top: 0;
+	margin-left: 0.04em;
+}
+
 #operator-metrics .metric-label {
 	margin-top: 0;
 	max-width: 90px;
@@ -1639,13 +1652,13 @@ body.pdf-lightbox-open {
 												</div>
 												<div class="metric-card">
 													<span class="metric-number" aria-label="15 plus global markets">
-														<span class="metric-value" data-metric-end="15">0</span><span class="metric-suffix">+</span>
+														<span class="metric-main"><span class="metric-value" data-metric-end="15">0</span><span class="metric-suffix">+</span></span>
 													</span>
 													<span class="metric-label">GLOBAL<br />MARKETS</span>
 												</div>
 												<div class="metric-card">
 													<span class="metric-number" aria-label="11 AI automations shipped">
-														<span class="metric-value" data-metric-end="11">0</span><span class="metric-suffix">+</span>
+														<span class="metric-main"><span class="metric-value" data-metric-end="11">0</span><span class="metric-suffix">+</span></span>
 													</span>
 													<span class="metric-label">AI<br />AUTOMATIONS<br />SHIPPED</span>
 												</div>
