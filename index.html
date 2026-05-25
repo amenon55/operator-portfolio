@@ -421,8 +421,11 @@ body {
 /* First metric needs a slightly wider label to keep 3 lines:
    "AGGREGATE P&L" / "TRANSFORMED" / "($M)" */
 #operator-metrics .metric-card:nth-child(1) .metric-label {
-	max-width: 156px;
-	letter-spacing: 0.06em;
+	max-width: none;
+	width: 100%;
+	padding: 0 0.25rem;
+	box-sizing: border-box;
+	letter-spacing: 0.055em;
 }
 
 /* Responsive wrap while preserving alignment. */
