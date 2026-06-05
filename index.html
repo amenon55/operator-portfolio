@@ -1592,6 +1592,15 @@ body.pdf-lightbox-open {
   .ai-tool-card { grid-template-columns: 1fr; }
   .ai-tool-preview { min-height: 360px; }
 }
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.25rem; }
+.problem-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.4rem 1.3rem 1.3rem; box-shadow: 0 6px 18px rgba(6, 27, 73, 0.045); transition: transform 150ms ease-out, box-shadow 150ms ease-out; }
+.problem-card:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(6, 27, 73, 0.10); }
+.problem-icon { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 8px; background: rgba(0, 107, 91, 0.10); color: var(--accent); margin-bottom: 0.85rem; }
+.problem-icon .icon:before { font-size: 1.1rem; }
+.problem-card h4 { margin-bottom: 0.45rem; font-size: 1.05rem; }
+.problem-card p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.55; max-width: none; }
+@media screen and (max-width: 980px) { .problems-grid { grid-template-columns: repeat(2, 1fr); } }
+@media screen and (max-width: 600px) { .problems-grid { grid-template-columns: 1fr; } }
 </style>
 	</head>
 	<body class="is-preload">
@@ -1610,6 +1619,7 @@ body.pdf-lightbox-open {
 				<nav id="nav">
 					<ul>
 						<li><a href="#one" class="active">Overview</a></li>
+						<li><a href="#problems">When to bring me in</a></li>
 						<li><a href="#two">Selected Operating Work</a></li>
 						<li><a href="#three">AI Tools</a></li>
 						<li><a href="#five">Media</a></li>
@@ -1724,6 +1734,47 @@ body.pdf-lightbox-open {
 							</section>
 
 						<!-- [REMOVED 2026-06: fabricated How-I-get-up-to-speed / Operator Ramp Dashboard section cut for credibility. Rebuild here later with a REAL artifact. Original markup in git history.] -->
+
+						<!-- When to bring me in -->
+							<section id="problems">
+								<div class="container">
+									<h3>When to bring me in</h3>
+									<p class="section-intro">When the business is under pressure, these are the calls I get.</p>
+									<div class="problems-grid">
+										<div class="problem-card">
+											<span class="problem-icon"><i class="icon solid fa-puzzle-piece" aria-hidden="true"></i></span>
+											<h4>Integration that needs running, not planning</h4>
+											<p>Day 1 through stabilization. Someone who executes the integration &mdash; ERPs, people, operations &mdash; not someone who hands you another checklist.</p>
+										</div>
+										<div class="problem-card">
+											<span class="problem-icon"><i class="icon solid fa-hourglass-half" aria-hidden="true"></i></span>
+											<h4>Behind plan, exit clock ticking</h4>
+											<p>The value-creation timeline is slipping. You need someone embedded who closes the gap before the deadline does.</p>
+										</div>
+										<div class="problem-card">
+											<span class="problem-icon"><i class="icon solid fa-fire" aria-hidden="true"></i></span>
+											<h4>Scaling fast, but execution keeps breaking</h4>
+											<p>Growth has outrun the operating system. The team is firefighting, not running the business. Install the discipline before it breaks further.</p>
+										</div>
+										<div class="problem-card">
+											<span class="problem-icon"><i class="icon solid fa-comment" aria-hidden="true"></i></span>
+											<h4>You need a straight answer</h4>
+											<p>Symptoms everywhere, leadership managing optics. You need the truth &mdash; and someone willing to push back on the sponsor when the plan is wrong.</p>
+										</div>
+										<div class="problem-card">
+											<span class="problem-icon"><i class="icon solid fa-users" aria-hidden="true"></i></span>
+											<h4>The culture has to move, without breaking</h4>
+											<p>A sleepy company, a stuck team, or a fragile culture after a deal. Change at the right pace, keep the good people, earn trust before demanding results.</p>
+										</div>
+										<div class="problem-card">
+											<span class="problem-icon"><i class="icon solid fa-bolt" aria-hidden="true"></i></span>
+											<h4>One operator, not a consulting army</h4>
+											<p>No budget for twenty. Parachute in one person who gets hands dirty, handles the mess, and fixes it &mdash; fast.</p>
+										</div>
+									</div>
+								</div>
+							</section>
+
 
 						<!-- Selected Operating Work -->
 							<section id="two">
