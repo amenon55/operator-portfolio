@@ -796,6 +796,10 @@ body {
 	margin: 0 0 0.95rem 0;
 }
 
+.hero-origin { font-family: "Inter", sans-serif; font-size: 0.96rem; line-height: 1.6; color: var(--muted); max-width: 42rem; margin: 0 0 0.9rem 0; }
+.grit-strip { list-style: none; padding: 0; margin: 0.25rem 0 1.75rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.grit-strip li { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; padding: 1rem 1.1rem; font-size: 0.95rem; line-height: 1.5; font-weight: 500; color: var(--ink); }
+@media screen and (max-width: 860px) { .grit-strip { grid-template-columns: 1fr; } }
 .hero-copy-intro {
 	font-family: "Inter", sans-serif;
 	font-size: 0.98rem;
@@ -1568,6 +1572,26 @@ body.pdf-lightbox-open {
 		box-sizing: border-box;
 	}
 }
+
+/* AI Tools section: live-demo card */
+.ai-tool-card { display: grid; grid-template-columns: 1.05fr 1fr; gap: 1.5rem; align-items: stretch; }
+.ai-tool-copy h4 { margin-bottom: 0.35rem; }
+.ai-tool-copy p { max-width: 52ch; }
+.ai-tool-note { font-family: "Inter", sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--muted); }
+.ai-tool-copy .button { margin-top: 0.4rem; }
+.ai-tool-preview { position: relative; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #14141b; min-height: 320px; box-shadow: 0 8px 24px rgba(6, 27, 73, 0.08); }
+.ai-tool-preview-frame { position: absolute; top: 0; left: 0; width: 1280px; height: 980px; border: 0; pointer-events: none; background: #14141b; transform: scale(0.33); transform-origin: top left; }
+.ai-tool-preview-open { position: absolute; inset: 0; z-index: 2; margin: 0; padding: 0; border: 0; background: transparent; cursor: zoom-in; display: flex; align-items: flex-end; justify-content: center; transition: background 150ms ease; }
+.ai-tool-preview-open:hover { background: rgba(6, 27, 73, 0.06); }
+.ai-tool-preview-open:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ai-tool-preview-hint { margin: 0 0 0.9rem; padding: 0.45rem 0.9rem; border-radius: 999px; background: rgba(6, 27, 73, 0.9); color: #fff; font-family: "Inter", sans-serif; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.ai-tool-card .eyebrow { color: var(--accent); margin-bottom: 0.55rem; }
+.ai-tool-preview.is-placeholder { background: var(--panel); display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem; min-height: 200px; }
+.ai-tool-placeholder-text { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-light); max-width: 24ch; line-height: 1.5; }
+@media screen and (max-width: 860px) {
+  .ai-tool-card { grid-template-columns: 1fr; }
+  .ai-tool-preview { min-height: 360px; }
+}
 </style>
 	</head>
 	<body class="is-preload">
@@ -1587,7 +1611,7 @@ body.pdf-lightbox-open {
 					<ul>
 						<li><a href="#one" class="active">Overview</a></li>
 						<li><a href="#two">Selected Operating Work</a></li>
-						<li><a href="#three">Automation I&rsquo;ve Deployed (using AI)</a></li>
+						<li><a href="#three">AI Tools</a></li>
 						<li><a href="#five">Media</a></li>
 						<li><a href="#six">Personal</a></li>
 						<li><a href="#seven">Contact</a></li>
@@ -1620,6 +1644,8 @@ body.pdf-lightbox-open {
 											<div class="hero-copy-column">
 												<p class="hero-lead">I walk into messy post-acquisition and PE-backed businesses, find what&rsquo;s actually broken, and fix it.</p>
 												<p class="hero-kicker">Not from a boardroom. From the floor.</p>
+												<p class="hero-copy-intro">Where I learned it:</p>
+												<p class="hero-origin">Under GE- and Siemens-trained operators at a $30B industrial group, then proven in leaner, faster companies.</p>
 												<p class="hero-copy-intro">How I actually work:</p>
 												<ul class="hero-bullet-list">
 													<li>Work the frontline jobs until I find what&rsquo;s actually broken, not what&rsquo;s on the org chart</li>
@@ -1704,8 +1730,14 @@ body.pdf-lightbox-open {
 								<div class="container">
 									<h3>Selected Operating Work</h3>
 									<p class="section-intro">
-										Three examples of stepping into unstable conditions, focusing on the real constraint, and restoring operating control.
+										I do whatever it takes to get it done. I&rsquo;m the operator you call when something&rsquo;s broken.
 									</p>
+
+									<ul class="grit-strip">
+										<li>As GM of a distressed plant, I learned the business by running the machines myself. Two years in a Minnesota town of 2,000.</li>
+										<li>Led an M&amp;A integration through peak COVID. When the border closed, I lived in a quarantine hotel until the deal closed.</li>
+										<li>Took over a property business I knew nothing about. As VP I didn&rsquo;t need the license, but I earned it in 4 months and worked the properties myself to win the team&rsquo;s respect.</li>
+									</ul>
 
 									<div class="case-grid">
 										<div class="case-card case-template-card">
@@ -1741,60 +1773,56 @@ body.pdf-lightbox-open {
 						<!-- [AI ROLLING TODO (private): 1) add tools-used list (n8n, Cursor, Groq, SQLite, OCR/LLM APIs); 2) consider a real AI artifact/demo; 3) keep AI as supporting proof, not headline. Not this pass.] --> <!-- Practical Automation -->
 							<section id="three">
 								<div class="container">
-									<h3>Automation I&rsquo;ve Deployed (using AI)</h3>
+									<h3>AI Tools I Build</h3>
 									<p class="section-intro">
-										Built automation to reduce manual review burden. 
+										Four levels of how I use AI, from reporting to client delivery. I run it on myself before I run it for anyone else. 
 									</p>
 
 									<div class="automation-stack">
-										<div class="panel automation-template">
-											<h4>n8n &amp; Cursor | API &amp; OCR</h4>
-											<p class="case-subtitle">Scalable vendor screening &amp; bottleneck removal</p>
-											<div class="case-template-columns">
-												<div class="case-template-column">
-													<span class="label">The Constraint</span>
-													<div class="case-template-divider" aria-hidden="true"></div>
-													<p>~$2M in vendor fraud exposure.</p>
-													<p>Thousands of invoices required manual review, slowing the team down.</p>
-												</div>
-												<div class="case-template-column">
-													<span class="label">The Fix</span>
-													<div class="case-template-divider" aria-hidden="true"></div>
-													<p>Extract key data from incoming invoices using OCR</p>
-													<p>Categorize vendor risk and flag anomalies</p>
-													<p>Auto-clear low-risk invoices and route exceptions for review using AI</p>
-												</div>
-												<div class="case-template-column">
-													<span class="label">The Value</span>
-													<div class="case-template-divider" aria-hidden="true"></div>
-													<p>Significant reduction in manual workload</p>
-													<p>Earlier detection of high-risk vendors</p>
-													<p>More consistent and repeatable invoice review process</p>
-												</div>
-											</div>
-
-											<div class="tp-workflow-shot" role="img" aria-label="Invoice intake and vendor screening workflow diagram.">
-												<img src="images/automation-invoice-n8n-flow.png" alt="" loading="lazy" decoding="async" />
-											</div>
+									<div class="ai-tool-card">
+										<div class="ai-tool-copy">
+											<span class="eyebrow">Level 1 · Dashboards &amp; Reporting</span>
+											<h4>Reporting dashboards</h4>
+											<p>Scattered data into one operating view.</p>
+											<button type="button" class="button primary ai-demo-open" data-demo-src="demo/dashboard/index.html" aria-haspopup="dialog" aria-controls="ai-demo-lightbox">Open the live demo</button>
 										</div>
-										
-										<div class="panel technical-proof">
-											<h4 class="tp-headline">Autonomous Life-Stack: Project TODO.</h4>
-											<p class="tp-message">I built a vertically-organized autonomous pipeline that reorganizes my Todo list every midnight and saves ~30 minutes every day planning my day.</p>
-											
-											<div class="tp-grid">
-												<div class="tp-diagram" role="img" aria-label="System architecture flow: Local Today.txt to n8n Workflow to Groq/Llama-3-70B to New Dated File.">
-													<img src="images/automation-todo-n8n-flow.png" alt="" loading="lazy" decoding="async" width="1024" height="576" />
-												</div>
-												
-												<div class="tp-meta">
-													<div class="tp-block">
-														<h5>The Stack</h5>
-														<p>n8n + Cursor + Groq + SQLite.</p>
-													</div>
-												</div>
-											</div>
+										<div class="ai-tool-preview">
+											<iframe class="ai-tool-preview-frame" src="demo/dashboard/index.html" title="Preview of the Portfolio Operations Dashboard" tabindex="-1" aria-hidden="true" loading="lazy" scrolling="no"></iframe>
+											<button type="button" class="ai-tool-preview-open ai-demo-open" data-demo-src="demo/dashboard/index.html" aria-label="Open the Portfolio Operations Dashboard live demo"></button>
 										</div>
+									</div>
+									<div class="ai-tool-card">
+										<div class="ai-tool-copy">
+											<span class="eyebrow">Level 2 · Tools for my productivity</span>
+											<h4>My &ldquo;Today&rdquo; checklist</h4>
+											<p>A lean daily tool that bends to my style, not the other way around.</p>
+											<button type="button" class="button primary ai-demo-open" data-demo-src="demo/today-demo.html" aria-haspopup="dialog" aria-controls="ai-demo-lightbox">Open the live demo</button>
+										</div>
+										<div class="ai-tool-preview">
+											<iframe class="ai-tool-preview-frame" src="demo/today-demo.html" title="Preview of the Today tool" tabindex="-1" aria-hidden="true" loading="lazy" scrolling="no"></iframe>
+											<button type="button" class="ai-tool-preview-open ai-demo-open" data-demo-src="demo/today-demo.html" aria-label="Open the Today tool live demo"></button>
+										</div>
+									</div>
+									<div class="ai-tool-card">
+										<div class="ai-tool-copy">
+											<span class="eyebrow">Level 3 · Automated workflows</span>
+											<h4>Workflow automation</h4>
+											<p>Agents that run repetitive work end to end.</p>
+										</div>
+										<div class="ai-tool-preview is-placeholder">
+											<span class="ai-tool-placeholder-text">Walkthrough on request</span>
+										</div>
+									</div>
+									<div class="ai-tool-card">
+										<div class="ai-tool-copy">
+											<span class="eyebrow">Level 4 · For clients</span>
+											<h4>The same playbook, in the business</h4>
+											<p>Deployed inside client operations. Confidential.</p>
+										</div>
+										<div class="ai-tool-preview is-placeholder">
+											<span class="ai-tool-placeholder-text">Confidential · sanitized demo on request</span>
+										</div>
+									</div>
 									</div>
 								</div>
 							</section>
@@ -1892,7 +1920,46 @@ body.pdf-lightbox-open {
 				</div>
 			</div>
 
-		<!-- Scripts -->
+		<div id="ai-demo-lightbox" class="pdf-lightbox" hidden role="dialog" aria-modal="true" aria-label="Live demo: the Today tool">
+				<div class="pdf-lightbox-backdrop" tabindex="-1" aria-hidden="true"></div>
+				<div class="pdf-lightbox-panel">
+					<button type="button" class="pdf-lightbox-close" id="ai-demo-lightbox-close" aria-label="Close demo">&times;</button>
+					<iframe class="pdf-lightbox-frame" id="ai-demo-lightbox-frame" src="about:blank" title="The Today tool, live demo"></iframe>
+				</div>
+			</div>
+
+			<script>
+				(function () {
+					var lb = document.getElementById('ai-demo-lightbox');
+					var frame = document.getElementById('ai-demo-lightbox-frame');
+					var closeBtn = document.getElementById('ai-demo-lightbox-close');
+					var backdrop = lb && lb.querySelector('.pdf-lightbox-backdrop');
+					var openers = document.querySelectorAll('.ai-demo-open');
+					var lastOpener = null;
+					if (!lb || !frame || !openers.length) return;
+					function openLb(btn) {
+						var src = btn.getAttribute('data-demo-src');
+						if (!src) return;
+						lastOpener = btn;
+						frame.src = src;
+						lb.removeAttribute('hidden');
+						document.body.classList.add('pdf-lightbox-open');
+						if (closeBtn) closeBtn.focus();
+					}
+					function closeLb() {
+						lb.setAttribute('hidden', '');
+						document.body.classList.remove('pdf-lightbox-open');
+						frame.src = 'about:blank';
+						if (lastOpener) lastOpener.focus();
+					}
+					openers.forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); openLb(b); }); });
+					if (closeBtn) closeBtn.addEventListener('click', closeLb);
+					if (backdrop) backdrop.addEventListener('click', closeLb);
+					document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hasAttribute('hidden')) { e.preventDefault(); closeLb(); } });
+				})();
+			</script>
+
+			<!-- Scripts -->
 			<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 			<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 			<script src="assets/js/jquery.min.js"></script>

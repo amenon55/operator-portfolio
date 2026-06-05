@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Today</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f; --surface: #16161a; --surface2: #1e1e24;
+      --border: #2a2a35; --text: #e8e8f0; --muted: #6b6b80;
+      --amber: #fbbf24; --green: #10b981; --blue: #60a5fa;
+      --purple: #a78bfa; --cyan: #22d3ee;
+      --row-h: 48px; --task-font: 16px; --time-font: 11px; --check-size: 18px;
+    }
+
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      padding: 10px 14px 9px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .header-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .header-date  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .header-stats { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .header-stats .num { color: var(--green); font-weight: 600; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 3px; align-items: center; }
+    .tab {
+      font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: 6px;
+      cursor: pointer; color: var(--muted); border: 1px solid transparent;
+      transition: color 0.1s, background 0.1s; user-select: none;
+    }
+    .tab:hover { color: var(--text); background: var(--surface2); }
+    .tab.today.active   { color: var(--amber);  border-color: rgba(251,191,36,0.3);  background: rgba(251,191,36,0.08); }
+    .tab.yest.active    { color: var(--muted);  border-color: rgba(107,107,128,0.35); background: rgba(107,107,128,0.08); }
+    .tab.tmrw.active    { color: var(--blue);   border-color: rgba(96,165,250,0.3);  background: rgba(96,165,250,0.08); }
+    .tab.someday.active { color: var(--purple); border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.08); }
+    .tab.mem.active     { color: var(--cyan);   border-color: rgba(34,211,238,0.3);  background: rgba(34,211,238,0.08); }
+    .tab.drop-target {
+      color: var(--green) !important; border-color: rgba(16,185,129,0.5) !important;
+      background: rgba(16,185,129,0.12) !important;
+      animation: tab-pulse 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes tab-pulse { from { background: rgba(16,185,129,0.08); } to { background: rgba(16,185,129,0.22); } }
+
+    .hist-btn {
+      font-size: 11px; font-weight: 700; padding: 4px 7px; border-radius: 6px;
+      cursor: pointer; color: var(--muted); background: none;
+      border: 1px solid var(--border); transition: color 0.1s, background 0.1s; line-height: 1;
+    }
+    .hist-btn:hover { color: var(--text); background: var(--surface2); }
+    .hist-btn.active { color: var(--muted); border-color: rgba(107,107,128,0.4); background: rgba(107,107,128,0.1); }
+
+    /* Banners */
+    .yest-banner {
+      display: none; align-items: center; gap: 6px; padding: 5px 14px;
+      background: rgba(107,107,128,0.08); border-bottom: 1px solid var(--border);
+      font-size: 11px; color: var(--muted); flex-shrink: 0;
+    }
+    .yest-banner.visible { display: flex; }
+    .now-banner {
+      display: none; align-items: center; gap: 10px; padding: 10px 16px;
+      background: rgba(251,191,36,0.07); border-bottom: 1px solid rgba(251,191,36,0.18);
+      font-size: 13px; color: var(--muted); flex-shrink: 0;
+    }
+    .now-banner.visible { display: flex; }
+    .now-dot { color: var(--amber); font-size: 8px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;}50%{opacity:0.3;} }
+    .now-label { color: var(--amber); font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+
+    /* Task list */
+    .task-list { flex: 1; overflow-y: auto; overflow-x: hidden; }
+    .task-list::-webkit-scrollbar { width: 3px; }
+    .task-list::-webkit-scrollbar-track { background: transparent; }
+    .task-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .task-list.drop-zone { outline: 2px dashed rgba(16,185,129,0.35); outline-offset: -4px; }
+
+    /* Done divider */
+    .done-divider {
+      display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 14px;
+      font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .done-divider::after { content:''; flex:1; height:1px; background: var(--border); }
+
+    /* Task row */
+    .task-row {
+      display: flex; flex-direction: column; height: var(--row-h);
+      overflow: hidden; border-left: 2px solid transparent;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .task-row:hover   { background: var(--surface2); }
+    .task-row.focused { background: rgba(251,191,36,0.05); border-left-color: var(--amber); }
+    .task-row.done    { height: auto; }
+    .task-row.notes-open { height: auto; }
+    .task-row.dragging   { opacity: 0.25; }
+    .task-row.selected   { background: rgba(251,191,36,0.07); border-left-color: var(--amber); }
+    .task-row.drag-over-top    { border-top: 2px solid var(--amber); }
+    .task-row.drag-over-bottom { border-bottom: 2px solid var(--amber); }
+
+    /* Task main */
+    .task-main {
+      display: flex; align-items: center; gap: 10px;
+      height: var(--row-h); flex-shrink: 0; padding: 0 10px 0 4px;
+    }
+    .task-row.done .task-main { height: auto; padding: 1px 10px 1px 4px; }
+
+    /* Drag handle */
+    .drag-handle {
+      color: var(--border); cursor: grab; font-size: 13px;
+      flex-shrink: 0; opacity: 0; transition: opacity 0.1s; line-height: 1;
+    }
+    .task-row:hover .drag-handle { opacity: 1; }
+    .drag-handle:hover { color: var(--muted); }
+
+    /* Checkbox */
+    .task-check {
+      width: var(--check-size); height: var(--check-size); min-width: var(--check-size);
+      border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: border-color 0.15s;
+    }
+    .task-check:hover { border-color: var(--green); }
+    .task-row.done .task-check { border-color: var(--green); background: rgba(16,185,129,0.15); }
+    .check-mark { color: var(--green); font-size: calc(var(--check-size)*0.55); display: none; line-height:1; }
+    .task-row.done .check-mark { display: block; }
+
+    /* Task body */
+    .task-body { flex:1; display:flex; align-items:center; gap:12px; min-width:0; overflow:hidden; }
+    .task-text {
+      font-size: var(--task-font); font-weight: 600; color: var(--text);
+      flex:1; white-space: nowrap; overflow: hidden; line-height: 1.15; letter-spacing: -0.01em;
+    }
+    .task-row.done .task-text { text-decoration: line-through; }
+    .task-time {
+      font-size: var(--time-font); color: var(--text); flex-shrink: 0;
+      font-variant-numeric: tabular-nums; cursor: pointer;
+      padding: 2px 6px; border-radius: 5px; transition: background 0.1s; white-space: nowrap;
+    }
+    .task-time:hover { background: var(--border); }
+    .task-time-add {
+      font-size: var(--time-font); color: var(--border); flex-shrink: 0;
+      cursor: pointer; opacity: 0; padding: 2px 6px; border-radius: 5px;
+      white-space: nowrap; transition: opacity 0.1s, color 0.1s;
+    }
+    .task-row:hover .task-time-add { opacity: 1; }
+    .task-time-add:hover { color: var(--muted); }
+
+    /* Inline edit */
+    .task-text-input {
+      flex:1; background: var(--surface2); border: 1px solid var(--amber); border-radius: 5px;
+      padding: 3px 8px; color: var(--text); font-size: var(--task-font);
+      font-weight: 600; outline: none; min-width: 0;
+    }
+    .task-time-input {
+      width: calc(var(--time-font)*5.5); min-width: 52px;
+      background: var(--surface2); border: 1px solid var(--amber); border-radius: 4px;
+      padding: 2px 5px; color: var(--text); font-size: var(--time-font);
+      outline: none; text-align: center; flex-shrink: 0;
+    }
+
+    /* Action buttons */
+    .task-actions { display:flex; align-items:center; gap:2px; opacity:0; transition:opacity 0.1s; flex-shrink:0; }
+    .task-row:hover .task-actions  { opacity: 1; }
+    .task-row.focused .task-actions { opacity: 1; }
+    .action-btn {
+      width: 22px; height: 22px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 10px; color: var(--muted);
+      transition: color 0.1s, background 0.1s; flex-shrink: 0;
+    }
+    .action-btn:hover { background: var(--border); }
+    .action-btn.notes-btn { font-size: 11px; font-weight: 700; letter-spacing: -0.5px; }
+    .action-btn.notes-btn.has-notes { color: var(--amber); opacity: 1 !important; }
+    .action-btn.notes-btn:hover { color: var(--amber); }
+    .notes-star {
+      color: var(--amber); font-size: calc(var(--task-font)*0.65);
+      font-weight: 900; flex-shrink: 0; line-height: 1; align-self: flex-start; margin-top: 1px;
+    }
+    .action-btn.focus-btn { font-size: 11px; font-weight: 700; }
+    .action-btn.focus-btn:hover { color: var(--amber); }
+    .task-row.focused .action-btn.focus-btn { color: var(--amber); }
+    .action-btn.del-btn:hover { color: #ef4444; }
+
+    /* Notes */
+    .task-notes-section { display: none; padding: 2px 14px 10px 42px; }
+    .task-row.notes-open .task-notes-section { display: block; }
+    .task-note-item { display:flex; align-items:flex-start; gap:8px; padding:3px 0; }
+    .note-bullet { color: var(--muted); font-size: 16px; line-height: 1.3; flex-shrink: 0; margin-top: -1px; }
+    .note-text { flex:1; font-size: max(11px, calc(var(--task-font)*0.6)); color: var(--muted); line-height: 1.4; cursor: default; }
+    .note-del { color: var(--border); cursor: pointer; font-size: 9px; opacity: 0; transition: opacity 0.1s; padding: 2px 4px; flex-shrink: 0; margin-top: 2px; }
+    .task-note-item:hover .note-del { opacity: 1; }
+    .note-del:hover { color: #ef4444; }
+    .note-add-row { display:flex; align-items:center; gap:8px; padding:4px 0 2px; }
+    .note-input {
+      flex:1; background: transparent; border: none; border-bottom: 1px solid var(--border);
+      color: var(--text); font-size: max(11px, calc(var(--task-font)*0.6));
+      outline: none; padding: 2px 0; transition: border-color 0.15s;
+    }
+    .note-input::placeholder { color: var(--border); }
+    .note-input:focus { border-bottom-color: var(--amber); }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--border); flex-shrink: 0; }
+    .add-row { display:flex; gap:6px; padding:8px 10px; }
+    .add-input {
+      flex:1; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 7px; padding: 7px 11px; color: var(--text);
+      font-size: 13px; outline: none; transition: border-color 0.15s; min-width: 0;
+    }
+    .add-input::placeholder { color: var(--muted); }
+    .add-input:focus { border-color: var(--amber); }
+    .add-btn {
+      background: rgba(251,191,36,0.12); color: var(--amber);
+      border: 1px solid rgba(251,191,36,0.25); border-radius: 7px;
+      padding: 7px 12px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background 0.1s; white-space: nowrap; flex-shrink: 0;
+    }
+    .add-btn:hover { background: rgba(251,191,36,0.22); }
+    .clear-row { padding: 0 10px 6px; display: none; }
+    .clear-row.visible { display: block; }
+    .clear-btn { background: none; border: none; color: var(--muted); font-size: 11px; cursor: pointer; padding: 2px 0; }
+    .clear-btn:hover { color: #ef4444; }
+    .empty { padding: 32px 16px; text-align: center; color: var(--muted); font-size: 13px; }
+
+    /* Someday categories */
+    .someday-cat-header {
+      padding: 14px 14px 4px; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .someday-cat-header:first-child { padding-top: 8px; }
+    .someday-cat-header::after { content:''; flex:1; height:1px; background: var(--border); }
+    .someday-row { --row-h: 34px; --task-font: 13px; --time-font: 10px; --check-size: 14px; }
+    .cat-preview {
+      font-size: 11px; color: var(--purple); white-space: nowrap;
+      flex-shrink: 0; align-self: center; opacity: 0.85;
+    }
+
+    /* Working Memory */
+    .wmem-area {
+      display: none; flex: 1; overflow-y: auto; overflow-x: hidden;
+      padding: 16px 18px; outline: none;
+      font-size: 14px; line-height: 1.65; color: var(--text);
+    }
+    .wmem-area:empty::before {
+      content: 'Working memory — dump anything here.\A\AThoughts, screenshots, links, rough notes. This carries forward every day.';
+      white-space: pre; color: var(--muted); pointer-events: none; display: block;
+    }
+    .wmem-area img {
+      max-width: 100%; border-radius: 6px; margin: 6px 0;
+      display: block; border: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .img-resize-overlay {
+      position: fixed; pointer-events: none;
+      border: 2px solid var(--blue); border-radius: 4px; z-index: 999;
+    }
+    .img-resize-handle {
+      position: absolute; right: -6px; bottom: -6px;
+      width: 13px; height: 13px; background: var(--blue);
+      border-radius: 3px; cursor: se-resize; pointer-events: all;
+    }
+    .wmem-area::-webkit-scrollbar { width: 3px; }
+    .wmem-area::-webkit-scrollbar-track { background: transparent; }
+    .wmem-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title" id="header-title">Today</div>
+    <div class="header-date" id="date-str"></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="tabs">
+      <div class="tab today active" id="tab-today"   onclick="switchTab('today')">Today</div>
+      <div class="tab yest"         id="tab-yest"    onclick="switchTab('yesterday')">Yesterday</div>
+      <div class="tab tmrw"         id="tab-tmrw"    onclick="switchTab('tomorrow')">Tomorrow</div>
+      <div class="tab someday"      id="tab-someday" onclick="switchTab('someday')">Someday</div>
+      <div class="tab mem"          id="tab-mem"     onclick="switchTab('memory')">Working Memory</div>
+      <input type="date" id="hist-date-input" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0;" />
+      <button class="hist-btn" id="hist-btn" title="View a past date">◀</button>
+    </div>
+    <div class="header-stats" id="header-stats">
+      <span class="num" id="done-count">0</span>&thinsp;/&thinsp;<span id="total-count">0</span> done
+    </div>
+  </div>
+</div>
+
+<div class="yest-banner" id="yest-banner">
+  Viewing <span id="yest-date-str" style="color:var(--text);margin:0 3px;"></span> — read only · drag to move tasks here
+</div>
+
+<div class="now-banner" id="now-banner">
+  <span class="now-dot">●</span>
+  <span>Now:&nbsp;<span class="now-label" id="now-task-name"></span></span>
+</div>
+
+<div class="task-list" id="task-list"></div>
+<div class="wmem-area" id="wmem-area" contenteditable="true" spellcheck="false"></div>
+
+<div class="footer" id="footer">
+  <div class="clear-row" id="clear-row">
+    <button class="clear-btn" id="clear-btn">Clear completed</button>
+  </div>
+  <div class="add-row">
+    <input class="add-input" id="add-input" placeholder="task  (or: task — 6pm)" autocomplete="off" />
+    <span class="cat-preview" id="cat-preview"></span>
+    <button class="add-btn" id="add-btn">+ Add</button>
+  </div>
+</div>
+
+<style>
+/* Demo-only: keep the Today tool readable on phones (original tool has no media queries) */
+@media (max-width: 480px) {
+  .header { flex-wrap: wrap; gap: 6px; row-gap: 8px; }
+  .tabs { flex-wrap: wrap; }
+  .header-stats { white-space: normal; }
+}
+</style>
+<script>
+/* DEMO SANDBOX — in-memory storage seeded with SAMPLE tasks across every tab.
+   Intercepts all localStorage so the real owner's data is never read or shown,
+   and any edits a viewer makes stay only in their browser tab. */
+(function () {
+  function dateOffset(days) { var d = new Date(); d.setDate(d.getDate() + days); return d.toISOString().slice(0, 10); }
+  var today = dateOffset(0), yest = dateOffset(-1);
+
+  var todayTasks = [
+    { id:'a1', text:'Walk the floor with 2nd-shift supervisor', time:'7:30a', done:false, focus:true,  notes:[{id:'n1', text:'Ask why Tue changeover slipped'}, {id:'n2', text:'Check torque-gun calibration'}], expanded:true },
+    { id:'a2', text:'Daily production stand-up', time:'8:30a', done:false, focus:false, notes:[], expanded:false },
+    { id:'a3', text:'Review weekly P&L vs plan', time:'9:00a', done:false, focus:false, notes:[{id:'n3', text:'OT running 12% over plan'}], expanded:false },
+    { id:'a4', text:'Call supplier re: late castings', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'a5', text:'1:1 with plant controller', time:'1:00p', done:true,  focus:false, notes:[], expanded:false },
+    { id:'a6', text:'Approve PO for line tooling', time:'', done:true, focus:false, notes:[], expanded:false },
+    { id:'a7', text:'Draft 100-day integration update', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'a8', text:'Interview maintenance lead candidate', time:'3:30p', done:false, focus:false, notes:[], expanded:false },
+    { id:'a9', text:'Check Line 2 scrap trend', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'a10', text:'Sign off on safety corrective action', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'a11', text:'Prep numbers for sponsor call', time:'4:30p', done:false, focus:false, notes:[], expanded:false },
+    { id:'a12', text:'Review open POs aging past 30 days', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'a13', text:'Confirm weekend run staffing', time:'', done:false, focus:false, notes:[], expanded:false }
+  ];
+  var tmrwTasks = [
+    { id:'b1', text:'Kaizen on Line 3 changeover', time:'8:00a', done:false, focus:false, notes:[], expanded:false },
+    { id:'b2', text:'Vendor scorecard review', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'b3', text:'Board deck: operations section', time:'11:00a', done:false, focus:false, notes:[], expanded:false },
+    { id:'b4', text:'Site walk with PE deal team', time:'2:00p', done:false, focus:false, notes:[], expanded:false },
+    { id:'b5', text:'Close out CAPEX request', time:'', done:false, focus:false, notes:[], expanded:false }
+  ];
+  var yestTasks = [
+    { id:'c1', text:'Month-end inventory count', time:'', done:true, focus:false, notes:[], expanded:false },
+    { id:'c2', text:'Fix scheduling bottleneck on Line 2', time:'', done:true, focus:false, notes:[], expanded:false },
+    { id:'c3', text:'Quality escape root-cause', time:'', done:true, focus:false, notes:[{id:'n4', text:'Bad lot traced to supplier change'}], expanded:false },
+    { id:'c4', text:'Union grievance meeting', time:'10:00a', done:true, focus:false, notes:[], expanded:false },
+    { id:'c5', text:'Hire 2 temps off the floor', time:'', done:true, focus:false, notes:[], expanded:false },
+    { id:'c6', text:'Supplier quality escalation call', time:'4:00p', done:false, focus:false, notes:[], expanded:false }
+  ];
+  var somedayTasks = [
+    { id:'d1', text:'Stand up MRP cycle-count discipline', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'d2', text:'Cross-train 2nd shift on changeovers', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'d3', text:'Renegotiate inbound freight contract', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'d4', text:'Replace paper travelers with tablets', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'d5', text:'Visit Houston plant', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'d6', text:'Evaluate cobot for packaging cell', time:'', done:false, focus:false, notes:[], expanded:false },
+    { id:'d7', text:'Quarterly supplier business reviews', time:'', done:false, focus:false, notes:[], expanded:false }
+  ];
+
+  var store = {};
+  store['today-v1-' + today] = JSON.stringify(todayTasks);
+  store['today-v1-' + yest] = JSON.stringify(yestTasks);
+  store['tmrw-v1'] = JSON.stringify(tmrwTasks);
+  store['someday-v1'] = JSON.stringify(somedayTasks);
+  store['wmem-v1'] = 'Constraint this week: Line 3 changeover time.<br>Owner: M. Ruiz &nbsp;|&nbsp; Target: 18 &rarr; 8 min.<br>Watch: OT trending +12% vs plan.';
+
+  var shim = {
+    getItem: function (k) { return Object.prototype.hasOwnProperty.call(store, k) ? store[k] : null; },
+    setItem: function (k, v) { store[k] = String(v); },
+    removeItem: function (k) { delete store[k]; },
+    clear: function () { store = {}; },
+    key: function (i) { return Object.keys(store)[i] || null; },
+    get length() { return Object.keys(store).length; }
+  };
+  try {
+    Object.defineProperty(window, 'localStorage', { configurable: true, get: function () { return shim; } });
+  } catch (e) {
+    try { window.localStorage = shim; } catch (e2) {}
+  }
+})();
+</script>
+<script>
+// ── Keys ───────────────────────────────────────────────────────
+const TODAY_KEY   = 'today-v1-' + new Date().toISOString().slice(0, 10);
+const YEST_KEY    = 'today-v1-' + (() => { const d = new Date(); d.setDate(d.getDate()-1); return d.toISOString().slice(0,10); })();
+const TMRW_KEY        = 'tmrw-v1';
+const TMRW_ROLLED_KEY = 'tmrw-rolled-v1';
+const TODAY_DATE      = new Date().toISOString().slice(0, 10);
+const SOMEDAY_KEY = 'someday-v1';
+const WMEM_KEY    = 'wmem-v1';
+
+// ── State ──────────────────────────────────────────────────────
+let viewMode = 'today';
+let histDate = null;
+let tasks    = loadKey(TODAY_KEY);
+
+// ── Storage ────────────────────────────────────────────────────
+function loadKey(key) {
+  try { return JSON.parse(localStorage.getItem(key) || '[]').map(t => ({ notes:[], expanded:false, ...t })); }
+  catch { return []; }
+}
+function saveKey(key, arr) { localStorage.setItem(key, JSON.stringify(arr)); }
+function save() { saveKey(TODAY_KEY, tasks); }
+
+function tabKey(tab) {
+  if (tab === 'today')     return TODAY_KEY;
+  if (tab === 'yesterday') return YEST_KEY;
+  if (tab === 'tomorrow')  return TMRW_KEY;
+  if (tab === 'someday')   return SOMEDAY_KEY;
+  if (tab === 'history')   return histDate ? 'today-v1-' + histDate : null;
+  return null;
+}
+
+function currentKey() { return tabKey(viewMode); }
+
+// ── Generic mutations ──────────────────────────────────────────
+function getArr(key) { return key === TODAY_KEY ? tasks : loadKey(key); }
+function putArr(key, arr) { if (key === TODAY_KEY) { tasks = arr; save(); } else saveKey(key, arr); }
+
+function toggleDoneIn(id, key) {
+  const arr = getArr(key);
+  const t = arr.find(t => t.id === id);
+  if (!t) return;
+  t.done = !t.done;
+  if (t.done) { t.focus = false; t.expanded = false; }
+  putArr(key, arr); reRender();
+}
+function toggleFocusIn(id, key) {
+  const arr = getArr(key);
+  const already = arr.find(t => t.id === id)?.focus;
+  arr.forEach(t => { t.focus = false; });
+  if (!already) { const t = arr.find(t => t.id === id); if (t && !t.done) t.focus = true; }
+  putArr(key, arr); reRender();
+}
+function toggleExpandedIn(id, key) {
+  const arr = getArr(key);
+  const t = arr.find(t => t.id === id);
+  if (!t) return;
+  t.expanded = !t.expanded;
+  putArr(key, arr); reRender();
+}
+function deleteTaskFrom(id, key) {
+  putArr(key, getArr(key).filter(t => t.id !== id)); reRender();
+}
+function updateTaskIn(id, text, time, key) {
+  const arr = getArr(key);
+  const t = arr.find(t => t.id === id);
+  if (t) { t.text = text; t.time = time; }
+  putArr(key, arr);
+}
+function addNoteIn(taskId, text, key) {
+  if (!text.trim()) return;
+  const arr = getArr(key);
+  const t = arr.find(t => t.id === taskId);
+  if (!t) return;
+  t.notes.push({ id: String(Date.now()), text: text.trim() });
+  t.expanded = true;
+  putArr(key, arr); reRender();
+}
+function deleteNoteIn(taskId, noteId, key) {
+  const arr = getArr(key);
+  const t = arr.find(t => t.id === taskId);
+  if (t) t.notes = t.notes.filter(n => n.id !== noteId);
+  putArr(key, arr); reRender();
+}
+function addTaskTo(raw, key) {
+  if (!raw.trim()) return;
+  const { text, time } = parseInput(raw);
+  const arr = getArr(key);
+  const task = { id: String(Date.now()), text, time, done:false, focus:false, notes:[], expanded:false };
+  if (key === SOMEDAY_KEY) task.category = detectCategory(text);
+  arr.push(task);
+  putArr(key, arr); reRender();
+}
+function clearDoneIn(key) {
+  putArr(key, getArr(key).filter(t => !t.done)); reRender();
+}
+
+// ── Parse ──────────────────────────────────────────────────────
+function parseInput(raw) {
+  const s = raw.trim();
+  const m = s.match(/^(.+?)\s*[-–—]\s*(\S.*?)$/);
+  if (m && /\d/.test(m[2])) return { text: m[1].trim(), time: m[2].trim() };
+  return { text: s, time: '' };
+}
+function parseTime(str) {
+  if (!str) return Infinity;
+  const s = str.trim().toLowerCase();
+  const ampm = s.match(/(am|pm)$/);
+  const isPM = ampm ? ampm[1] === 'pm' : null;
+  const p = s.match(/^(\d{1,2})(?::(\d{2}))?/);
+  if (!p) return Infinity;
+  let h = parseInt(p[1]);
+  const min = p[2] ? parseInt(p[2]) : 0;
+  if (isPM !== null) {
+    if (isPM && h !== 12) h += 12;
+    if (!isPM && h === 12) h = 0;
+  } else {
+    // No AM/PM specified — pick the next upcoming occurrence relative to now
+    const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
+    const asMins  = h * 60 + min;         // as-is (e.g. h=7 → 7:00)
+    const asPM    = (h % 12 + 12) * 60 + min; // PM version (e.g. 7 → 19:00)
+    const asAM    = (h % 12) * 60 + min;       // AM version (e.g. 7 → 7:00)
+    if (h === 0 || h === 12) {
+      // 12 → noon, 0 → midnight — unambiguous
+    } else if (h >= 1 && h <= 11) {
+      // Pick whichever of AM/PM is next after now; if both are past, pick PM
+      if (asPM >= nowMins) h = h + 12;       // PM is still upcoming → use PM
+      else if (asAM >= nowMins) { /* keep AM */ }
+      else h = h + 12;                        // both past → default PM
+    }
+    // h >= 13 is already unambiguous 24h
+  }
+  return h * 60 + min;
+}
+
+// ── Tab switching ──────────────────────────────────────────────
+const TAB_MAP = { today:'tab-today', yesterday:'tab-yest', tomorrow:'tab-tmrw', someday:'tab-someday', memory:'tab-mem' };
+const TAB_TITLES = { today:'Today', yesterday:'Yesterday', tomorrow:'Tomorrow', someday:'Someday', memory:'Working Memory', history:'History' };
+const ADD_PLACEHOLDERS = { today:'task  (or: task — 6pm)', tomorrow:'add to tomorrow…', someday:'add to someday…' };
+
+function switchTab(tab, dateStr) {
+  const prevMode = viewMode;
+  viewMode = (tab === 'history') ? 'history' : tab;
+  if (tab === 'history' && dateStr) histDate = dateStr;
+
+  Object.entries(TAB_MAP).forEach(([t, id]) => {
+    const el = document.getElementById(id);
+    el.classList.remove('active');
+    if (t === tab || (tab === 'history' && t === 'yesterday')) el.classList.add('active');
+  });
+  document.getElementById('hist-btn').classList.toggle('active', tab === 'history');
+
+  const isReadonly = tab === 'yesterday' || tab === 'history';
+  const isMemory   = tab === 'memory';
+
+  document.getElementById('yest-banner').classList.toggle('visible', isReadonly);
+  document.getElementById('now-banner').style.display  = tab === 'today' ? '' : 'none';
+  document.getElementById('footer').style.display      = (isReadonly || isMemory) ? 'none' : '';
+  document.getElementById('header-stats').style.visibility = isMemory ? 'hidden' : '';
+  document.getElementById('header-title').textContent  = TAB_TITLES[tab] || 'Today';
+  document.title = 'Checklist — ' + (TAB_TITLES[tab] || 'Today');
+  document.getElementById('task-list').style.display   = isMemory ? 'none' : '';
+  document.getElementById('wmem-area').style.display   = isMemory ? 'block' : 'none';
+  if (ADD_PLACEHOLDERS[tab]) document.getElementById('add-input').placeholder = ADD_PLACEHOLDERS[tab];
+
+  if (isReadonly) {
+    const key = tab === 'history' ? ('today-v1-' + histDate) : YEST_KEY;
+    const d   = tab === 'history'
+      ? new Date(histDate + 'T12:00:00')
+      : (() => { const x = new Date(); x.setDate(x.getDate()-1); return x; })();
+    document.getElementById('yest-date-str').textContent =
+      d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+    renderView(loadKey(key), tab === 'history' ? 'history' : 'yesterday');
+  } else if (tab === 'today') {
+    tasks = loadKey(TODAY_KEY); render();
+  } else if (tab === 'tomorrow') {
+    renderList(TMRW_KEY, 'tomorrow');
+  } else if (tab === 'someday') {
+    renderSomeday();
+  } else if (tab === 'memory') {
+    _deselImg(); clearSelection();
+    loadWmem();
+    setTimeout(() => document.getElementById('wmem-area').focus(), 50);
+  } else {
+    // Flush any pending Working Memory save before leaving the tab
+    if (prevMode === 'memory') {
+      clearTimeout(wmemTimer);
+      localStorage.setItem(WMEM_KEY, wmemEl.innerHTML);
+    }
+    _deselImg(); clearSelection();
+  }
+}
+
+function reRender() {
+  if (viewMode === 'today')     render();
+  else if (viewMode === 'tomorrow')  renderList(TMRW_KEY, 'tomorrow');
+  else if (viewMode === 'someday')   renderSomeday();
+  else if (viewMode === 'yesterday') renderView(loadKey(YEST_KEY), 'yesterday');
+  else if (viewMode === 'history' && histDate) renderView(loadKey('today-v1-'+histDate), 'history');
+}
+
+// ── Working Memory ─────────────────────────────────────────────
+const wmemEl = document.getElementById('wmem-area');
+let wmemTimer;
+
+function loadWmem() {
+  wmemEl.innerHTML = localStorage.getItem(WMEM_KEY) || '';
+  wmemEl.querySelectorAll('img').forEach(makeResizable);
+}
+function saveWmem() {
+  clearTimeout(wmemTimer);
+  wmemTimer = setTimeout(() => localStorage.setItem(WMEM_KEY, wmemEl.innerHTML), 600);
+}
+wmemEl.addEventListener('input', saveWmem);
+
+wmemEl.addEventListener('paste', e => {
+  const items = [...(e.clipboardData?.items || [])];
+  const imgItem = items.find(i => i.type.startsWith('image/'));
+  if (!imgItem) return;
+  e.preventDefault();
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = document.createElement('img');
+    img.src = ev.target.result;
+    const sel = window.getSelection();
+    if (sel?.rangeCount) {
+      const r = sel.getRangeAt(0); r.deleteContents(); r.insertNode(img); r.collapse(false);
+    } else { wmemEl.appendChild(img); }
+    makeResizable(img);
+    saveWmem();
+  };
+  reader.readAsDataURL(imgItem.getAsFile());
+});
+
+// ── Image resize in working memory ────────────────────────────
+let _selImg = null, _selOverlay = null;
+
+function _posOverlay() {
+  if (!_selImg || !_selOverlay) return;
+  const r = _selImg.getBoundingClientRect();
+  Object.assign(_selOverlay.style, { left:r.left+'px', top:r.top+'px', width:r.width+'px', height:r.height+'px' });
+}
+
+function _deselImg() {
+  if (_selOverlay) { _selOverlay.remove(); _selOverlay = null; }
+  _selImg = null;
+}
+
+function makeResizable(img) {
+  img.addEventListener('click', e => {
+    e.stopPropagation();
+    if (_selImg === img) { _deselImg(); return; }
+    _deselImg();
+    _selImg = img;
+    const ov = document.createElement('div');
+    ov.className = 'img-resize-overlay';
+    const h = document.createElement('div');
+    h.className = 'img-resize-handle';
+    ov.appendChild(h);
+    document.body.appendChild(ov);
+    _selOverlay = ov;
+    _posOverlay();
+
+    h.addEventListener('mousedown', e => {
+      e.preventDefault(); e.stopPropagation();
+      const sx = e.clientX, sw = img.offsetWidth;
+      const onMove = e => {
+        img.style.width  = Math.max(60, sw + e.clientX - sx) + 'px';
+        img.style.height = 'auto';
+        _posOverlay();
+      };
+      const onUp = () => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        saveWmem();
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+}
+
+document.addEventListener('click', e => {
+  if (_selOverlay && !_selOverlay.contains(e.target) && e.target !== _selImg) _deselImg();
+});
+wmemEl.addEventListener('scroll', _posOverlay);
+
+wmemEl.addEventListener('dragover', e => { if ([...e.dataTransfer.types].includes('Files')) e.preventDefault(); });
+wmemEl.addEventListener('drop', e => {
+  const imgs = [...(e.dataTransfer?.files || [])].filter(f => f.type.startsWith('image/'));
+  if (!imgs.length) return;
+  e.preventDefault();
+  imgs.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.createElement('img'); img.src = ev.target.result;
+      wmemEl.appendChild(img); makeResizable(img); saveWmem();
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+// ── Canvas text measurement ────────────────────────────────────
+function canvasWidth(text, font) {
+  const c = canvasWidth._c || (canvasWidth._c = document.createElement('canvas'));
+  const ctx = c.getContext('2d'); ctx.font = font;
+  return ctx.measureText(text).width * 1.06;
+}
+
+// ── Font scaling ───────────────────────────────────────────────
+function fitText(displayTasks) {
+  const list = document.getElementById('task-list');
+  const rows = list.querySelectorAll('.task-row:not(.done)');
+  if (!rows.length) return;
+  const hasDivider = !!list.querySelector('.done-divider');
+  const doneRows   = list.querySelectorAll('.task-row.done').length;
+  const availH     = list.clientHeight - (hasDivider ? 30 : 0) - doneRows * 28;
+  const rowH       = Math.max(28, availH / rows.length);
+  const fontFromH  = Math.max(11, Math.floor(rowH * 0.52));
+  const OVERHEAD   = 140;
+  const availW     = Math.max(60, list.clientWidth - OVERHEAD);
+  const ff         = '-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif';
+  const arr        = displayTasks || tasks;
+  function allFitWidth(size) {
+    const mf = `600 ${size}px ${ff}`, tf = `400 ${Math.floor(size*0.60)}px ${ff}`;
+    return arr.every(t => canvasWidth(t.text, mf) + (t.time ? canvasWidth(t.time, tf) + 20 : 0) <= availW);
+  }
+  let lo = 11, hi = 128;
+  while (lo < hi - 1) { const mid = Math.floor((lo+hi)/2); if (allFitWidth(mid)) lo=mid; else hi=mid; }
+  const font = Math.min(fontFromH, lo);
+  const r = document.documentElement;
+  r.style.setProperty('--row-h',      rowH + 'px');
+  r.style.setProperty('--task-font',  font + 'px');
+  r.style.setProperty('--time-font',  Math.max(9, Math.floor(font*0.60)) + 'px');
+  r.style.setProperty('--check-size', Math.max(15, Math.min(Math.floor(font*0.55), 36)) + 'px');
+}
+
+// ── Auto-categorize (Someday) ──────────────────────────────────
+const CATS = [
+  { name: 'Work',     kw: ['work','project','meeting','client','email','report','job','career','office','deadline','proposal','presentation','hire','interview'] },
+  { name: 'Health',   kw: ['gym','workout','exercise','run','yoga','diet','sleep','doctor','dentist','health','fitness','walk','meditat','physio','therapy','medication'] },
+  { name: 'Learning', kw: ['learn','course','read','book','study','research','practice','skill','class','tutorial','podcast','certificate','train','watch'] },
+  { name: 'Finance',  kw: ['tax','money','bank','invest','budget','bill','pay','insurance','expense','income','saving','loan','credit','accountant'] },
+  { name: 'Home',     kw: ['fix','clean','repair','buy','groceries','apartment','house','room','organiz','declutter','laundry','kitchen','furniture','move'] },
+  { name: 'Social',   kw: ['call','visit','dinner','friend','family','party','lunch','coffee','catch up','message','text','reach out','birthday','wedding','gift'] },
+  { name: 'Travel',   kw: ['trip','flight','hotel','pack','passport','visa','travel','vacation','airbnb','itinerary','drive','road'] },
+  { name: 'Creative', kw: ['write','draw','design','create','build','make','art','music','photo','video','record','blog','website'] },
+  { name: 'Admin',    kw: ['renew','register','apply','form','document','sign','submit','license','permit','notif','paperwork'] },
+];
+
+function detectCategory(text) {
+  const lower = text.toLowerCase();
+  for (const c of CATS) { if (c.kw.some(kw => lower.includes(kw))) return c.name; }
+  return 'Other';
+}
+
+// ── Render helpers ─────────────────────────────────────────────
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function appendDivider(list) {
+  const d = document.createElement('div'); d.className = 'done-divider'; d.textContent = 'Completed';
+  list.appendChild(d);
+}
+
+// ── Render: today ──────────────────────────────────────────────
+function render() {
+  const list    = document.getElementById('task-list');
+  const pending = tasks.filter(t => !t.done);
+  const done    = tasks.filter(t =>  t.done);
+  const focused = tasks.find(t => t.focus);
+
+  document.getElementById('done-count').textContent  = done.length;
+  document.getElementById('total-count').textContent = tasks.length;
+  const banner = document.getElementById('now-banner');
+  if (focused) { document.getElementById('now-task-name').textContent = focused.text; banner.classList.add('visible'); }
+  else { banner.classList.remove('visible'); }
+  document.getElementById('clear-row').classList.toggle('visible', done.length > 0);
+
+  list.innerHTML = '';
+  if (!tasks.length) { list.innerHTML = '<div class="empty">Nothing yet — add a task below</div>'; return; }
+
+  const timed   = pending.filter(t =>  t.time).sort((a,b) => parseTime(a.time)-parseTime(b.time));
+  const untimed = pending.filter(t => !t.time);
+  [...timed, ...untimed].forEach(t => list.appendChild(makeRow(t, 'today', TODAY_KEY)));
+  if (done.length) { appendDivider(list); done.forEach(t => list.appendChild(makeRow(t, 'today', TODAY_KEY))); }
+
+  initWithinDrag(untimed, TODAY_KEY);
+  requestAnimationFrame(() => fitText(tasks));
+}
+
+// ── Render: read-only (yesterday / history) ────────────────────
+function renderView(taskList, tab) {
+  const list    = document.getElementById('task-list');
+  const pending = taskList.filter(t => !t.done);
+  const done    = taskList.filter(t =>  t.done);
+  const key     = tabKey(tab);
+
+  document.getElementById('done-count').textContent  = done.length;
+  document.getElementById('total-count').textContent = taskList.length;
+
+  list.innerHTML = '';
+  if (!taskList.length) { list.innerHTML = '<div class="empty">No tasks found for this day</div>'; return; }
+
+  const timed   = pending.filter(t =>  t.time).sort((a,b) => parseTime(a.time)-parseTime(b.time));
+  const untimed = pending.filter(t => !t.time);
+  [...timed, ...untimed].forEach(t => list.appendChild(makeRow(t, tab, key)));
+  if (done.length) { appendDivider(list); done.forEach(t => list.appendChild(makeRow(t, tab, key))); }
+
+  initCrossDragSource(pending, tab, key);
+  requestAnimationFrame(() => fitText(taskList));
+}
+
+// ── Render: tomorrow / someday ─────────────────────────────────
+function renderList(key, tab) {
+  const list      = document.getElementById('task-list');
+  const listTasks = loadKey(key);
+  const pending   = listTasks.filter(t => !t.done);
+  const done      = listTasks.filter(t =>  t.done);
+
+  document.getElementById('done-count').textContent  = done.length;
+  document.getElementById('total-count').textContent = listTasks.length;
+  document.getElementById('clear-row').classList.toggle('visible', done.length > 0);
+
+  list.innerHTML = '';
+  if (!listTasks.length) { list.innerHTML = '<div class="empty">Nothing here — add a task below</div>'; requestAnimationFrame(() => fitText([])); return; }
+
+  pending.forEach(t => list.appendChild(makeRow(t, tab, key)));
+  if (done.length) { appendDivider(list); done.forEach(t => list.appendChild(makeRow(t, tab, key))); }
+
+  initWithinDrag(pending, key);
+  requestAnimationFrame(() => fitText(listTasks));
+}
+
+// ── Render: someday (categorized) ─────────────────────────────
+function renderSomeday() {
+  const list = document.getElementById('task-list');
+  let allTasks = loadKey(SOMEDAY_KEY);
+
+  // Auto-assign missing categories, save back if any changed
+  let changed = false;
+  allTasks = allTasks.map(t => {
+    if (!t.category) { changed = true; return { ...t, category: detectCategory(t.text) }; }
+    return t;
+  });
+  if (changed) saveKey(SOMEDAY_KEY, allTasks);
+
+  const pending = allTasks.filter(t => !t.done);
+  const done    = allTasks.filter(t =>  t.done);
+
+  document.getElementById('done-count').textContent  = done.length;
+  document.getElementById('total-count').textContent = allTasks.length;
+  document.getElementById('clear-row').classList.toggle('visible', done.length > 0);
+
+  list.innerHTML = '';
+  if (!allTasks.length) {
+    list.innerHTML = '<div class="empty">Nothing here yet — add a task below</div>';
+    return;
+  }
+
+  // Group pending by category, sorted alphabetically
+  const groups = {};
+  pending.forEach(t => { const c = t.category || 'Other'; (groups[c] = groups[c] || []).push(t); });
+  Object.keys(groups).sort().forEach(cat => {
+    const hdr = document.createElement('div');
+    hdr.className = 'someday-cat-header';
+    hdr.textContent = cat;
+    list.appendChild(hdr);
+    groups[cat].forEach(t => {
+      const row = makeRow(t, 'someday', SOMEDAY_KEY);
+      row.classList.add('someday-row');
+      row.dataset.category = cat;
+      list.appendChild(row);
+    });
+  });
+
+  if (done.length) {
+    appendDivider(list);
+    done.forEach(t => {
+      const row = makeRow(t, 'someday', SOMEDAY_KEY);
+      row.classList.add('someday-row');
+      list.appendChild(row);
+    });
+  }
+
+  initWithinDrag(pending, SOMEDAY_KEY);
+}
+
+// ── Make row ───────────────────────────────────────────────────
+function makeRow(task, tab, key) {
+  const readOnly = tab === 'yesterday' || tab === 'history';
+  const isToday  = tab === 'today';
+  const hasNotes = task.notes && task.notes.length > 0;
+  const isOpen   = task.expanded && !task.done;
+
+  // Hide drag handle: for today timed tasks (can't reorder); never hide for read-only/list (drag-out works)
+  const hideHandle = !readOnly && isToday && !!task.time;
+
+  const row = document.createElement('div');
+  row.className = 'task-row' + (task.done ? ' done' : '') + (task.focus ? ' focused' : '') + (isOpen ? ' notes-open' : '');
+  row.dataset.id = task.id;
+
+  const main = document.createElement('div');
+  main.className = 'task-main';
+  main.innerHTML = `
+    <div class="drag-handle" style="${hideHandle ? 'visibility:hidden' : ''}">⠿</div>
+    <div class="task-check" style="${readOnly ? 'pointer-events:none;opacity:0.5' : ''}"><span class="check-mark">✓</span></div>
+    <div class="task-body">
+      <div class="task-text">${esc(task.text)}</div>
+      ${hasNotes ? `<span class="notes-star">*</span>` : ''}
+      ${task.time
+        ? `<div class="task-time" style="${readOnly ? 'pointer-events:none' : ''}">${esc(task.time)}</div>`
+        : (!task.done && !readOnly ? `<div class="task-time-add">+ time</div>` : '')
+      }
+    </div>
+    ${!readOnly ? `<div class="task-actions">
+      ${!task.done ? `<div class="action-btn notes-btn ${hasNotes ? 'has-notes' : ''}" title="Notes">N</div>` : ''}
+      ${isToday && !task.done ? `<div class="action-btn focus-btn" title="Focus">F</div>` : ''}
+      <div class="action-btn del-btn" title="Delete">✕</div>
+    </div>` : ''}
+  `;
+  row.appendChild(main);
+
+  // Notes section
+  if (!task.done) {
+    const ns = document.createElement('div');
+    ns.className = 'task-notes-section';
+    (task.notes || []).forEach(n => {
+      const item = document.createElement('div');
+      item.className = 'task-note-item';
+      item.innerHTML = `<span class="note-bullet">·</span><span class="note-text">${esc(n.text)}</span>${!readOnly ? `<span class="note-del">✕</span>` : ''}`;
+      if (!readOnly) item.querySelector('.note-del').addEventListener('click', e => { e.stopPropagation(); deleteNoteIn(task.id, n.id, key); });
+      ns.appendChild(item);
+    });
+    if (!readOnly) {
+      const ar = document.createElement('div');
+      ar.className = 'note-add-row';
+      ar.innerHTML = `<span class="note-bullet">·</span><input class="note-input" placeholder="Add a note…" autocomplete="off" />`;
+      const inp = ar.querySelector('.note-input');
+      inp.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && inp.value.trim()) { e.preventDefault(); addNoteIn(task.id, inp.value, key); }
+        if (e.key === 'Escape') inp.blur();
+      });
+      ns.appendChild(ar);
+    }
+    row.appendChild(ns);
+  }
+
+  // Listeners
+  if (!readOnly) {
+    main.querySelector('.task-check').addEventListener('click', e => { e.stopPropagation(); toggleDoneIn(task.id, key); });
+    const nb = main.querySelector('.notes-btn');
+    if (nb) nb.addEventListener('click', e => { e.stopPropagation(); toggleExpandedIn(task.id, key); });
+    const fb = main.querySelector('.focus-btn');
+    if (fb) fb.addEventListener('click', e => { e.stopPropagation(); toggleFocusIn(task.id, key); });
+    main.querySelector('.del-btn').addEventListener('click', e => { e.stopPropagation(); deleteTaskFrom(task.id, key); });
+  }
+  if (readOnly) {
+    row.style.cursor = 'pointer';
+    // Click row → toggle selection
+    row.addEventListener('click', e => {
+      if (e.target.closest('.drag-handle')) return;
+      row.classList.toggle('selected');
+      if (row.classList.contains('selected')) selectedIds.add(task.id);
+      else selectedIds.delete(task.id);
+    });
+    // Click notes-star → expand notes
+    const star = main.querySelector('.notes-star');
+    if (star) star.addEventListener('click', e => { e.stopPropagation(); row.classList.toggle('notes-open'); });
+  }
+
+  // Edit text
+  main.querySelector('.task-text').addEventListener('dblclick', () => {
+    if (task.done || readOnly) return;
+    const textEl = main.querySelector('.task-text');
+    const inp = document.createElement('input');
+    inp.className = 'task-text-input'; inp.value = task.text;
+    textEl.replaceWith(inp); inp.focus(); inp.select();
+    function commit() { updateTaskIn(task.id, inp.value.trim() || task.text, task.time, key); reRender(); }
+    inp.addEventListener('blur', commit);
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } if (e.key === 'Escape') reRender(); });
+  });
+
+  // Edit time
+  if (!readOnly) {
+    function openTimeEdit(el) {
+      if (task.done) return;
+      const inp = document.createElement('input');
+      inp.className = 'task-time-input'; inp.value = task.time || ''; inp.placeholder = '6pm';
+      el.replaceWith(inp); inp.focus(); inp.select();
+      function commit() { updateTaskIn(task.id, task.text, inp.value.trim(), key); reRender(); }
+      inp.addEventListener('blur', commit);
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } if (e.key === 'Escape') reRender(); });
+    }
+    const te = main.querySelector('.task-time'), ta = main.querySelector('.task-time-add');
+    if (te) te.addEventListener('click', e => { e.stopPropagation(); openTimeEdit(te); });
+    if (ta) ta.addEventListener('click', e => { e.stopPropagation(); openTimeEdit(ta); });
+  }
+
+  return row;
+}
+
+// ── Selection (read-only tabs) ─────────────────────────────────
+let selectedIds = new Set();
+
+function clearSelection() {
+  selectedIds.clear();
+  document.querySelectorAll('.task-row.selected').forEach(r => r.classList.remove('selected'));
+}
+
+// ── Drag state ─────────────────────────────────────────────────
+let dragId    = null;
+let crossDrag = null; // { tasks: [...], fromTab, fromKey }
+
+function highlightDestTabs(fromTab) {
+  ['today','tomorrow','someday'].filter(t => t !== fromTab).forEach(t => {
+    document.getElementById(TAB_MAP[t]).classList.add('drop-target');
+  });
+}
+function clearTabHighlights() {
+  Object.values(TAB_MAP).forEach(id => document.getElementById(id).classList.remove('drop-target'));
+}
+
+// ── Within-list drag (today / tomorrow / someday) ──────────────
+function initWithinDrag(pending, key) {
+  const rows      = document.querySelectorAll('.task-row:not(.done)');
+  const pendingIds = new Set(pending.map(t => t.id));
+  let handleDown  = false;
+
+  rows.forEach(row => {
+    if (!pendingIds.has(row.dataset.id)) return;
+    const task   = pending.find(t => t.id === row.dataset.id);
+    const handle = row.querySelector('.drag-handle');
+    if (!handle || handle.style.visibility === 'hidden') return;
+
+    handle.addEventListener('mousedown', () => { handleDown = true; });
+    document.addEventListener('mouseup', () => { handleDown = false; }, { once: true });
+    row.setAttribute('draggable', 'true');
+
+    row.addEventListener('dragstart', e => {
+      if (!handleDown) { e.preventDefault(); return; }
+      dragId    = row.dataset.id;
+      crossDrag = { tasks: [task], fromTab: viewMode, fromKey: key };
+      handle.style.cursor = 'grabbing';
+      setTimeout(() => row.classList.add('dragging'), 0);
+      e.dataTransfer.effectAllowed = 'move';
+      highlightDestTabs(viewMode);
+    });
+
+    row.addEventListener('dragend', () => {
+      handle.style.cursor = '';
+      rows.forEach(r => r.classList.remove('dragging','drag-over-top','drag-over-bottom'));
+      dragId = null; crossDrag = null;
+      clearTabHighlights();
+      document.getElementById('task-list').classList.remove('drop-zone');
+    });
+
+    row.addEventListener('dragover', e => {
+      if (!dragId || dragId === row.dataset.id) return;
+      if (crossDrag?.fromTab !== viewMode) return; // cross-tab in progress, skip row target
+      e.preventDefault(); e.stopPropagation();
+      rows.forEach(r => r.classList.remove('drag-over-top','drag-over-bottom'));
+      const rect = row.getBoundingClientRect();
+      row.classList.add(e.clientY < rect.top + rect.height/2 ? 'drag-over-top' : 'drag-over-bottom');
+    });
+    row.addEventListener('dragleave', () => row.classList.remove('drag-over-top','drag-over-bottom'));
+    row.addEventListener('drop', e => {
+      if (!dragId || dragId === row.dataset.id || !crossDrag || crossDrag.fromTab !== viewMode) return;
+      e.preventDefault(); e.stopPropagation();
+      // In Someday: if dropping into a different category, reassign category
+      if (key === SOMEDAY_KEY && row.dataset.category) {
+        const arr = getArr(SOMEDAY_KEY);
+        const t = arr.find(t => t.id === dragId);
+        if (t && t.category !== row.dataset.category) {
+          t.category = row.dataset.category;
+          putArr(SOMEDAY_KEY, arr);
+          reRender(); return;
+        }
+      }
+      const after = e.clientY >= row.getBoundingClientRect().top + row.getBoundingClientRect().height/2;
+      reorderInKey(dragId, row.dataset.id, after, key);
+    });
+  });
+}
+
+function reorderInKey(srcId, dstId, after, key) {
+  const arr = key === TODAY_KEY ? tasks : loadKey(key);
+  const si = arr.findIndex(t => t.id === srcId);
+  let   di = arr.findIndex(t => t.id === dstId);
+  if (si === -1 || di === -1) return;
+  const [moved] = arr.splice(si, 1);
+  di = arr.findIndex(t => t.id === dstId);
+  arr.splice(after ? di+1 : di, 0, moved);
+  if (key === TODAY_KEY) { save(); render(); } else { saveKey(key, arr); renderList(key, viewMode); }
+}
+
+// ── Cross-tab drag source (read-only tabs) ─────────────────────
+function initCrossDragSource(pending, tab, key) {
+  const rows = document.querySelectorAll('.task-row:not(.done)');
+  let handleDown = false;
+
+  rows.forEach(row => {
+    const task = pending.find(t => t.id === row.dataset.id);
+    if (!task) return;
+    const handle = row.querySelector('.drag-handle');
+    if (!handle) return;
+
+    handle.addEventListener('mousedown', () => { handleDown = true; });
+    document.addEventListener('mouseup', () => { handleDown = false; }, { once: true });
+    row.setAttribute('draggable', 'true');
+
+    row.addEventListener('dragstart', e => {
+      if (!handleDown) { e.preventDefault(); return; }
+      const dragTasks = selectedIds.size > 0 && selectedIds.has(task.id)
+        ? pending.filter(t => selectedIds.has(t.id))
+        : [task];
+      crossDrag = { tasks: dragTasks, fromTab: tab, fromKey: key };
+      handle.style.cursor = 'grabbing';
+      setTimeout(() => row.classList.add('dragging'), 0);
+      e.dataTransfer.effectAllowed = 'move';
+      highlightDestTabs(tab);
+    });
+
+    row.addEventListener('dragend', () => {
+      handle.style.cursor = ''; row.classList.remove('dragging');
+      crossDrag = null; clearTabHighlights();
+      document.getElementById('task-list').classList.remove('drop-zone');
+    });
+  });
+}
+
+// ── Cross-tab drop targets (set up once on boot) ───────────────
+let _tabHoverTimer = null;
+
+function initCrossTabDrop() {
+  const taskList = document.getElementById('task-list');
+
+  ['today','tomorrow','someday'].forEach(tab => {
+    const el = document.getElementById(TAB_MAP[tab]);
+
+    el.addEventListener('dragenter', e => {
+      if (!crossDrag || crossDrag.fromTab === tab) return;
+      e.preventDefault();
+      // Deliberate 600ms hover to switch — prevents accidental switches during within-list drags
+      clearTimeout(_tabHoverTimer);
+      _tabHoverTimer = setTimeout(() => switchTab(tab), 600);
+    });
+    el.addEventListener('dragleave', () => clearTimeout(_tabHoverTimer));
+    el.addEventListener('dragover', e => {
+      if (!crossDrag || crossDrag.fromTab === tab) return;
+      e.preventDefault();
+    });
+    // Drop directly on tab button — instant, no timer needed
+    el.addEventListener('drop', e => {
+      if (!crossDrag || crossDrag.fromTab === tab) return;
+      e.preventDefault();
+      clearTimeout(_tabHoverTimer);
+      landCrossDrag(tab);
+    });
+  });
+
+  taskList.addEventListener('dragover', e => {
+    if (!crossDrag || crossDrag.fromTab === viewMode) return;
+    e.preventDefault(); taskList.classList.add('drop-zone');
+  });
+  taskList.addEventListener('dragleave', e => {
+    if (!taskList.contains(e.relatedTarget)) taskList.classList.remove('drop-zone');
+  });
+  taskList.addEventListener('drop', e => {
+    if (!crossDrag || crossDrag.fromTab === viewMode) return;
+    e.preventDefault(); taskList.classList.remove('drop-zone');
+    landCrossDrag();
+  });
+}
+
+function landCrossDrag(forceDestTab) {
+  if (!crossDrag) return;
+  const { tasks: dragTasks, fromKey } = crossDrag;
+  const destTab = forceDestTab || viewMode;
+  const destKey = tabKey(destTab);
+  if (!destKey) return;
+
+  // Add all to destination
+  const destArr = getArr(destKey);
+  const now = Date.now();
+  dragTasks.forEach((task, i) => {
+    const t = { ...task, id: String(now + i), time:'', done:false, focus:false, expanded:false };
+    if (destKey === SOMEDAY_KEY) t.category = t.category || detectCategory(t.text);
+    destArr.push(t);
+  });
+  putArr(destKey, destArr);
+
+  // Remove all from source
+  const dragIds = new Set(dragTasks.map(t => t.id));
+  putArr(fromKey, getArr(fromKey).filter(t => !dragIds.has(t.id)));
+
+  clearSelection();
+  crossDrag = null; dragId = null;
+  clearTabHighlights();
+  reRender();
+}
+
+// ── Footer ─────────────────────────────────────────────────────
+const addInput = document.getElementById('add-input');
+function doAdd() {
+  addTaskTo(addInput.value, currentKey() || TODAY_KEY);
+  addInput.value = '';
+  document.getElementById('cat-preview').textContent = '';
+  addInput.focus();
+}
+document.getElementById('add-btn').addEventListener('click', doAdd);
+addInput.addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
+document.getElementById('clear-btn').addEventListener('click', () => clearDoneIn(currentKey() || TODAY_KEY));
+
+addInput.addEventListener('input', () => {
+  const preview = document.getElementById('cat-preview');
+  if (viewMode === 'someday' && addInput.value.trim()) {
+    preview.textContent = detectCategory(addInput.value);
+  } else {
+    preview.textContent = '';
+  }
+});
+
+// ── History picker ─────────────────────────────────────────────
+document.getElementById('hist-btn').addEventListener('click', () => {
+  const inp = document.getElementById('hist-date-input');
+  try { inp.showPicker(); } catch { inp.click(); }
+});
+document.getElementById('hist-date-input').addEventListener('change', e => {
+  if (e.target.value) switchTab('history', e.target.value);
+});
+
+// ── Tomorrow rollover ──────────────────────────────────────────
+function rolloverTomorrow() {
+  if (localStorage.getItem(TMRW_ROLLED_KEY) === TODAY_DATE) return;
+  const pending = loadKey(TMRW_KEY).filter(t => !t.done);
+  if (pending.length) {
+    const todayArr = loadKey(TODAY_KEY);
+    const now = Date.now();
+    pending.forEach((t, i) => {
+      todayArr.push({ ...t, id: String(now + i), done: false, focus: false, expanded: false });
+    });
+    saveKey(TODAY_KEY, todayArr);
+    tasks = loadKey(TODAY_KEY);
+    saveKey(TMRW_KEY, []);
+  }
+  localStorage.setItem(TMRW_ROLLED_KEY, TODAY_DATE);
+}
+
+// ── Boot ───────────────────────────────────────────────────────
+document.getElementById('date-str').textContent =
+  new Date().toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+
+document.title = 'Checklist — Today';
+rolloverTomorrow();
+initCrossTabDrop();
+render();
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (viewMode === 'someday') return;
+    const key = currentKey();
+    const arr = key === TODAY_KEY ? tasks : (key ? loadKey(key) : []);
+    fitText(arr);
+  }, 40);
+});
+</script>
+</body>
+</html>
