@@ -1601,6 +1601,22 @@ body.pdf-lightbox-open {
 .problem-card p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.55; max-width: none; }
 @media screen and (max-width: 980px) { .problems-grid { grid-template-columns: repeat(2, 1fr); } }
 @media screen and (max-width: 600px) { .problems-grid { grid-template-columns: 1fr; } }
+.engage-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 1.25rem; }
+.engage-card { display: flex; flex-direction: column; gap: 0.65rem; }
+.engage-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.1rem; }
+.engage-card .eyebrow { color: var(--accent); margin-bottom: 0; }
+.engage-timeline { font-family: "Inter", sans-serif; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted-light); white-space: nowrap; padding-top: 0.15rem; }
+.engage-card h4 { margin-bottom: 0; }
+.engage-card p { color: var(--muted); font-size: 0.93rem; line-height: 1.6; margin: 0; max-width: none; }
+.engage-list { margin: 0; font-size: 0.9rem; }
+.engage-list li { padding: 0.45rem 0; color: var(--ink); }
+.engage-btn { margin-top: auto; display: inline-block; text-align: center; }
+.engage-card--ft { background: var(--panel); border: 2px dashed var(--line); box-shadow: none; }
+.engage-card--ft .eyebrow { color: var(--muted); }
+.engage-section-cta { margin-top: 1.75rem; text-align: center; font-size: 0.95rem; color: var(--muted); }
+.engage-section-cta a { color: var(--accent); font-weight: 700; border-bottom: 1px solid transparent; }
+.engage-section-cta a:hover { border-bottom-color: var(--accent); }
+@media screen and (max-width: 860px) { .engage-grid { grid-template-columns: 1fr; } }
 </style>
 	</head>
 	<body class="is-preload">
@@ -1622,6 +1638,7 @@ body.pdf-lightbox-open {
 						<li><a href="#problems">When to bring me in</a></li>
 						<li><a href="#two">Selected Operating Work</a></li>
 						<li><a href="#three">AI Tools</a></li>
+						<li><a href="#engage">How to engage</a></li>
 						<li><a href="#five">Media</a></li>
 						<li><a href="#six">Personal</a></li>
 						<li><a href="#seven">Contact</a></li>
@@ -1879,6 +1896,86 @@ body.pdf-lightbox-open {
 							</section>
 
 						<!-- [REMOVED 2026-06: fabricated M&A Integration Playbook section + email-capture form cut for credibility. No real playbook artifact exists yet. Rebuild here later. Original markup in git history.] -->
+
+						<!-- How to engage -->
+							<section id="engage">
+								<div class="container">
+									<h3>How to engage</h3>
+									<p class="section-intro">Five ways to work together, depending on what the situation calls for.</p>
+									<div class="engage-grid">
+										<div class="panel engage-card">
+											<div class="engage-card-header">
+												<span class="eyebrow">Start here</span>
+												<span class="engage-timeline">20 min</span>
+											</div>
+											<h4>Operating Diagnostic</h4>
+											<p>A focused conversation. I ask the right questions and give you an honest read on your top operating constraints &mdash; no pitch, no agenda.</p>
+											<ul class="clean-list engage-list">
+												<li>Structured diagnostic, not a sales call</li>
+												<li>Walk away with the 2&ndash;3 constraints I&rsquo;d address first</li>
+												<li>I take on a small number each quarter</li>
+											</ul>
+											<a href="https://scheduler.zoom.us/abi-menon/20-mins-with-abi" target="_blank" rel="noopener noreferrer" class="button primary engage-btn">Book a diagnostic call</a>
+										</div>
+										<div class="panel engage-card">
+											<div class="engage-card-header">
+												<span class="eyebrow">Full mandate</span>
+												<span class="engage-timeline">6&ndash;18 months</span>
+											</div>
+											<h4>Turnaround &amp; Transformation</h4>
+											<p>You give me the brief and the authority. I own the outcome. For businesses under pressure that need an operator embedded for the duration.</p>
+											<ul class="clean-list engage-list">
+												<li>Full P&amp;L and operational accountability</li>
+												<li>Lean operating system and KPI governance installed</li>
+												<li>EBITDA-focused, defined timeline and mandate</li>
+											</ul>
+										</div>
+										<div class="panel engage-card">
+											<div class="engage-card-header">
+												<span class="eyebrow">M&amp;A Integration &middot; Embedded</span>
+												<span class="engage-timeline">90 days&ndash;6 months</span>
+											</div>
+											<h4>M&amp;A Integration Execution</h4>
+											<p>I bring a proprietary integration playbook built from five real acquisitions and customize it to your business. Embedded from Day 1, no large team required.</p>
+											<ul class="clean-list engage-list">
+												<li>Post-acquisition Day 1 through 100-day stabilization</li>
+												<li>ERP&sol;MRP, operating cadence, accountability structures</li>
+												<li>Integration built and run end to end</li>
+											</ul>
+										</div>
+										<div class="panel engage-card">
+											<div class="engage-card-header">
+												<span class="eyebrow">Fractional &middot; Ongoing</span>
+												<span class="engage-timeline">3&ndash;18 months</span>
+											</div>
+											<h4>Fractional Operator</h4>
+											<p>Part-time, embedded, with a defined mandate. Operating leadership without a permanent commitment &mdash; for as long as the work requires.</p>
+											<ul class="clean-list engage-list">
+												<li>Operating rhythm, KPIs, SLAs, and accountability</li>
+												<li>Scales to the engagement, not the org chart</li>
+												<li>Selective engagements; quality over volume</li>
+											</ul>
+										</div>
+										<div class="panel engage-card engage-card--ft">
+											<div class="engage-card-header">
+												<span class="eyebrow">Direct placement</span>
+												<span class="engage-timeline">Open to the right role</span>
+											</div>
+											<h4>Full-Time Operator</h4>
+											<p>For the right business, the right mandate, and the right authority structure. If the situation calls for a dedicated operator embedded full-time, I&rsquo;m open to that conversation.</p>
+											<ul class="clean-list engage-list">
+												<li>Defined mandate with real authority</li>
+												<li>PE-backed, owner-led, or post-acquisition environment</li>
+												<li>B2B industrial, manufacturing, distribution, services</li>
+											</ul>
+										</div>
+									</div>
+									<div class="engage-section-cta">
+										<p>Not sure which fits? <a href="https://scheduler.zoom.us/abi-menon/20-mins-with-abi" target="_blank" rel="noopener noreferrer">Book a 20-minute call</a> and I&rsquo;ll tell you.</p>
+									</div>
+								</div>
+							</section>
+
 
 						<!-- Media -->
 							<section id="five">
