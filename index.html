@@ -1633,6 +1633,12 @@ body.pdf-lightbox-open {
 .faq-item:last-child { border-bottom: none; }
 .faq-q { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 0.45rem; letter-spacing: -0.02em; }
 .faq-a { margin: 0; font-size: 0.97rem; line-height: 1.7; color: var(--muted); max-width: 62ch; }
+.case-tight { display: flex; flex-direction: column; gap: 0.65rem; margin-top: 0.6rem; }
+.case-tight-situation { font-size: 0.95rem; color: var(--muted); line-height: 1.55; margin: 0; }
+.case-tight-bullets { list-style: none; padding: 0.55rem 0; margin: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.case-tight-bullets li { font-size: 0.92rem; color: var(--ink); padding: 0.2rem 0 0.2rem 1rem; position: relative; line-height: 1.45; }
+.case-tight-bullets li::before { content: "—"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.case-tight .case-outcome { font-size: 1rem; font-weight: 700; color: var(--navy); margin: 0; line-height: 1.5; }
 </style>
 	</head>
 	<body class="is-preload">
@@ -1656,7 +1662,7 @@ body.pdf-lightbox-open {
 						<li><a href="#three">AI Tools</a></li>
 						<li><a href="#engage">How to engage</a></li>
 						<li><a href="#faq">Q&amp;A</a></li>
-						<li><a href="#five">Media</a></li>
+						<li><a href="#five">How I operate</a></li>
 						<li><a href="#six">Personal</a></li>
 						<li><a href="#seven">Contact</a></li>
 					</ul>
@@ -1829,54 +1835,54 @@ body.pdf-lightbox-open {
 										<div class="case-card case-template-card">
 											<h4>Asset Portfolio Recovery | $25M P&amp;L</h4>
 											<p class="case-subtitle">Regional turnaround &middot; Property management &middot; ~70 FTE, 70K units</p>
-											<div class="case-sections">
+											<div class="case-tight">
 												<div class="case-section">
-													<span class="label">Situation</span>
+													
 													<p>Distressed multi-site region: high churn, leadership turnover, weak execution cadence, and trust broken with client councils. Brought in with full P&L ownership to stabilize fast.</p>
 												</div>
 												<div class="case-section">
-													<span class="label">Action</span>
-													<p>Stabilized within 90 days. Installed weekly operating rhythm, KPI scorecards, SLAs, and a fight-to-retain playbook. Consolidated 4 director roles to 2. Built an ops automation capability &mdash; including audio-to-minutes tooling &mdash; to cut decision lag and eliminate manual reporting.</p>
+													
+													<ul class="case-tight-bullets"><li>Stabilized within 90 days</li><li>Weekly cadence, KPI scorecards, SLAs installed</li><li>Consolidated 4 director roles to 2</li></ul>
 												</div>
 												<div class="case-section case-section--outcome">
-													<span class="label">Outcome</span>
-													<p class="case-outcome">Doubled EBITDA run-rate year-over-year. Retention lifted from 90% to 96%. NPS detractors cut ~50%.</p>
+													
+													<p class="case-outcome">Doubled EBITDA within 12 months. Retention 90% &rarr; 96%. NPS detractors cut ~50%.</p>
 												</div>
 											</div>
 										</div>
 										<div class="case-card case-template-card">
 											<h4>Industrial Turnaround | $25M Manufacturing Site</h4>
 											<p class="case-subtitle">Post-acquisition &middot; GM &middot; Chisholm, Minnesota (pop. 2,000)</p>
-											<div class="case-sections">
+											<div class="case-tight">
 												<div class="case-section">
-													<span class="label">Situation</span>
-													<p>Distressed plant mid-COVID: owner exit on Day 1, labor attrition, paper-based scheduling, margin compression, aging equipment. Relocated to a Minnesota town of 2,000 to take the GM role on-site.</p>
+													
+													<p class="case-tight-situation">Distressed plant mid-COVID. Owner exit Day 1, labor attrition, paper scheduling. Relocated to a town of 2,000 as GM.</p>
 												</div>
 												<div class="case-section">
-													<span class="label">Action</span>
-													<p>Replaced paper scheduling with SYSPRO ERP/MRP. Redesigned training throughput (18 &rarr; 8 weeks). Rebuilt the leadership bench: exited underperformers, corrected wage bands to market, reduced SG&amp;A by ~$500K. Reset safety fundamentals after critical incidents.</p>
+													
+													<ul class="case-tight-bullets"><li>ERP/MRP replaced paper scheduling</li><li>Training: 18 &rarr; 8 weeks &middot; SG&amp;A cut ~$500K</li><li>Leadership bench rebuilt</li></ul>
 												</div>
 												<div class="case-section case-section--outcome">
-													<span class="label">Outcome</span>
-													<p class="case-outcome">Site returned to ~$100K/month profit run-rate within the first operating year. Inventory turns improved from 5.8x to 8.8x. SG&amp;A reduced by ~$500K. Training throughput doubled.</p>
+													
+													<p class="case-outcome">Distressed to profitable within year one. Inventory turns 5.8x &rarr; 8.8x.</p>
 												</div>
 											</div>
 										</div>
 										<div class="case-card case-template-card">
 											<h4>Saving the Integration | Covid</h4>
 											<p class="case-subtitle">M&amp;A integration &middot; COVID disruption &middot; Built the function from zero</p>
-											<div class="case-sections">
+											<div class="case-tight">
 												<div class="case-section">
-													<span class="label">Situation</span>
-													<p>Acquired business, founder exited Day 1. Thousands of SKUs with no BOM data. Corporate issued a 500-item checklist disconnected from real risk. The border closed mid-deal &mdash; and no integration function existed yet. I was building it for the first time.</p>
+													
+													<p class="case-tight-situation">Founder exited Day 1. No BOM data. Border closed mid-deal. No integration function existed &mdash; I built it from zero.</p>
 												</div>
 												<div class="case-section">
-													<span class="label">Action</span>
-													<p>Built the corporate M&amp;A integration function from scratch &mdash; governance, Day-1 playbook, workstreams, executive cadence. Dropped the 500-item checklist. Focused on ERP cutover, supply continuity, and talent retention. Moved into a quarantine hotel and stayed until the deal closed.</p>
+													
+													<ul class="case-tight-bullets"><li>Built integration governance, playbook &amp; cadence from scratch</li><li>Dropped the 500-item checklist &middot; focused on what mattered</li><li>Stayed in a quarantine hotel until the deal closed</li></ul>
 												</div>
 												<div class="case-section case-section--outcome">
-													<span class="label">Outcome</span>
-													<p class="case-outcome">Integration targets hit 3 months early. No shipping disruption. ERP cutover protected. The playbook was used for four subsequent acquisitions.</p>
+													
+													<p class="case-outcome">3 months early. No disruption. Playbook used for 4 more acquisitions.</p>
 												</div>
 											</div>
 										</div>
@@ -2060,10 +2066,9 @@ body.pdf-lightbox-open {
 						<!-- Media -->
 							<section id="five">
 								<div class="container">
-									<h3>Media</h3>
-									<p class="section-intro">
-										Featured on <em>Workforce One</em> (Advanced Minnesota) — Apple Podcasts.
-									</p>
+									<h3>How I operate &mdash; in my own words</h3>
+									<p class="section-intro">I was interviewed about what it actually takes to stabilize a distressed manufacturing business. How I diagnose fast, why I work the floor before I touch the org chart, and what separates operators who fix things from ones who manage the problem.</p>
+									<p class="section-intro" style="font-style:italic;color:var(--ink);margin-top:0.5rem;">&ldquo;I&rsquo;m the operator you call when something&rsquo;s broken and you need it fixed, not managed.&rdquo;</p>
 									<div class="media-podcast-wrap">
 										<iframe title="Workforce One podcast on Apple Podcasts" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" height="175" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.podcasts.apple.com/us/podcast/workforce-one-podcast-by-advanced-minnesota-season/id1535055174?i=1000536994097"></iframe>
 									</div>
