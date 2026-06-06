@@ -1008,6 +1008,49 @@ button:hover {
 	justify-content: flex-start;
 }
 
+/* Insights teaser on main page */
+.insights-teaser-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin-top: 1.5rem;
+}
+.insights-teaser-card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	padding: 1.1rem 1.25rem;
+	border: 1.5px solid var(--line);
+	border-radius: 8px;
+	background: var(--panel-strong);
+	text-decoration: none;
+	transition: border-color 0.15s, box-shadow 0.15s;
+}
+.insights-teaser-card:hover {
+	border-color: var(--navy);
+	box-shadow: 0 3px 14px rgba(6,27,73,0.07);
+}
+.insights-teaser-tag {
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+	color: var(--accent-blue);
+}
+.insights-teaser-title {
+	font-family: "Inter Tight", "Inter", sans-serif;
+	font-size: 1rem;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	color: var(--ink);
+	line-height: 1.25;
+}
+.insights-teaser-meta {
+	font-size: 0.78rem;
+	color: var(--muted-light);
+	font-weight: 500;
+}
+
 .personal-grid {
 	display: grid;
 	width: 100%;
@@ -1665,6 +1708,7 @@ body.pdf-lightbox-open {
 						<li><a href="#five">How I operate</a></li>
 						<li><a href="#six">Personal</a></li>
 						<li><a href="#seven">Contact</a></li>
+						<li><a href="insights/index.html">Insights &rarr;</a></li>
 					</ul>
 				</nav>
 				<footer>
@@ -2059,6 +2103,34 @@ body.pdf-lightbox-open {
 											<h4 class="faq-q">Do you need a large team to deliver results?</h4>
 											<p class="faq-a">No. I run lean and frugal. One operator who gets close to the work delivers faster than a consulting team, without the overhead.</p>
 										</div>
+									</div>
+								</div>
+							</section>
+
+						<!-- Insights teaser -->
+							<section id="insights-teaser">
+								<div class="container">
+									<h3>Operator Insights</h3>
+									<p class="section-intro">Writing on M&amp;A integration, turnarounds, and operations &mdash; from someone who has run the floor.</p>
+									<div class="insights-teaser-list">
+										<a class="insights-teaser-card" href="insights/kpi-scorecard.html">
+											<span class="insights-teaser-tag">Operations</span>
+											<span class="insights-teaser-title">The KPI Scorecard I Install in Every Business I Take Over</span>
+											<span class="insights-teaser-meta">May 2026 &middot; 5 min read</span>
+										</a>
+										<a class="insights-teaser-card" href="insights/distressed-to-profitable.html">
+											<span class="insights-teaser-tag">Turnaround</span>
+											<span class="insights-teaser-title">Distressed to Profitable in Year One: What Actually Changed</span>
+											<span class="insights-teaser-meta">January 2026 &middot; 5 min read</span>
+										</a>
+										<a class="insights-teaser-card" href="insights/ma-checklist-problem.html">
+											<span class="insights-teaser-tag">M&amp;A Integration</span>
+											<span class="insights-teaser-title">The 500-Item Checklist Problem</span>
+											<span class="insights-teaser-meta">September 2025 &middot; 5 min read</span>
+										</a>
+									</div>
+									<div style="margin-top:1.75rem;">
+										<a href="insights/index.html" class="button">All articles &rarr;</a>
 									</div>
 								</div>
 							</section>

@@ -1,0 +1,386 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Operator Insights | Abi Menon</title>
+  <meta name="description" content="Practical writing on M&A integration, turnarounds, and operations from an operator who has run the floor." />
+  <link rel="canonical" href="https://www.abimenon.com/insights/" />
+  <link rel="icon" href="../images/favicon-48.png?v=4" type="image/png" sizes="48x48" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="insights.css" />
+  <style>
+    /* Index-page-specific styles */
+    .insights-hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 2rem;
+    }
+    .insights-hero h1 {
+      font-family: "Inter Tight", "Inter", sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+      line-height: 1.08;
+    }
+    .insights-hero p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 520px;
+    }
+
+    /* Controls */
+    .insights-controls {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 1.75rem;
+    }
+    .search-wrap {
+      position: relative;
+      margin-bottom: 1.1rem;
+    }
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted-light);
+      pointer-events: none;
+      font-size: 0.92rem;
+    }
+    #insight-search {
+      width: 100%;
+      padding: 0.72rem 1rem 0.72rem 2.8rem;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      font-family: "Inter", sans-serif;
+      font-size: 0.93rem;
+      color: var(--ink);
+      background: var(--panel);
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    #insight-search:focus { border-color: var(--accent-blue); background: #fff; }
+    #insight-search::placeholder { color: var(--muted-light); }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      list-style: none;
+    }
+    .filter-chip {
+      padding: 0.32rem 0.9rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      font-family: "Inter", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .filter-chip:hover { border-color: var(--navy); color: var(--navy); }
+    .filter-chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+    /* Article list */
+    .insights-list {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .insight-card {
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 1.6rem 1.75rem;
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+    .insight-card:hover {
+      border-color: var(--navy);
+      box-shadow: 0 4px 20px rgba(6,27,73,0.07);
+    }
+    .insight-card.hidden { display: none; }
+
+    .card-tags {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.7rem;
+    }
+    .card-tag {
+      font-size: 0.71rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      background: rgba(7,92,229,0.08);
+      padding: 0.18rem 0.6rem;
+      border-radius: 4px;
+    }
+    .card-tag--secondary {
+      color: var(--muted);
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+
+    .card-title {
+      font-family: "Inter Tight", "Inter", sans-serif;
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      line-height: 1.22;
+      margin-bottom: 0.45rem;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.62;
+      margin-bottom: 1rem;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.79rem;
+      color: var(--muted-light);
+      font-weight: 500;
+    }
+    .card-meta-sep { color: var(--line); }
+    .card-read-cta {
+      margin-left: auto;
+      font-size: 0.79rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted-light);
+      font-size: 0.93rem;
+      display: none;
+    }
+
+    /* Footer CTA */
+    .insights-footer-cta {
+      background: var(--panel);
+      border-top: 1px solid var(--line);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .insights-footer-cta p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+      line-height: 1.6;
+    }
+    .btn-navy { background: var(--navy); color: #fff; }
+    .btn-outline-navy {
+      background: transparent;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+    }
+
+    @media (max-width: 640px) {
+      .insights-hero { padding: 2.5rem 1.25rem 1.5rem; }
+      .insights-hero h1 { font-size: 1.9rem; }
+      .insights-controls { padding: 1.25rem 1.25rem 1.5rem; }
+      .insights-list { padding: 0 1.25rem 3rem; }
+      .insight-card { padding: 1.25rem; }
+      .card-read-cta { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="../index.html" class="site-nav-logo">Abi Menon</a>
+    <a href="../index.html" class="site-nav-back">&#8592; Back to abimenon.com</a>
+  </nav>
+
+  <section class="insights-hero">
+    <h1>Operator Insights</h1>
+    <p>Practical writing on M&amp;A integration, turnarounds, and operations &mdash; from someone who has run the floor.</p>
+  </section>
+
+  <div class="insights-controls">
+    <div class="search-wrap">
+      <span class="search-icon" aria-hidden="true">&#128269;</span>
+      <input
+        type="search"
+        id="insight-search"
+        placeholder="Search articles..."
+        autocomplete="off"
+        aria-label="Search articles"
+      />
+    </div>
+    <ul class="filter-chips" role="list" aria-label="Filter by topic">
+      <li><button class="filter-chip active" data-filter="all">All</button></li>
+      <li><button class="filter-chip" data-filter="m-a-integration">M&amp;A Integration</button></li>
+      <li><button class="filter-chip" data-filter="turnaround">Turnaround</button></li>
+      <li><button class="filter-chip" data-filter="operations">Operations</button></li>
+      <li><button class="filter-chip" data-filter="leadership">Leadership</button></li>
+    </ul>
+  </div>
+
+  <main class="insights-list" id="insights-list" aria-label="Articles">
+
+    <a class="insight-card" href="kpi-scorecard.html"
+       data-topics="operations"
+       data-title="The KPI Scorecard I Install in Every Business I Take Over"
+       data-desc="Most businesses have data. What they don't have is an operating cadence. The scorecard is the artifact. The cadence is the point.">
+      <div class="card-tags">
+        <span class="card-tag">Operations</span>
+      </div>
+      <div class="card-title">The KPI Scorecard I Install in Every Business I Take Over</div>
+      <div class="card-desc">Most businesses have data. What they don&rsquo;t have is an operating cadence. The scorecard is the artifact. The cadence is the point.</div>
+      <div class="card-meta">
+        <span>May 2026</span>
+        <span class="card-meta-sep">&middot;</span>
+        <span>5 min read</span>
+        <span class="card-read-cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="insight-card" href="floor-before-org-chart.html"
+       data-topics="operations leadership"
+       data-title="I Worked the Floor Before I Touched the Org Chart"
+       data-desc="You can't understand a business from an org chart or a P&L. The real operating constraints live on the floor — in the handoffs, the workarounds, the things nobody writes down.">
+      <div class="card-tags">
+        <span class="card-tag">Operations</span>
+        <span class="card-tag card-tag--secondary">Leadership</span>
+      </div>
+      <div class="card-title">I Worked the Floor Before I Touched the Org Chart</div>
+      <div class="card-desc">You can&rsquo;t understand a business from an org chart or a P&amp;L. The real operating constraints live on the floor &mdash; in the handoffs, the workarounds, the things nobody writes down.</div>
+      <div class="card-meta">
+        <span>March 2026</span>
+        <span class="card-meta-sep">&middot;</span>
+        <span>4 min read</span>
+        <span class="card-read-cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="insight-card" href="distressed-to-profitable.html"
+       data-topics="turnaround operations"
+       data-title="Distressed to Profitable in Year One: What Actually Changed"
+       data-desc="The naive answer to a distressed plant is to cut costs and push harder. That's usually wrong. What fixed the plant wasn't heroics — it was the operating system.">
+      <div class="card-tags">
+        <span class="card-tag">Turnaround</span>
+        <span class="card-tag card-tag--secondary">Operations</span>
+      </div>
+      <div class="card-title">Distressed to Profitable in Year One: What Actually Changed</div>
+      <div class="card-desc">The naive answer to a distressed plant is to cut costs and push harder. That&rsquo;s usually wrong. What fixed the plant wasn&rsquo;t heroics &mdash; it was the operating system.</div>
+      <div class="card-meta">
+        <span>January 2026</span>
+        <span class="card-meta-sep">&middot;</span>
+        <span>5 min read</span>
+        <span class="card-read-cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="insight-card" href="day-one-too-late.html"
+       data-topics="m-a-integration leadership"
+       data-title="Day One Is Already Too Late"
+       data-desc="The moment the deal closes, the clock is running. Talent is deciding whether to stay. The silence is filling itself with rumors. And most integration teams are still writing the plan.">
+      <div class="card-tags">
+        <span class="card-tag">M&amp;A Integration</span>
+        <span class="card-tag card-tag--secondary">Leadership</span>
+      </div>
+      <div class="card-title">Day One Is Already Too Late</div>
+      <div class="card-desc">The moment the deal closes, the clock is running. Talent is deciding whether to stay. The silence is filling itself with rumors. And most integration teams are still writing the plan.</div>
+      <div class="card-meta">
+        <span>November 2025</span>
+        <span class="card-meta-sep">&middot;</span>
+        <span>4 min read</span>
+        <span class="card-read-cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="insight-card" href="ma-checklist-problem.html"
+       data-topics="m-a-integration"
+       data-title="The 500-Item Checklist Problem"
+       data-desc="Most M&A integrations fail not because of bad planning but because teams lose sight of what actually matters. The checklist gives you comfort. The 40-item plan gets the deal done.">
+      <div class="card-tags">
+        <span class="card-tag">M&amp;A Integration</span>
+      </div>
+      <div class="card-title">The 500-Item Checklist Problem</div>
+      <div class="card-desc">Most M&amp;A integrations fail not because of bad planning, but because teams lose sight of what actually matters. The checklist gives you comfort. The 40-item plan gets the deal done.</div>
+      <div class="card-meta">
+        <span>September 2025</span>
+        <span class="card-meta-sep">&middot;</span>
+        <span>5 min read</span>
+        <span class="card-read-cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <p class="no-results" id="no-results" aria-live="polite">No articles match your search.</p>
+
+  </main>
+
+  <div class="insights-footer-cta">
+    <p>Have an integration, turnaround, or operational problem you&rsquo;re trying to solve?</p>
+    <a href="https://scheduler.zoom.us/abi-menon/20-mins-with-abi" target="_blank" rel="noopener noreferrer" class="btn btn-navy">Book a diagnostic call</a>
+    <a href="../index.html" class="btn btn-outline-navy" style="margin-left:0.5rem;">Back to abimenon.com</a>
+  </div>
+
+  <footer class="insights-page-footer">
+    <span>&copy; Abi Menon 2026</span>
+    <a href="../index.html">abimenon.com</a>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById('insight-search');
+    const cards = Array.from(document.querySelectorAll('.insight-card'));
+    const noResults = document.getElementById('no-results');
+    let activeFilter = 'all';
+
+    function filterCards() {
+      const query = searchInput.value.toLowerCase().trim();
+      let visible = 0;
+      cards.forEach(function(card) {
+        const topics = card.dataset.topics || '';
+        const title = (card.dataset.title || '').toLowerCase();
+        const desc = (card.dataset.desc || '').toLowerCase();
+        const matchesTopic = activeFilter === 'all' || topics.split(' ').includes(activeFilter);
+        const matchesSearch = !query || title.includes(query) || desc.includes(query);
+        if (matchesTopic && matchesSearch) {
+          card.classList.remove('hidden');
+          visible++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    searchInput.addEventListener('input', filterCards);
+
+    document.querySelectorAll('.filter-chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        document.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
+        chip.classList.add('active');
+        activeFilter = chip.dataset.filter;
+        filterCards();
+      });
+    });
+  </script>
+</body>
+</html>
