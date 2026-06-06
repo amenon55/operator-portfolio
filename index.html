@@ -109,9 +109,9 @@
 
 html, body, input, select, textarea {
 	font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-	font-size: 16px;
+	font-size: 17px;
 	font-weight: 400;
-	line-height: 1.6;
+	line-height: 1.7;
 	color: var(--ink);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -133,8 +133,8 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 { font-size: 2.9rem; }
 h2 { font-size: 2.35rem; }
-h3 { font-size: 1.8rem; font-weight: 850; color: var(--navy); }
-h4 { font-size: 1.2rem; font-weight: 800; color: var(--ink); }
+h3 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.01em; color: var(--navy); }
+h4 { font-family: "Inter", sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0; color: var(--ink); }
 
 p, li {
 	font-size: 0.98rem;
@@ -181,10 +181,10 @@ body {
 }
 
 #logo a {
-	font-family: "Inter Tight", "Inter", sans-serif;
+	font-family: "Inter", sans-serif;
 	font-size: 1.45rem;
-	font-weight: 850;
-	letter-spacing: -0.035em;
+	font-weight: 700;
+	letter-spacing: 0.01em;
 	color: #ffffff;
 }
 
@@ -776,11 +776,11 @@ body {
 }
 
 .hero-lead {
-	font-family: "Inter Tight", "Inter", sans-serif;
-	font-size: clamp(0.965rem, 1.55vw, 1.2rem);
-	font-weight: 750;
-	line-height: 1.28;
-	letter-spacing: -0.025em;
+	font-family: "Inter", sans-serif;
+	font-size: clamp(0.965rem, 1.55vw, 1.15rem);
+	font-weight: 600;
+	line-height: 1.55;
+	letter-spacing: 0;
 	color: var(--navy);
 	max-width: 42rem;
 	margin: 0 0 0.5rem 0;
@@ -796,7 +796,7 @@ body {
 	margin: 0 0 0.95rem 0;
 }
 
-.hero-origin { font-family: "Inter", sans-serif; font-size: 0.96rem; line-height: 1.6; color: var(--muted); max-width: 42rem; margin: 0 0 0.9rem 0; }
+.hero-origin { font-family: "Inter", sans-serif; font-size: 0.96rem; line-height: 1.7; color: var(--muted); max-width: 42rem; margin: 0 0 0.9rem 0; }
 .grit-strip { list-style: none; padding: 0; margin: 0.25rem 0 1.75rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .grit-strip li { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; padding: 1rem 1.1rem; font-size: 0.95rem; line-height: 1.5; font-weight: 500; color: var(--ink); }
 @media screen and (max-width: 860px) { .grit-strip { grid-template-columns: 1fr; } }
@@ -1611,7 +1611,7 @@ body.pdf-lightbox-open {
 .engage-card .eyebrow { color: var(--accent); margin-bottom: 0; }
 .engage-timeline { font-family: "Inter", sans-serif; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted-light); white-space: nowrap; padding-top: 0.15rem; }
 .engage-card h4 { margin-bottom: 0; }
-.engage-card p { color: var(--muted); font-size: 0.93rem; line-height: 1.6; margin: 0; max-width: none; }
+.engage-card p { color: var(--muted); font-size: 0.93rem; line-height: 1.7; margin: 0; max-width: none; }
 .engage-list { margin: 0; font-size: 0.9rem; }
 .engage-list li { padding: 0.45rem 0; color: var(--ink); }
 .engage-btn { margin-top: auto; display: inline-block; text-align: center; }
@@ -1624,7 +1624,7 @@ body.pdf-lightbox-open {
 .case-sections { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.75rem; }
 .case-section { display: flex; flex-direction: column; gap: 0.2rem; }
 .case-section .label { display: block; margin-bottom: 0.2rem; }
-.case-section p { margin: 0; max-width: none; font-size: 0.95rem; line-height: 1.6; }
+.case-section p { margin: 0; max-width: none; font-size: 0.95rem; line-height: 1.7; }
 .case-section--outcome { border-top: 2px solid var(--line); padding-top: 0.85rem; margin-top: 0.2rem; }
 .case-section--outcome .label { color: var(--accent); }
 .case-outcome { font-weight: 700; color: var(--navy); font-size: 1rem; line-height: 1.55; }
@@ -1688,8 +1688,6 @@ body.pdf-lightbox-open {
 											<div class="hero-copy-column">
 												<p class="hero-lead">I walk into messy post-acquisition and PE-backed businesses, find what&rsquo;s actually broken, and fix it.</p>
 												<p class="hero-kicker">Not from a boardroom. From the floor.</p>
-												<p class="hero-copy-intro">Where I learned it:</p>
-												<p class="hero-origin">Under GE- and Siemens-trained operators at a $30B industrial group, then proven in leaner, faster companies.</p>
 												<p class="hero-copy-intro">How I actually work:</p>
 												<ul class="hero-bullet-list">
 													<li>Work the frontline jobs until I find what&rsquo;s actually broken, not what&rsquo;s on the org chart</li>
