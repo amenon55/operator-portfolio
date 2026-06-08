@@ -1559,7 +1559,7 @@ body.pdf-lightbox-open {
 	height: 100%;
 	object-fit: cover;
 	object-position: 64% 24%;
-	transform: scale(1.62);
+	transform: scale(0.81);
 	transform-origin: 64% 24%;
 	box-sizing: border-box;
 	transition: transform 500ms ease;
@@ -1567,7 +1567,7 @@ body.pdf-lightbox-open {
 }
 
 .image.avatar:hover img {
-	transform: scale(1.782);
+	transform: scale(0.891);
 	transform-origin: 64% 24%;
 }
 
@@ -1635,6 +1635,10 @@ body.pdf-lightbox-open {
 .ai-tool-card .eyebrow { color: var(--accent); margin-bottom: 0.55rem; }
 .ai-tool-preview.is-placeholder { background: var(--panel); display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem; min-height: 200px; }
 .ai-tool-placeholder-text { font-family: "Inter", sans-serif; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-light); max-width: 24ch; line-height: 1.5; }
+.ai-tool-preview.is-workflow-blur { background: #14141b; }
+.workflow-blur-layer { position: absolute; inset: 0; filter: blur(3.5px); transform: scale(1.04); transform-origin: center; overflow: hidden; }
+.workflow-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.28); }
+.workflow-overlay .ai-tool-placeholder-text { color: rgba(255,255,255,0.88); }
 @media screen and (max-width: 860px) {
   .ai-tool-card { grid-template-columns: 1fr; }
   .ai-tool-preview { min-height: 360px; }
@@ -1820,7 +1824,7 @@ body.pdf-lightbox-open {
 
 						<!-- [REMOVED 2026-06: fabricated How-I-get-up-to-speed / Operator Ramp Dashboard section cut for credibility. Rebuild here later with a REAL artifact. Original markup in git history.] -->
 
-						<!-- When to bring me in -->
+					<!-- When to bring me in -->
 							<section id="problems">
 								<div class="container">
 									<h3>When to bring me in</h3>
@@ -1973,8 +1977,13 @@ body.pdf-lightbox-open {
 											<h4>Workflow automation</h4>
 											<p>Agents that run repetitive work end to end.</p>
 										</div>
-										<div class="ai-tool-preview is-placeholder">
-											<span class="ai-tool-placeholder-text">Walkthrough on request</span>
+										<div class="ai-tool-preview is-workflow-blur">
+											<div class="workflow-blur-layer">
+												<canvas id="wf-anim" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+											</div>
+											<div class="workflow-overlay">
+												<span class="ai-tool-placeholder-text">Walkthrough on request</span>
+											</div>
 										</div>
 									</div>
 									<div class="ai-tool-card">
@@ -2404,5 +2413,204 @@ body.pdf-lightbox-open {
 				})();
 			</script>
 
+	<script>
+	(function () {
+		var canvas = document.getElementById('wf-anim');
+		if (!canvas) return;
+		var ctx = canvas.getContext('2d');
+		var DW = 900, DH = 300;
+
+		var N = [
+			{ x: 28,  y: 108, w: 142, h: 72, color: '#e06c2d' },
+			{ x: 202, y: 108, w: 142, h: 72, color: '#3b82f6' },
+			{ x: 376, y: 108, w: 142, h: 72, color: '#10b981' },
+			{ x: 552, y: 42,  w: 130, h: 62, color: '#6366f1' },
+			{ x: 552, y: 200, w: 130, h: 62, color: '#ef4444' },
+			{ x: 714, y: 100, w: 80,  h: 90, color: '#f59e0b' },
+		];
+
+		function ex(n) { return n.x + n.w; }
+		function ey(n) { return n.y + n.h / 2; }
+		function nx(n) { return n.x; }
+		function ny(n) { return n.y + n.h / 2; }
+
+		function linePt(i, j) {
+			return function (t) {
+				return { x: ex(N[i]) + t * (nx(N[j]) - ex(N[i])), y: ey(N[i]) + t * (ny(N[j]) - ey(N[i])) };
+			};
+		}
+		function quadPt(i, j, cpx, cpy) {
+			return function (t) {
+				var x0 = ex(N[i]), y0 = ey(N[i]), x2 = nx(N[j]), y2 = ny(N[j]);
+				var u = 1 - t;
+				return { x: u * u * x0 + 2 * u * t * cpx + t * t * x2, y: u * u * y0 + 2 * u * t * cpy + t * t * y2 };
+			};
+		}
+
+		var C = [
+			{ fi: 0, ti: 1, pt: linePt(0, 1) },
+			{ fi: 1, ti: 2, pt: linePt(1, 2) },
+			{ fi: 2, ti: 3, pt: quadPt(2, 3, (ex(N[2]) + nx(N[3])) / 2, ey(N[2])) },
+			{ fi: 2, ti: 4, pt: quadPt(2, 4, (ex(N[2]) + nx(N[4])) / 2, ey(N[2])) },
+			{ fi: 3, ti: 5, pt: quadPt(3, 5, nx(N[5]) - 20, ey(N[3])) },
+			{ fi: 4, ti: 5, pt: quadPt(4, 5, nx(N[5]) - 20, ey(N[4])) },
+		];
+
+		var PKT = [
+			{ c: 0, s: 0.02, d: 0.14 },
+			{ c: 1, s: 0.17, d: 0.14 },
+			{ c: 2, s: 0.32, d: 0.17 },
+			{ c: 3, s: 0.32, d: 0.22 },
+			{ c: 4, s: 0.51, d: 0.14 },
+			{ c: 5, s: 0.54, d: 0.14 },
+		];
+
+		var GLOW_AT  = [0.00, 0.17, 0.32, 0.51, 0.54, 0.67];
+		var GLOW_DUR = 0.14;
+		var CYCLE    = 3800;
+		var glow     = [0, 0, 0, 0, 0, 0];
+		var t0       = null;
+
+		function resize() {
+			var r = canvas.parentElement.getBoundingClientRect();
+			var w = Math.max(Math.round(r.width) || 900, 1);
+			var h = Math.max(Math.round(r.height) || 300, 1);
+			if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+		}
+
+		if (window.ResizeObserver) {
+			new ResizeObserver(resize).observe(canvas.parentElement);
+		} else {
+			window.addEventListener('resize', resize);
+		}
+		resize();
+
+		function rrect(x, y, w, h, r) {
+			ctx.beginPath();
+			ctx.moveTo(x + r, y);
+			ctx.lineTo(x + w - r, y); ctx.arcTo(x + w, y, x + w, y + r, r);
+			ctx.lineTo(x + w, y + h - r); ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+			ctx.lineTo(x + r, y + h); ctx.arcTo(x, y + h, x, y + h - r, r);
+			ctx.lineTo(x, y + r); ctx.arcTo(x, y, x + r, y, r);
+			ctx.closePath();
+		}
+
+		function parseHex(hex) {
+			var v = parseInt(hex.slice(1), 16);
+			return [(v >> 16) & 255, (v >> 8) & 255, v & 255];
+		}
+
+		function drawNode(n, gl, sx, sy) {
+			var x = n.x * sx, y = n.y * sy, w = n.w * sx, h = n.h * sy, r = 8 * sx;
+			var hh = 26 * sy;
+
+			if (gl > 0.01) {
+				ctx.save();
+				ctx.shadowColor = n.color;
+				ctx.shadowBlur = 22 * gl;
+				ctx.strokeStyle = n.color;
+				ctx.lineWidth = (2 + 5 * gl) * sx;
+				rrect(x, y, w, h, r); ctx.stroke();
+				ctx.restore();
+			}
+
+			ctx.fillStyle = '#1e1e2a'; rrect(x, y, w, h, r); ctx.fill();
+
+			ctx.save(); ctx.beginPath();
+			ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.arcTo(x + w, y, x + w, y + r, r);
+			ctx.lineTo(x + w, y + hh); ctx.lineTo(x, y + hh); ctx.arcTo(x, y, x + r, y, r); ctx.closePath();
+			if (gl > 0.01) {
+				var rgb = parseHex(n.color);
+				ctx.fillStyle = 'rgb(' + Math.min(255, rgb[0] + Math.round(55 * gl)) + ',' + Math.min(255, rgb[1] + Math.round(55 * gl)) + ',' + Math.min(255, rgb[2] + Math.round(55 * gl)) + ')';
+			} else {
+				ctx.fillStyle = n.color;
+			}
+			ctx.fill(); ctx.restore();
+
+			ctx.strokeStyle = n.color; ctx.lineWidth = 2 * sx;
+			rrect(x, y, w, h, r); ctx.stroke();
+
+			ctx.fillStyle = 'rgba(255,255,255,0.28)';
+			ctx.beginPath(); ctx.arc(x + 20 * sx, y + 13 * sy, 6 * sx, 0, Math.PI * 2); ctx.fill();
+
+			ctx.fillStyle = 'rgba(255,255,255,0.62)';
+			ctx.fillRect(x + 32 * sx, y + 9 * sy, (n.w - 44) * sx * 0.68, 6 * sy);
+
+			ctx.fillStyle = '#3a3a58';
+			var ly = y + hh + 10 * sy;
+			[0.74, 0.54, 0.64].forEach(function (f) {
+				ctx.fillRect(x + 12 * sx, ly, (n.w - 22) * sx * f, 5 * sy);
+				ly += 11 * sy;
+			});
+		}
+
+		function drawConns(sx, sy) {
+			C.forEach(function (c) {
+				var x0 = ex(N[c.fi]) * sx, y0 = ey(N[c.fi]) * sy;
+				var x2 = nx(N[c.ti]) * sx, y2 = ny(N[c.ti]) * sy;
+				ctx.strokeStyle = '#3a3a50'; ctx.lineWidth = 2 * sx; ctx.setLineDash([]);
+				ctx.beginPath(); ctx.moveTo(x0, y0);
+				if (c.fi === 2 && c.ti === 3) {
+					ctx.quadraticCurveTo((ex(N[2]) + nx(N[3])) / 2 * sx, y0, x2, y2);
+				} else if (c.fi === 2 && c.ti === 4) {
+					ctx.quadraticCurveTo((ex(N[2]) + nx(N[4])) / 2 * sx, y0, x2, y2);
+				} else if (c.fi === 3 && c.ti === 5) {
+					ctx.quadraticCurveTo((nx(N[5]) - 20) * sx, y0, x2, y2);
+				} else if (c.fi === 4 && c.ti === 5) {
+					ctx.quadraticCurveTo((nx(N[5]) - 20) * sx, y0, x2, y2);
+				} else {
+					ctx.lineTo(x2, y2);
+				}
+				ctx.stroke();
+				ctx.fillStyle = '#3a3a50'; ctx.beginPath();
+				ctx.moveTo(x2, y2); ctx.lineTo(x2 - 8 * sx, y2 - 4 * sy); ctx.lineTo(x2 - 8 * sx, y2 + 4 * sy); ctx.closePath(); ctx.fill();
+			});
+		}
+
+		function drawPackets(cf, sx, sy) {
+			PKT.forEach(function (p) {
+				var lt = (cf - p.s) / p.d;
+				if (lt < 0 || lt > 1) return;
+				var pos = C[p.c].pt(lt);
+				var px = pos.x * sx, py = pos.y * sy;
+				var col = N[C[p.c].fi].color;
+				var g = ctx.createRadialGradient(px, py, 0, px, py, 13 * sx);
+				g.addColorStop(0, 'rgba(255,255,255,0.95)');
+				g.addColorStop(0.35, col + 'bb');
+				g.addColorStop(1, 'rgba(0,0,0,0)');
+				ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, 13 * sx, 0, Math.PI * 2); ctx.fill();
+				ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(px, py, 3.5 * sx, 0, Math.PI * 2); ctx.fill();
+			});
+		}
+
+		function frame(ts) {
+			if (!t0) t0 = ts;
+			var cf = ((ts - t0) % CYCLE) / CYCLE;
+			var sx = canvas.width / DW, sy = canvas.height / DH;
+
+			GLOW_AT.forEach(function (at, i) {
+				var d = cf - at; if (d < 0) d += 1;
+				glow[i] = d < GLOW_DUR ? 1 - d / GLOW_DUR : 0;
+			});
+
+			ctx.fillStyle = '#14141b'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			ctx.fillStyle = '#252530';
+			var sp = 28 * sx;
+			for (var gx = sp / 2; gx < canvas.width; gx += sp)
+				for (var gy = sp / 2; gy < canvas.height; gy += sp) {
+					ctx.beginPath(); ctx.arc(gx, gy, 1.2, 0, Math.PI * 2); ctx.fill();
+				}
+
+			drawConns(sx, sy);
+			N.forEach(function (n, i) { drawNode(n, glow[i], sx, sy); });
+			drawPackets(cf, sx, sy);
+
+			requestAnimationFrame(frame);
+		}
+
+		requestAnimationFrame(frame);
+	})();
+	</script>
 	</body>
 </html>
