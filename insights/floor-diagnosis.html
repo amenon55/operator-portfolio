@@ -1,0 +1,721 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>How I Implement Lean When I Parachute Into a Business | Abi Menon</title>
+  <meta name="description" content="A drill plant in Minnesota. A property management company in Vancouver. Different industries, same method: go do the work, find what's actually broken, remove the excuses, fix the system." />
+  <link rel="icon" href="../images/favicon-48.png?v=4" type="image/png" sizes="48x48" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="insights.css" />
+  <style>
+
+    /* ── PART DIVIDER ── */
+    .part-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 3rem 0 2rem;
+    }
+    .part-divider-line { flex: 1; height: 1px; background: var(--line); }
+    .part-divider-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      white-space: nowrap;
+      background: var(--panel);
+      border: 1.5px solid var(--line);
+      padding: 0.28rem 0.8rem;
+      border-radius: 999px;
+    }
+
+    /* ══════════════════════════════════════════
+       LEAN FLOW DIAGRAM
+    ══════════════════════════════════════════ */
+    .flow-diagram {
+      margin: 2rem 0 2.5rem;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* ── PANEL HEADER ── */
+    .fd-panel { padding: 1.25rem 1.4rem 1.4rem; }
+    .fd-panel--before { background: #fdf6f4; border-bottom: 1.5px solid var(--line); }
+    .fd-panel--after  { background: #f4faf8; }
+
+    .fd-heading {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .fd-heading--before { color: #c0392b; }
+    .fd-heading--after  { color: var(--accent); }
+
+    /* ── BEFORE: batch flow layout ── */
+    .fd-before-flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0;
+      margin-bottom: 0.9rem;
+    }
+
+    .fd-dept {
+      background: #fff;
+      border: 1.5px solid #c0392b;
+      border-radius: 6px;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #c0392b;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .fd-wip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.1rem;
+      padding: 0 0.3rem;
+      flex-shrink: 0;
+    }
+    .fd-wip-blocks {
+      display: flex;
+      gap: 2px;
+      animation: wipGrow 2.4s ease-in-out infinite;
+    }
+    .fd-wip-block {
+      width: 7px;
+      height: 18px;
+      background: #e67e22;
+      border-radius: 2px;
+      opacity: 0.85;
+    }
+    .fd-wip-block:nth-child(2) { opacity: 0.65; height: 14px; margin-top: 4px; }
+    .fd-wip-block:nth-child(3) { opacity: 0.45; height: 10px; margin-top: 8px; }
+    @keyframes wipGrow {
+      0%, 100% { transform: scaleY(1);   opacity: 1; }
+      50%       { transform: scaleY(1.2); opacity: 0.8; }
+    }
+    .fd-wip-label {
+      font-size: 0.6rem;
+      color: #e67e22;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .fd-arrow-right {
+      font-size: 0.75rem;
+      color: var(--muted-light);
+      padding: 0 0.15rem;
+      flex-shrink: 0;
+    }
+
+    .fd-before-stats {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .fd-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .fd-stat-val {
+      font-family: "Inter Tight", "Inter", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .fd-stat-val--red   { color: #c0392b; }
+    .fd-stat-val--green { color: var(--accent); }
+    .fd-stat-label {
+      font-size: 0.7rem;
+      color: var(--muted-light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── AFTER: one-piece flow ── */
+    .fd-after-track {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .fd-cell {
+      background: #fff;
+      border: 1.5px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.66rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .fd-cell-arrow {
+      font-size: 0.72rem;
+      color: var(--accent);
+      padding: 0 0.2rem;
+      flex-shrink: 0;
+      z-index: 2;
+      position: relative;
+    }
+    .fd-ship-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 0.3rem 0.65rem;
+      flex-shrink: 0;
+      z-index: 2;
+      position: relative;
+    }
+
+    /* The moving part dot */
+    .fd-part-dot {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      background: var(--navy);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      animation: partFlow 3s cubic-bezier(0.4,0,0.2,1) infinite;
+      box-shadow: 0 0 0 3px rgba(6,27,73,0.15);
+    }
+    @keyframes partFlow {
+      0%   { left: 2%; opacity: 0; }
+      5%   { opacity: 1; }
+      90%  { left: 88%; opacity: 1; }
+      100% { left: 92%; opacity: 0; }
+    }
+
+    .fd-after-stats { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+
+    /* ── IMPROVEMENT BANNER ── */
+    .fd-improvement {
+      background: var(--navy);
+      padding: 0.7rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .fd-imp-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .fd-imp-label {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .fd-imp-val {
+      font-family: "Inter Tight", "Inter", sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .fd-imp-arrow {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── SEVEN WASTES GRID ── */
+    .wastes-section { margin: 2rem 0; }
+    .wastes-section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      margin-bottom: 1rem;
+    }
+    .wastes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .waste-card {
+      background: var(--panel);
+      border: 1.5px solid var(--line);
+      border-left: 4px solid #C0392B;
+      border-radius: 0 8px 8px 0;
+      padding: 0.85rem 0.95rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .waste-card.is-visible { opacity: 1; transform: translateY(0); }
+    .waste-card:nth-child(2) { transition-delay: 0.07s; }
+    .waste-card:nth-child(3) { transition-delay: 0.14s; }
+    .waste-card:nth-child(4) { transition-delay: 0.21s; }
+    .waste-card:nth-child(5) { transition-delay: 0.28s; }
+    .waste-card:nth-child(6) { transition-delay: 0.35s; }
+    .waste-card:nth-child(7) { transition-delay: 0.42s; }
+    .waste-name {
+      font-size: 0.73rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #C0392B;
+      margin-bottom: 0.28rem;
+    }
+    .waste-detail {
+      font-size: 0.81rem;
+      color: var(--muted);
+      line-height: 1.57;
+    }
+    .waste-card--wide { grid-column: 1 / -1; }
+
+    /* ── EXCUSE STACK ── */
+    .excuse-stack { margin: 2rem 0; }
+    .excuse-stack-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      margin-bottom: 1rem;
+    }
+    .excuse-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .excuse-item.is-visible { opacity: 1; transform: translateX(0); }
+    .excuse-item:nth-child(2) { transition-delay: 0.09s; }
+    .excuse-item:nth-child(3) { transition-delay: 0.18s; }
+    .excuse-item:nth-child(4) { transition-delay: 0.27s; }
+    .excuse-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(192,57,43,0.1);
+      border: 1.5px solid rgba(192,57,43,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #C0392B;
+      margin-top: 1px;
+    }
+    .excuse-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    .excuse-text span {
+      font-size: 0.81rem;
+      color: var(--muted);
+      line-height: 1.56;
+    }
+    .excuse-resolution {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 0.25rem;
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .wastes-grid { grid-template-columns: 1fr; }
+      .waste-card--wide { grid-column: auto; }
+      .excuse-item { flex-direction: column; gap: 0.5rem; }
+      .fd-before-flow { gap: 0.1rem; }
+      .fd-dept, .fd-cell { font-size: 0.6rem; padding: 0.35rem 0.45rem; }
+      .fd-improvement { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <a href="../index.html" class="site-nav-logo">Abi Menon</a>
+    <a href="index.html" class="site-nav-back">&#8592; All Insights</a>
+  </nav>
+
+  <article class="article-wrap">
+
+    <p class="article-breadcrumb"><a href="index.html">Insights</a> &rsaquo; Operations</p>
+
+    <div class="article-meta">
+      <span class="article-tag">Operations</span>
+      <span class="article-tag article-tag--secondary">Turnaround</span>
+      <span class="article-tag article-tag--secondary">Leadership</span>
+      <span class="article-meta-sep">&middot;</span>
+      <span class="article-date">October 2025</span>
+      <span class="article-meta-sep">&middot;</span>
+      <span class="article-readtime">8 min read</span>
+    </div>
+
+    <h1 class="article-title">How I Implement Lean When I Parachute Into a Business</h1>
+
+    <p class="article-lead">A drill plant in northern Minnesota. A property management company in Vancouver. Different industries, different teams, completely different products. The method was the same in both: go do the work, find what is actually broken, remove the excuses, fix the system.</p>
+
+    <div class="article-body">
+
+      <div class="part-divider">
+        <div class="part-divider-line"></div>
+        <div class="part-divider-label">Part One &mdash; The Drill Plant</div>
+        <div class="part-divider-line"></div>
+      </div>
+
+      <h2>What I walked into</h2>
+
+      <p>The plant made drill bits for the industrial market &mdash; a $25M facility in Chisholm, Minnesota, part of a private equity-backed premium tools company. When I took it over as GM, we had $1.2 million in back orders and lead times running over a year. The production team was hitting their numbers every month.</p>
+
+      <p>107 machines across five departments. Different ages, different makes, no standardized operator positions, no safety markings. Parts moved through the plant in large batches: made in Drilling, parked until enough accumulated to justify moving them, then transferred to Grinding, parked again, and so on through five operations before anything shipped.</p>
+
+      <p>The team was not failing. They were doing exactly what the system rewarded them to do. That is where the diagnosis had to start.</p>
+
+      <h2>The flow problem, visualized</h2>
+
+      <p>The core issue was batch production: every department ran large batches before passing anything downstream. A part spent a few days being processed and weeks sitting in queues. The diagram below shows what that looks like &mdash; and what it looks like after the switch to one-piece flow.</p>
+
+      <!-- ══ LEAN FLOW DIAGRAM ══ -->
+      <div class="flow-diagram" role="img" aria-label="Batch flow versus one-piece flow comparison diagram">
+
+        <!-- BEFORE panel -->
+        <div class="fd-panel fd-panel--before">
+          <div class="fd-heading fd-heading--before">Before &mdash; Batch Flow</div>
+          <div class="fd-before-flow">
+            <div class="fd-dept">Drilling</div>
+            <div class="fd-wip">
+              <div class="fd-wip-blocks">
+                <div class="fd-wip-block"></div>
+                <div class="fd-wip-block"></div>
+                <div class="fd-wip-block"></div>
+              </div>
+              <div class="fd-wip-label">6 wks</div>
+            </div>
+            <div class="fd-dept">Grinding</div>
+            <div class="fd-wip">
+              <div class="fd-wip-blocks" style="animation-delay:0.6s">
+                <div class="fd-wip-block"></div>
+                <div class="fd-wip-block"></div>
+                <div class="fd-wip-block"></div>
+              </div>
+              <div class="fd-wip-label">6 wks</div>
+            </div>
+            <div class="fd-dept">Hardening</div>
+            <div class="fd-wip">
+              <div class="fd-wip-blocks" style="animation-delay:1.2s">
+                <div class="fd-wip-block"></div>
+                <div class="fd-wip-block"></div>
+                <div class="fd-wip-block"></div>
+              </div>
+              <div class="fd-wip-label">6 wks</div>
+            </div>
+            <div class="fd-dept">Coating</div>
+            <div class="fd-wip">
+              <div class="fd-wip-blocks" style="animation-delay:1.8s">
+                <div class="fd-wip-block"></div>
+                <div class="fd-wip-block"></div>
+                <div class="fd-wip-block"></div>
+              </div>
+              <div class="fd-wip-label">6 wks</div>
+            </div>
+            <div class="fd-dept">Ship</div>
+          </div>
+          <div class="fd-before-stats">
+            <div class="fd-stat">
+              <div class="fd-stat-val fd-stat-val--red">12–14 mo</div>
+              <div class="fd-stat-label">Lead time</div>
+            </div>
+            <div class="fd-stat">
+              <div class="fd-stat-val fd-stat-val--red">$1.2M</div>
+              <div class="fd-stat-label">Back orders on arrival</div>
+            </div>
+            <div class="fd-stat">
+              <div class="fd-stat-val fd-stat-val--red">~5%</div>
+              <div class="fd-stat-label">Processing vs. total lead time</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AFTER panel -->
+        <div class="fd-panel fd-panel--after">
+          <div class="fd-heading fd-heading--after">After &mdash; One-Piece Flow</div>
+          <div class="fd-after-track">
+            <div class="fd-part-dot" aria-hidden="true"></div>
+            <div class="fd-cell">Drill</div>
+            <div class="fd-cell-arrow">&#8594;</div>
+            <div class="fd-cell">Grind</div>
+            <div class="fd-cell-arrow">&#8594;</div>
+            <div class="fd-cell">Harden</div>
+            <div class="fd-cell-arrow">&#8594;</div>
+            <div class="fd-cell">Coat</div>
+            <div class="fd-cell-arrow">&#8594;</div>
+            <div class="fd-ship-badge">Shipped</div>
+          </div>
+          <div class="fd-after-stats">
+            <div class="fd-stat">
+              <div class="fd-stat-val fd-stat-val--green">3–6 mo</div>
+              <div class="fd-stat-label">Lead time</div>
+            </div>
+            <div class="fd-stat">
+              <div class="fd-stat-val fd-stat-val--green">Cleared</div>
+              <div class="fd-stat-label">Back order status</div>
+            </div>
+            <div class="fd-stat">
+              <div class="fd-stat-val fd-stat-val--green">↓ 75%</div>
+              <div class="fd-stat-label">Lead time reduction</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Improvement banner -->
+        <div class="fd-improvement">
+          <div class="fd-imp-item">
+            <div class="fd-imp-label">WIP inventory</div>
+            <div class="fd-imp-val">months &#8594; days</div>
+          </div>
+          <div class="fd-imp-item">
+            <div class="fd-imp-label">Batch size</div>
+            <div class="fd-imp-val">hundreds &#8594; one</div>
+          </div>
+          <div class="fd-imp-item">
+            <div class="fd-imp-label">Customer signal</div>
+            <div class="fd-imp-val">ignored &#8594; takt time</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- end flow diagram -->
+      <p style="font-size:0.74rem;color:var(--muted-light);font-style:italic;margin-top:-1.5rem;margin-bottom:1.75rem;">Representative diagram only &mdash; company and product details are confidential under NDA. Metrics are accurate; specific identifiers have been omitted.</p>
+
+      <h2>Every waste was running</h2>
+
+      <p>In lean manufacturing, waste falls into seven categories. Every one of them was present at this plant. None showed up in the production report.</p>
+
+      <div class="wastes-section">
+        <p class="wastes-section-label">The seven wastes &mdash; how each appeared at the plant</p>
+        <div class="wastes-grid" id="wastes-grid">
+          <div class="waste-card">
+            <div class="waste-name">Overproduction</div>
+            <div class="waste-detail">Batches of hundreds ran regardless of actual orders. The plant optimized for machine utilization. Finished goods piled in some SKUs while back orders grew in others.</div>
+          </div>
+          <div class="waste-card">
+            <div class="waste-name">Waiting</div>
+            <div class="waste-detail">WIP sat between departments for weeks. Drilled parts waited for grinding. Ground parts waited for hardening. Nothing moved until a full batch was ready to transfer.</div>
+          </div>
+          <div class="waste-card">
+            <div class="waste-name">Transportation</div>
+            <div class="waste-detail">Parts traveled hundreds of feet between functional departments in every production cycle. The layout was organized by machine type, not by the flow of the product.</div>
+          </div>
+          <div class="waste-card">
+            <div class="waste-name">Overprocessing</div>
+            <div class="waste-detail">Paper-based scheduling and manual batch logs added administrative work at every handoff. None of it added value for the customer. It existed because no one had built a better system.</div>
+          </div>
+          <div class="waste-card">
+            <div class="waste-name">Inventory</div>
+            <div class="waste-detail">$1.2M in back orders sitting alongside months of finished goods in slow-moving SKUs. Too much of the wrong thing. Not enough of what customers needed shipped next week.</div>
+          </div>
+          <div class="waste-card">
+            <div class="waste-name">Motion</div>
+            <div class="waste-detail">One operator ran up to six different machines, each with different tooling and setup sequences. No standardized work. Preventive maintenance had also been deferred &mdash; operators worked around machine issues rather than fixing them.</div>
+          </div>
+          <div class="waste-card waste-card--wide">
+            <div class="waste-name">Defects</div>
+            <div class="waste-detail">Production made parts. Quality caught defects. The system treated defects as Quality&rsquo;s problem to find after the fact, not Production&rsquo;s problem to prevent. Defective parts could travel through four or five expensive operations before anyone flagged them. Detection was the system. Prevention was not.</div>
+          </div>
+        </div>
+        <p style="font-size:0.77rem;color:var(--muted-light);font-style:italic;text-align:center;margin-top:0.7rem;">All seven were present. None appeared in the monthly production report.</p>
+      </div>
+
+      <h2>Find the constraint, put everything there</h2>
+
+      <p>The temptation in a distressed operation is to fight fires everywhere. There were fires everywhere. The discipline is to not do that &mdash; to identify the one area limiting everything else and concentrate all resources there first.</p>
+
+      <p>At this plant, the constraint was the cells area: the production cell where parts went through the highest-complexity operations. Everything upstream fed it. Everything downstream waited on it. It was understaffed, undermaintained, and the firefighting had been distributed across the whole floor so that no one had named it clearly as the bottleneck.</p>
+
+      <p>I put the best operators there. I directed HR attention there. I made it the highest-paying area in the plant and told people exactly why. Not everyone was happy. My approach was to tell the truth about the logic and let people decide. The constraint is the constraint. You do not make progress by treating every problem as equally urgent.</p>
+
+      <h2>The incentive was pointed the wrong direction</h2>
+
+      <p>The production team was rational. Pay was tied to units produced, not units shipped. Running large batches maximizes production numbers per setup and therefore maximizes bonuses. The fact that large batches were generating the back orders was invisible to them, because the incentive did not ask them to care about it.</p>
+
+      <p>I changed the structure. Pay tied to what ships, not what is made. Profit sharing on top, so when the business does better the team does better. Once the connection was clear, the team started pushing to clear the back order pile themselves. The incentive and the business objective were finally pointing the same direction.</p>
+
+      <h2>The training was the hidden bottleneck</h2>
+
+      <p>One-piece flow requires operators who can move between stations. The plant had operators who had been on the same machine for years, trained by six VHS tapes and whatever the person beside them could demonstrate. Cross-training was theoretically possible but practically blocked &mdash; not because of the people, but because the knowledge had never been documented in a form anyone could transfer.</p>
+
+      <p>I partnered with a local university to build a curriculum on iPad &mdash; structured by machine type, with clear progressions. This was not optional. You cannot implement one-piece flow if operators cannot follow the work through the cell. The constraint was not the machines. It was undocumented knowledge locked inside individual operators that had never needed to move before.</p>
+
+      <div class="pull-quote">&ldquo;You cannot ask people to change how they work if you do not understand what they are actually doing. I ran the machines. I did the changeovers. Then the conversation changed.&rdquo;</div>
+
+      <h2>The resistance</h2>
+
+      <p>People pushed back. Some quit. That is honest.</p>
+
+      <p>My approach was the same one I use everywhere: I ran the machines. Not to perform. Because you cannot ask people to change how they work if you do not understand what they are actually doing. Once you have worked the setup sequences yourself, the argument that you do not know what you are asking disappears. The conversation shifts from defending the current state to debating the solution. That is a far more useful argument to have.</p>
+
+      <div class="part-divider">
+        <div class="part-divider-line"></div>
+        <div class="part-divider-label">Part Two &mdash; The Property Management Company</div>
+        <div class="part-divider-line"></div>
+      </div>
+
+      <h2>The same method, a different floor</h2>
+
+      <p>A large property management company managed HOA boards, condo communities, and high-rises across a large region. I came in as VP of Operations. Before I changed anything, I went to where the work happens.</p>
+
+      <p>In property management, the floor is the building. It is the 9 pm board meeting. It is the maintenance call on a Saturday morning. To understand what the property managers were actually dealing with, I got licensed as a property manager and ran properties myself &mdash; a full license, earned in four months. The role did not require it. I did it because the biggest excuse in the organization was the license: a signal that the work was too specialized for anyone without it to fully understand.</p>
+
+      <p>Getting licensed took away that excuse. Once I had run the properties, sat through the board meetings, handled the calls, I was no longer an outsider asking people to change. That matters more than most operators realize.</p>
+
+      <h2>What I found when I did the job</h2>
+
+      <p>Property managers were running eighty evening board meetings a month. By the time a manager arrived at work in the morning, they had already spent the previous evening in a two-hour board meeting. They were drained before the day started, and their admin queues reflected it &mdash; routine tasks that had never been automated were sitting unfinished because no one had capacity to get ahead of them.</p>
+
+      <p>The business also held a belief that had calcified into policy: change the property manager on an account and you lose the building. This belief was protecting underperforming managers and blocking any restructuring. When I looked at the data, it was correlation, not causation. Manager changes were happening in response to accounts already at risk &mdash; not causing the loss. The sequence in the organizational memory was backwards.</p>
+
+      <p>And the portfolio had a small-customer drag: a large number of small, high-maintenance accounts consuming disproportionate manager time relative to what they generated. The instinct was that every customer matters equally. The reality was that these accounts were pulling capacity away from the large, profitable buildings where retention actually moved the numbers.</p>
+
+      <h2>The excuse stack</h2>
+
+      <div class="excuse-stack">
+        <p class="excuse-stack-label">What I found &mdash; and what replaced each excuse</p>
+        <div id="excuse-list">
+          <div class="excuse-item">
+            <div class="excuse-icon">1</div>
+            <div class="excuse-text">
+              <strong>&ldquo;You can&rsquo;t understand this business without a license.&rdquo;</strong>
+              <span>Used to create distance between leadership and the work. Made the business feel more specialized than it was, insulating the current operating model from scrutiny.</span>
+              <span class="excuse-resolution">Got licensed in four months. Ran properties. Sat in the board meetings. The distance closed.</span>
+            </div>
+          </div>
+          <div class="excuse-item">
+            <div class="excuse-icon">2</div>
+            <div class="excuse-text">
+              <strong>&ldquo;If you change the property manager, you lose the building.&rdquo;</strong>
+              <span>Treated as settled fact. Used to protect underperforming managers on large accounts and block restructuring of the assignment model.</span>
+              <span class="excuse-resolution">Looked at the data. Correlation, not causation. Manager changes were a response to accounts already at risk &mdash; not the cause of loss.</span>
+            </div>
+          </div>
+          <div class="excuse-item">
+            <div class="excuse-icon">3</div>
+            <div class="excuse-text">
+              <strong>&ldquo;The workload is too high to focus on anything strategic.&rdquo;</strong>
+              <span>Eighty evening meetings a month plus full admin queues. The capacity constraint was real &mdash; but also partially manufactured by manual processes that had never been automated and small accounts that cost more to serve than they generated.</span>
+              <span class="excuse-resolution">Built automation for routine admin. Made deliberate decisions about which small high-drama accounts to release. Freed up real capacity.</span>
+            </div>
+          </div>
+          <div class="excuse-item">
+            <div class="excuse-icon">4</div>
+            <div class="excuse-text">
+              <strong>&ldquo;Our senior people are where they are for a reason.&rdquo;</strong>
+              <span>Seniority had determined account assignments over time. The most experienced managers had gravitated to the most manageable buildings, not the most profitable ones. No one had reexamined the logic.</span>
+              <span class="excuse-resolution">Put the best people on the most profitable buildings. Changed comp to match: highest pay tied to the accounts that mattered most to the P&amp;L.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>What changed and what it produced</h2>
+
+      <p>The structural changes were straightforward once the excuses were gone. Automate the admin. Reassign the portfolio. Restructure the comp. Release the accounts consuming more than they generated. Focus retention effort on the buildings where losing a contract actually moved the P&amp;L.</p>
+
+      <p>Client retention went from 90 percent to 96 percent. In property management, where contracts are annual and acquisition is expensive, six percentage points on a large portfolio compounds quickly. EBITDA doubled in twelve months.</p>
+
+      <div class="part-divider">
+        <div class="part-divider-line"></div>
+        <div class="part-divider-label">What These Two Have in Common</div>
+        <div class="part-divider-line"></div>
+      </div>
+
+      <h2>The method is industry-agnostic</h2>
+
+      <p>A drill manufacturing plant in northern Minnesota and a property management company in Vancouver have nothing in common on paper. Different product, different customer, different regulatory environment, different cost structure.</p>
+
+      <p>The diagnostic was identical. Go do the work. Map where value gets stuck. Identify the constraint. Find the excuses that have built up around the real problem and remove them. Fix the incentive so it points at the outcome the business actually needs. Build the operating system around flow, not around what is convenient for the machine or the manager.</p>
+
+      <p>In manufacturing, value stream mapping makes the waste visible: you draw every step, every wait, every handoff, and the places where time piles up become impossible to ignore. In a service business, doing the job yourself is the equivalent diagnostic. You find where the capacity is actually going. You see which constraints are real and which ones exist only because no one has tested them lately.</p>
+
+      <hr class="article-rule" />
+
+      <p>The license was not the point. Running the machines was not the point. The point was that both businesses had built up a set of assumptions about what the constraints were &mdash; and none of those assumptions had been seriously tested in years. Going to where the work happens is the fastest way to test them. You find the waste. You remove the excuses. Then you can fix the actual problem.</p>
+
+    </div>
+
+    <div class="article-cta">
+      <p>Running a manufacturing turnaround, integrating two operations, or walking into a business where the real problems are buried under years of assumptions?</p>
+      <a href="https://scheduler.zoom.us/abi-menon/20-mins-with-abi" target="_blank" rel="noopener noreferrer" class="btn btn-white">Book a 20-minute diagnostic</a>
+      <a href="../index.html" class="btn btn-outline-white">Back to abimenon.com</a>
+    </div>
+
+  </article>
+
+  <footer class="insights-page-footer">
+    <span>&copy; Abi Menon 2026</span>
+    <a href="index.html">&#8592; All Insights</a>
+  </footer>
+
+  <script>
+    function revealOnScroll(containerId, selector) {
+      var container = document.getElementById(containerId);
+      if (!container || !('IntersectionObserver' in window)) {
+        if (container) container.querySelectorAll(selector).forEach(function(el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          container.querySelectorAll(selector).forEach(function(el, i) {
+            setTimeout(function() { el.classList.add('is-visible'); }, i * 80);
+          });
+          obs.disconnect();
+        }
+      }, { threshold: 0.1 });
+      obs.observe(container);
+    }
+    revealOnScroll('wastes-grid', '.waste-card');
+    revealOnScroll('excuse-list', '.excuse-item');
+  </script>
+
+</body>
+</html>
