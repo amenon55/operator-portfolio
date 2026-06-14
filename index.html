@@ -247,6 +247,14 @@ body {
 
 .hero-copy-column {
 	min-width: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Pin the CTA to the bottom so it aligns with the snapshot panel — no dead gap below it */
+.hero-copy-column .hero-cta-inline {
+	margin-top: auto;
+	padding-top: 1.25rem;
 }
 
 .hero-grid {
@@ -259,7 +267,7 @@ body {
 .hero-grid > .panel.hero-snapshot-panel {
 	margin-top: 0;
 	align-self: stretch;
-	padding: 1.1rem 1.5rem 0.95rem;
+	padding: 0.75rem 1.25rem 0.65rem;
 	box-sizing: border-box;
 }
 
@@ -317,7 +325,7 @@ body {
 }
 
 .hero-snapshot-panel .snapshot-section-separator {
-	margin: 0.3rem 0 0.05rem 0;
+	margin: 0.15rem 0 0 0;
 }
 
 .hero-snapshot-panel .snapshot-list {
@@ -325,12 +333,12 @@ body {
 }
 
 .hero-snapshot-panel .snapshot-list li {
-	padding: 0.42rem 0;
-	line-height: 1.45;
+	padding: 0.25rem 0;
+	line-height: 1.4;
 }
 
 .hero-snapshot-panel .snapshot-list li:first-child {
-	padding-top: 0.3rem;
+	padding-top: 0.15rem;
 }
 
 .snapshot-section-separator {
@@ -917,6 +925,41 @@ body {
 	color: var(--accent);
 	max-width: 42rem;
 	margin: 0 0 0.95rem 0;
+}
+
+/* Hero typed line: cycles through phrases on load, settles on the last one */
+.hero-typed {
+	font-family: "Inter", sans-serif;
+	font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+	font-weight: 700;
+	line-height: 1.4;
+	letter-spacing: -0.01em;
+	color: var(--accent);
+	margin: 0 0 0.6rem 0;
+	min-height: 1.5em; /* reserve a line so layout doesn't jump while typing */
+}
+.hero-typed-cursor {
+	display: inline-block;
+	width: 2px;
+	height: 1.05em;
+	background: var(--accent);
+	margin-left: 3px;
+	vertical-align: -0.14em;
+	animation: heroBlink 1.05s steps(1) infinite;
+}
+@keyframes heroBlink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+
+/* Sidebar blueprint motif: subtle process-flow texture behind the nav */
+#header .sidebar-motif {
+	position: absolute; inset: 0;
+	z-index: 0; pointer-events: none; overflow: hidden;
+	opacity: 0.07;
+}
+#header .sidebar-motif svg { width: 100%; height: 100%; display: block; }
+#header > header, #header > nav, #header > footer { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-typed-cursor { animation: none; }
 }
 
 .hero-origin { font-family: "Inter", sans-serif; font-size: 0.96rem; line-height: 1.7; color: var(--muted); max-width: 42rem; margin: 0 0 0.9rem 0; }
@@ -1815,6 +1858,37 @@ body.pdf-lightbox-open {
 
 		<!-- Header -->
 			<section id="header">
+					<div class="sidebar-motif" aria-hidden="true">
+						<svg viewBox="0 0 280 860" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g stroke="#ffffff" stroke-width="1.1">
+								<line x1="24" y1="40" x2="24" y2="820" stroke-dasharray="2 10" stroke-width="0.8"/>
+								<line x1="20" y1="40" x2="28" y2="40"/><line x1="20" y1="820" x2="28" y2="820"/>
+								<rect x="70" y="70" width="150" height="48" rx="6"/>
+								<rect x="70" y="240" width="150" height="48" rx="6"/>
+								<rect x="70" y="410" width="150" height="48" rx="6"/>
+								<rect x="70" y="580" width="150" height="48" rx="6"/>
+								<line x1="145" y1="118" x2="145" y2="232"/><path d="M145 240 l-5 -9 h10 z" fill="#ffffff" stroke="none"/>
+								<line x1="145" y1="288" x2="145" y2="402"/><path d="M145 410 l-5 -9 h10 z" fill="#ffffff" stroke="none"/>
+								<line x1="145" y1="458" x2="145" y2="572"/><path d="M145 580 l-5 -9 h10 z" fill="#ffffff" stroke="none"/>
+								<circle cx="244" cy="264" r="11"/><line x1="220" y1="264" x2="233" y2="264"/>
+								<circle cx="244" cy="434" r="11"/><line x1="220" y1="434" x2="233" y2="434"/>
+								<circle cx="36"  cy="604" r="11"/><line x1="47"  y1="604" x2="70"  y2="604"/>
+								<g font-family="Inter, sans-serif" font-size="11" font-weight="700" letter-spacing="1.2" fill="#ffffff" stroke="none" text-anchor="middle">
+									<text x="145" y="99">INTAKE</text>
+									<text x="145" y="269">STABILIZE</text>
+									<text x="145" y="439">IMPROVE</text>
+									<text x="145" y="609">HAND OFF</text>
+								</g>
+								<g font-family="Inter, sans-serif" font-size="8" font-weight="700" letter-spacing="0.5" fill="#ffffff" stroke="none" text-anchor="middle">
+									<text x="244" y="267">KPI</text>
+									<text x="244" y="437">SLA</text>
+									<text x="36"  y="607">P&amp;L</text>
+								</g>
+								<path d="M70 604 H40 V94 H66" stroke-dasharray="3 6" stroke-width="0.8"/>
+								<path d="M66 94 l-9 -5 v10 z" fill="#ffffff" stroke="none"/>
+							</g>
+						</svg>
+					</div>
 				<header>
 					<span class="image avatar">
   <img src="images/headshot_2026.png" alt="Abi Menon, M&amp;A integration and operations professional" width="948" height="767" loading="lazy" decoding="async" />
@@ -1859,12 +1933,12 @@ body.pdf-lightbox-open {
 									<div class="hero-top">
 										<div class="hero-header">
 											<h1 class="hero-title">Abi Menon</h1>
-											<p class="hero-subtitle">Operations Transformation &amp; M&amp;A Integration | PE Portfolio Companies</p>
+											<p class="hero-typed" aria-live="off"><span id="hero-typed-text"></span><span class="hero-typed-cursor" aria-hidden="true"></span></p>
+												<p class="hero-subtitle">Operations Transformation &amp; M&amp;A Integration | PE Portfolio Companies</p>
 										</div>
 										<div class="hero-grid">
 											<div class="hero-copy-column">
 												<p class="hero-lead">I walk into messy post-acquisition and PE-backed businesses, find what&rsquo;s actually broken, and fix it.</p>
-												<p class="hero-kicker">Not from a boardroom. From the floor.</p>
 												<p class="hero-copy-intro">How I actually work:</p>
 												<ul class="hero-bullet-list">
 													<li>Work the frontline jobs until I find what&rsquo;s actually broken, not what&rsquo;s on the org chart</li>
@@ -2754,6 +2828,48 @@ body.pdf-lightbox-open {
 		}
 
 		requestAnimationFrame(frame);
+	})();
+	</script>
+	<script>
+	/* Hero typewriter: types each phrase, deletes, moves on, and SETTLES on the last phrase. */
+	(function () {
+		var el = document.getElementById('hero-typed-text');
+		if (!el) return;
+
+		/* EDIT HERE. Phrases play top to bottom; it stops on the LAST one (the resting line).
+		   Alt for the middle line if you prefer your version: 'Getting it done.' */
+		var phrases = [
+			'Not from a boardroom. From the floor.',
+			'Then I leave it running without me.',
+			'From operational chaos to control.'
+		];
+
+		var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (reduce) { el.textContent = phrases[phrases.length - 1]; return; }
+
+		var TYPE = 45, DEL = 25, HOLD = 1400, GAP = 250, START = 500;
+		var pi = 0, ci = 0, deleting = false;
+
+		function tick() {
+			var full = phrases[pi];
+			if (!deleting) {
+				ci++;
+				el.textContent = full.slice(0, ci);
+				if (ci === full.length) {
+					if (pi === phrases.length - 1) return; /* settle: stop here, cursor keeps blinking */
+					deleting = true;
+					setTimeout(tick, HOLD);
+					return;
+				}
+				setTimeout(tick, TYPE);
+			} else {
+				ci--;
+				el.textContent = full.slice(0, ci);
+				if (ci === 0) { deleting = false; pi++; setTimeout(tick, GAP); return; }
+				setTimeout(tick, DEL);
+			}
+		}
+		setTimeout(tick, START);
 	})();
 	</script>
 	</body>
